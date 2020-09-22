@@ -1,19 +1,47 @@
-import React from 'react';
-import { Card, CardContent, CardHeader } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Card, CardContent, CardHeader, CardActionArea } from '@material-ui/core';
 
-function App() {
+import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
+import { getCourses } from '../../../reducer/courses';
+
+function HomeCourses(props) {
+  useEffect(() => {
+    props.getCourses();
+  }, []);
+
+
   return (
     <Card style={{ padding: 0 }}>
       <CardHeader
         title="Các lớp học phần"
-        style={{ color: 'white', backgroundColor: '#3f51b5' }}
+        style={{ background: 'linear-gradient(90deg,#48b1bf,#06beb6)' }}
       />
       <CardContent>
-        ok
-        ok
+        {props.courses.map((e) => (
+          <Card style={{ margin: '8px 0', background: 'linear-gradient(270deg,#36d1dc,#5b86e5)' }}>
+            <CardActionArea>
+              <CardHeader title={e.name}/>
+            </CardActionArea>
+          </Card>
+        ))}
       </CardContent>
     </Card>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  courses: select(state, 'coursesReducer', 'courses'),
+  isFetching: select(state, 'coursesReducer', 'isFetching'),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCourses: () => dispatch(getCourses()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(toJs(HomeCourses));
+

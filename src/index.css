@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div.MuiToolbar-regular {
+    min-height: 55px;
+}
+
+
