@@ -40,9 +40,9 @@ function AppHeader() {
             className={classes.menuButton}
             style={{ padding: '0 16px', color: 'white', textDecoration: 'none', fontWeight: 'bold' }}
           >
-            <Typography variant="h7">Bài tập</Typography>
+            <Typography variant="h6">Bài tập</Typography>
           </Link>
-          <Typography variant="h7" style={{ padding: '0 16px'}}>Phạm Trung Kiên</Typography>
+          <Typography variant="h6" style={{ padding: '0 16px'}}>Phạm Trung Kiên</Typography>
           <AccountCircle style={{ cursor: 'pointer' }} />
         </Toolbar>
       </AppBar>
