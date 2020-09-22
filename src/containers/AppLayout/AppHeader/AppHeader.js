@@ -1,10 +1,28 @@
 import React from 'react';
-import { Link, AppBar, Toolbar } from '@material-ui/core';
+import {
+  Link,
+  AppBar,
+  Toolbar,
+  Button,
+  Grid,
+  IconButton,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 
 import ROUTER from '../../../constant/router';
 import logo from '../../../assets/logo.png';
 
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    flexGrow: 1,
+  },
+}));
+
 function AppHeader() {
+  const classes = useStyles();
+
   return (
     <>
       <AppBar
@@ -18,13 +36,14 @@ function AppHeader() {
             <img src={logo} alt="logo" width="100px" />
           </Link>
           <Link
-            color="white"
-            variant="h7"
-            underline="none"
-            style={{ cursor: 'pointer', padding: '0 16px', textAlign: 'center', fontWeight: 'bold' }}
+            href={ROUTER.HOME}
+            className={classes.menuButton}
+            style={{ padding: '0 16px', color: 'white', textDecoration: 'none', fontWeight: 'bold' }}
           >
-            Bài tập
+            <Typography variant="h7">Bài tập</Typography>
           </Link>
+          <Typography variant="h7" style={{ padding: '0 16px'}}>Phạm Trung Kiên</Typography>
+          <AccountCircle style={{ cursor: 'pointer' }} />
         </Toolbar>
       </AppBar>
     </>
