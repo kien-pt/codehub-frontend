@@ -1,8 +1,11 @@
 import React from 'react';
+import { Markup } from 'interweave';
+import QuizList from '../../containers/Courses/QuizList';
 
-function Courses() {
+function Courses(props) {
+  const courseId = props.history.location.state.courseId;
   return (
-    <>ok</>
+    <QuizList courseId={courseId} />
   );
 }
 

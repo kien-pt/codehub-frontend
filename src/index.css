@@ -16,4 +16,12 @@ div.MuiToolbar-regular {
     min-height: 55px;
 }
 
+div.MuiPaper-rounded {
+  border-radius: 18px;
+}
+
+div.MuiCardHeader-root {
+  padding: 8px 16px;
+}
+
 

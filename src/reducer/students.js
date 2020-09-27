@@ -48,7 +48,7 @@ export default function StudentsReducer(state = initialState, action) {
 
     case GET_STUDENTS_SUCCESS:
       return state.merge({
-        students: action.payload,
+        students: action.payload.sort((a, b) => b.point - a.point),
         isFetching: false,
       });
 

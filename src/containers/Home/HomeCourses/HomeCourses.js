@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardContent, CardHeader, CardActionArea, Link } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardActionArea } from '@material-ui/core';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -8,10 +9,11 @@ import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
 
 function HomeCourses(props) {
+  const history = useHistory();
+
   useEffect(() => {
     props.getCourses();
-  }, []);
-
+  }, [props]);
 
   return (
     <Card style={{ padding: 0 }}>
@@ -22,10 +24,13 @@ function HomeCourses(props) {
       <CardContent>
         {props.courses.map((e) => (
           <Card key={e.id} style={{ margin: '8px 0', background: 'linear-gradient(270deg,#36d1dc,#5b86e5)' }}>
-            <CardActionArea>
-              <Link href={`${ROUTER.COURSES}/${e.code}`}>
+            <CardActionArea onClick={() => {
+              history.push({
+                pathname: `${ROUTER.COURSES}/${e.code}`,
+                state: { courseId: e.id },
+              });
+            }}>
               <CardHeader title={e.name}/>
-              </Link>
             </CardActionArea>
           </Card>
         ))}

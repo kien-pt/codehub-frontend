@@ -1,6 +1,7 @@
 const ROUTER = {
   HOME: '/',
-  COURSES: '/courses'
+  QUIZ: '/quiz',
+  COURSES: '/courses',
 };
 
 export default ROUTER;
