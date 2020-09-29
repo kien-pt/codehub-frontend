@@ -56,7 +56,7 @@ function HomeRank(props) {
     <Card style={{ padding: 0 }}>
       <CardHeader
         title="Bảng xếp hạng"
-        style={{ background: 'linear-gradient(90deg,#48b1bf,#06beb6)' }}
+        style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
         <Button onClick={handleClick} style={{ color: 'white', backgroundColor: '#20a8d8', width: '100%' }}>

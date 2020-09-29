@@ -9,10 +9,13 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
+
 import { AccountCircle } from '@material-ui/icons';
 
 import ROUTER from '../../../constant/router';
 import logo from '../../../assets/logo.png';
+import code from '../../../assets/code.png';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -27,24 +30,40 @@ function AppHeader() {
     <>
       <AppBar
         position="fixed"
-        style={{
-          background: 'linear-gradient(90deg,#48b1bf,#677ebd)'
-        }}
+        style={{ backgroundColor: '#39424E', padding: '0 20px' }}
       >
-        <Toolbar>
-          <Link href={ROUTER.HOME}>
-            <img src={logo} alt="logo" width="100px" />
-          </Link>
-          <Link
-            href={ROUTER.HOME}
-            className={classes.menuButton}
-            style={{ padding: '0 16px', color: 'white', textDecoration: 'none', fontWeight: 'bold' }}
-          >
-            <Typography variant="h6">Bài tập</Typography>
-          </Link>
-          <Typography variant="h6" style={{ padding: '0 16px'}}>Phạm Trung Kiên</Typography>
-          <AccountCircle style={{ cursor: 'pointer' }} />
-        </Toolbar>
+        <Grid container style={{ height: 60 }} spacing={3}>
+          <Grid item md={1} xs={0} />
+          <Grid item md={5} xs={0}>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <Link href={ROUTER.HOME}>
+                <img src={code} alt="logo" height="36px" />
+              </Link>
+              <div
+                style={{
+                  cursor: 'pointer',
+                  padding: '6px 24px',
+                }}
+              >
+                Bài tập
+              </div>
+            </div>
+          </Grid>
+          <Grid item md={5} xs={0}>
+            <div
+              style={{
+                cursor: 'pointer',
+                display: 'flex',
+                float: 'right',
+                padding: '4px 0',
+              }}
+            >
+              <AccountCircle style={{ padding: '0 4px' }} />
+              18070737
+              <ExpandMore />
+            </div>
+          </Grid>
+        </Grid>
       </AppBar>
     </>
   );
