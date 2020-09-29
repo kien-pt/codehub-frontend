@@ -6,6 +6,8 @@ import {
   CardHeader,
   CardContent,
   CardActionArea,
+  Grid,
+  Button,
 } from '@material-ui/core';
 
 import toJs from '../../../hoc/ToJS';
@@ -33,19 +35,31 @@ function HomeCourses(props) {
           <Card style={{ padding: 0, marginBottom: 16 }}>
             <CardHeader
               title={tag?.name}
-              style={{ backgroundColor: '#f0f3f5' }}
+              style={{ color: 'white', backgroundColor: '#39424E' }}
             />
             <CardContent>
               {tag?.quizList.map((quizId) => (
-                <Card style={{ margin: '8px 0', background: 'linear-gradient(270deg,#36d1dc,#5b86e5)' }}>
+                <Card style={{ marginBottom: '8px' }}>
                   {console.log(quizId)}
                   <CardActionArea onClick={() => {
                     history.push({
-                      pathname: `${ROUTER.COURSES}/${quizId}`,
+                      pathname: `${ROUTER.QUIZ}/${quizId}`,
                       state: { quizId: quizId },
                     });
                   }}>
-                    <CardHeader title={props.quiz?.find((quiz) => quiz.id == quizId)?.name}/>
+                    <CardContent>
+                      <Grid container>
+                        <Grid item xs={8}>
+                          <div style={{ fontSize: 24, padding: 8 }}>
+                            {props.quiz?.find((quiz) => quiz.id == quizId)?.name}
+                          </div>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Button variant="outlined" style={{ float: 'right', color: '#1BA94C', borderColor: '#1BA94C' }}>0/100</Button>
+                        </Grid>
+                      </Grid>
+                      
+                    </CardContent>
                   </CardActionArea>
                 </Card>
               ))}

@@ -38,7 +38,6 @@ div.MuiPaper-elevation1 {
 }
 
 div.MuiGrid-spacing-xs-3 {
-  width: calc(100% + 24px);
   margin: 0 -12px;
 }
 
