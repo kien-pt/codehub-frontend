@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardActionArea,
   LinearProgress,
-  Button,
 } from '@material-ui/core';
 
 import toJs from '../../../hoc/ToJS';
@@ -44,7 +43,7 @@ function HomeCourses(props) {
                   <span style={{ fontWeight: 'bold' }}>0%</span>
                   <span>&nbsp; (0/1000)</span>
                 </div>
-                <Button variant="outlined" style={{ color: '#1BA94C', borderColor: '#1BA94C' }}>Continue Practice</Button>
+                <div className="cardButton" style={{ width: '20%' }}>Tiếp tục luyện tập</div>
               </CardContent>
             </CardActionArea>
           </Card>

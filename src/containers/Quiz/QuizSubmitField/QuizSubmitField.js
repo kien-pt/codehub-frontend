@@ -8,14 +8,28 @@ import {
   TextareaAutosize,
 } from '@material-ui/core';
 
-import Editor from '@matthamlin/react-code-editor';
-import { highlight, languages } from 'prismjs/components/prism-core';
+import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-const code = "#include <cstring>";
+require('codemirror/lib/codemirror.css');
+require('codemirror/theme/material.css');
+require('codemirror/theme/neat.css');
+require('codemirror/mode/clike/clike.js');
+
+
+const code = `#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	cout << "Hello World" << endl;
+	return 0;
+}
+`;
 
 function QuizSubmitField(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
@@ -29,7 +43,16 @@ function QuizSubmitField(props) {
       />
       <CardContent>
         {/* <TextareaAutosize rowsMin={20} placeholder="Empty" style={{ minWidth:'98%', maxWidth: '98%' }} /> */}
-      
+        <CodeMirror
+          value={code}
+          options={{
+            mode: 'text/x-c++src',
+            theme: 'material',
+            lineNumbers: true
+          }}
+          onChange={(editor, data, value) => {
+          }}
+        />
       </CardContent>
     </Card>
   );

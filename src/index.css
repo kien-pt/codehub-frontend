@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+.cardButton {
+  width: 80px;
+  padding: 8px 0;
+  text-align: center;
+  color: #1BA94C;
+  border: solid 1px #1BA94C;
+}
+
 div.MuiToolbar-regular {
     min-height: 55px;
 }
