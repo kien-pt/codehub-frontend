@@ -6,7 +6,7 @@ import QuizSubmitField from '../../containers/Quiz/QuizSubmitField';
 import QuizDiscuss from '../../containers/Quiz/QuizDiscuss';
 
 function Quiz(props) {
-  const quizId = props.history.location.state.quizId;
+  const quizId = props.history.location.state?.quizId;
   return (
     <Grid container spacing={3}>
       <Grid item md={1} xs={false} />

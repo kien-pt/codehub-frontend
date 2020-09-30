@@ -14,6 +14,8 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
+import { submitCode } from '../../../reducer/quiz';
+
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
 require('codemirror/theme/neat.css');
@@ -60,6 +62,7 @@ function QuizSubmitField(props) {
             width: 160,
             float: 'right',
           }}
+          onClick={() => props.submitCode()}
         >
           Nộp bài
         </Button>
@@ -74,6 +77,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  submitCode: () => dispatch(submitCode()),
 });
 
 export default connect(

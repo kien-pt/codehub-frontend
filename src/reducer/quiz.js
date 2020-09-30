@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-import { apiCall } from '../utils/api';
+import { apiCall, runCode } from '../utils/api';
 import { PREFIX } from '../constant/enum';
 import { QUIZ_API } from '../services/quizAPI';
 
@@ -11,6 +11,10 @@ const GET_QUIZ_FAILURE = 'GET_QUIZ_FAILURE';
 const GET_TAGS_LOADING = 'GET_TAGS_LOADING';
 const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
 const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
+
+const SUBMIT_CODE_LOADING = 'SUBMIT_CODE_LOADING';
+const SUBMIT_CODE_SUCCESS = 'SUBMIT_CODE_SUCCESS';
+const SUBMIT_CODE_FAILURE = 'SUBMIT_CODE_FAILURE';
 
 export const getQuiz = () => async (dispatch) => {
   const api = QUIZ_API.getQuiz();
@@ -52,6 +56,12 @@ export const getTags = () => async (dispatch) => {
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_FAILURE] },
     });
   }
+};
+
+export const submitCode = () => async (dispatch) => {
+  // const { response, error } = await 
+  runCode();
+  // console.log(response, error);
 };
 
 const initialState = fromJS({
