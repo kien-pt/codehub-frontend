@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 
 import QuizContent from '../../containers/Quiz/QuizContent';
 import QuizSubmitField from '../../containers/Quiz/QuizSubmitField';
+import QuizDiscuss from '../../containers/Quiz/QuizDiscuss';
 
 function Quiz(props) {
   const quizId = props.history.location.state.quizId;
@@ -14,6 +15,7 @@ function Quiz(props) {
         <QuizSubmitField quizId={quizId} />
       </Grid>
       <Grid item md={3} xs={12}>
+        <QuizDiscuss />
       </Grid>
       <Grid item md={1} xs={false} />
     </Grid>

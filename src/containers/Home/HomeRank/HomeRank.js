@@ -59,7 +59,7 @@ function HomeRank(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        <Button onClick={handleClick} style={{ color: 'white', backgroundColor: '#20a8d8', width: '100%' }}>
+        <Button variant="contained" color="primary" onClick={handleClick} style={{ width: '100%' }}>
           {props.courses[0]?.name}
         </Button>
         <StyledMenu
@@ -79,7 +79,7 @@ function HomeRank(props) {
             <Grid container>
               <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
               <Grid item xs={8}>{e.name}</Grid>
-              <Grid item xs={2} style={{ color: 'rgb(32, 168, 216)', fontWeight: 'bold', textAlign: 'end' }}>{e.point}</Grid>
+              <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{e.point}</Grid>
             </Grid>
           </div>
         ))}

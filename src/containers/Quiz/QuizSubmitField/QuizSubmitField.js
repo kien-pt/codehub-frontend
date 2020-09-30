@@ -5,7 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
-  TextareaAutosize,
+  Button,
 } from '@material-ui/core';
 
 import {UnControlled as CodeMirror} from 'react-codemirror2';
@@ -42,7 +42,6 @@ function QuizSubmitField(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        {/* <TextareaAutosize rowsMin={20} placeholder="Empty" style={{ minWidth:'98%', maxWidth: '98%' }} /> */}
         <CodeMirror
           value={code}
           options={{
@@ -53,6 +52,17 @@ function QuizSubmitField(props) {
           onChange={(editor, data, value) => {
           }}
         />
+        <Button
+          variant="contained"
+          color="primary"
+          style={{
+            margin: '16px 0',
+            width: 160,
+            float: 'right',
+          }}
+        >
+          Nộp bài
+        </Button>
       </CardContent>
     </Card>
   );
