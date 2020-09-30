@@ -49,3 +49,55 @@ export const apiCall = async ({
     };
   }
 };
+
+export const runCode = async () => {
+  try {
+    const result = await fetch(
+      "https://cors-anywhere.herokuapp.com/" + process.env.REACT_APP_HACKEREARTH_ENDPOINT,
+      // 'https://cors-anywhere.herokuapp.com/https://api.hackerearth.com/v3/code/compile/',
+      {
+        method: "POST",
+        body: JSON.stringify({
+          client_secret: process.env.REACT_APP_HACKEREARTH_CLIENT_SECRET,
+          source: 'int main() {   printf("Hello world\n");   return 0; }',
+          lang: 'C',
+        }),
+      }
+    );
+    console.log("OK", result);
+    // return {
+    //   response: result,
+    //   error: null,
+    // };
+  } catch (e) {
+    console.log("NOT OK", e);
+    // return {
+    //   response: null,
+    //   error: e.request,
+    // };
+  }
+  // await fetch(
+  //   process.env.REACT_APP_HACKEREARTH_ENDPOINT,
+  //   {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       client_secret: process.env.REACT_APP_HACKEREARTH_CLIENT_SECRET,
+  //       source: 'int main() {   printf("Hello world\n");   return 0; }',
+  //       lang: 'C',
+  //     }),
+  //     mode: "no-cors",
+  //   }
+  // ).then((response) => {
+  //   console.log("OK", response);
+  //   // return {
+  //   //   response: response,
+  //   //   error: null,
+  //   // };
+  // }).catch((error) => {
+  //   console.log("NOT OK", error);
+  //   // return {
+  //   //   response: null,
+  //   //   error: error,
+  //   // };
+  // });
+};

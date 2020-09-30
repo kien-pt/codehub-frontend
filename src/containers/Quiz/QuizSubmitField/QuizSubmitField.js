@@ -5,7 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
-  TextareaAutosize,
+  Button,
 } from '@material-ui/core';
 
 import {UnControlled as CodeMirror} from 'react-codemirror2';
@@ -13,6 +13,8 @@ import {UnControlled as CodeMirror} from 'react-codemirror2';
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
+
+import { submitCode } from '../../../reducer/quiz';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
@@ -42,7 +44,6 @@ function QuizSubmitField(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        {/* <TextareaAutosize rowsMin={20} placeholder="Empty" style={{ minWidth:'98%', maxWidth: '98%' }} /> */}
         <CodeMirror
           value={code}
           options={{
@@ -53,6 +54,18 @@ function QuizSubmitField(props) {
           onChange={(editor, data, value) => {
           }}
         />
+        <Button
+          variant="contained"
+          color="primary"
+          style={{
+            margin: '16px 0',
+            width: 160,
+            float: 'right',
+          }}
+          onClick={() => props.submitCode()}
+        >
+          Nộp bài
+        </Button>
       </CardContent>
     </Card>
   );
@@ -64,6 +77,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  submitCode: () => dispatch(submitCode()),
 });
 
 export default connect(

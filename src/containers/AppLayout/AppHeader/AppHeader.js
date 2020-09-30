@@ -37,30 +37,32 @@ function AppHeader(props) {
         position="fixed"
         style={{ backgroundColor: '#39424E', padding: '0 20px' }}
       >
-        <Grid container style={{ height: 60 }} spacing={3}>
+        <Grid container style={{ height: 60 }}>
           <Grid item md={1} xs={false} />
-          <Grid item md={5} xs={false}>
+          <Grid item md={5} xs={6}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Link href={ROUTER.HOME}>
-                <img src={code} alt="logo" height="36px" />
+                <img src={code} alt="logo" height="36px" style={{ padding: '10px 0' }} />
               </Link>
               <div
                 style={{
                   cursor: 'pointer',
-                  padding: '6px 24px',
+                  margin: '0 24px',
+                  paddingTop: '18px',
+                  borderBottom: 'solid 5px #1BA94C',
                 }}
               >
                 Bài tập
               </div>
             </div>
           </Grid>
-          <Grid item md={5} xs={false}>
+          <Grid item md={5} xs={6}>
             <div
               style={{
                 cursor: 'pointer',
                 display: 'flex',
                 float: 'right',
-                padding: '4px 0',
+                padding: '18px 0',
               }}
             >
               <AccountCircle style={{ padding: '0 4px' }} />
@@ -68,6 +70,7 @@ function AppHeader(props) {
               <ExpandMore />
             </div>
           </Grid>
+          <Grid item md={5} xs={false} />
         </Grid>
       </AppBar>
     </>

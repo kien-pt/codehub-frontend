@@ -44,3 +44,12 @@ button.MuiButton-root {
   border-radius: 2px;
 }
 
+button.MuiButton-containedPrimary {
+  background-color: #1BA94C;
+}
+
+button.MuiButton-containedPrimary:hover {
+  background-color: #199644;
+}
+
+
