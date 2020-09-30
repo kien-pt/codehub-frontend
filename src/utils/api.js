@@ -31,7 +31,8 @@ export const apiCall = async ({
   try {
     const result = await axios({
       method,
-      url: process.env.REACT_APP_DOMAIN + endPoint,
+      // url: process.env.REACT_APP_DOMAIN + endPoint,
+      url: "http://localhost:8000/" + endPoint,
       headers,
       data: payload,
       params,

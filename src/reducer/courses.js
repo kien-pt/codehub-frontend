@@ -15,6 +15,7 @@ export const getCourses = () => async (dispatch) => {
     meta: { prefix: [PREFIX.COURSES, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
+  console.log(response);
   if (!error && response.status === 200) {
     dispatch({
       type: GET_COURSES_SUCCESS,
