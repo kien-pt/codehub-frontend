@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
   Link,
   AppBar,
-  Toolbar,
-  Button,
   Grid,
-  IconButton,
-  Typography,
   makeStyles,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
 import { AccountCircle } from '@material-ui/icons';
 
+import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
+
 import ROUTER from '../../../constant/router';
 import logo from '../../../assets/logo.png';
 import code from '../../../assets/code.png';
+import AppLayout from '../../../components/AppLayout/AppLayout';
+
+import { getQuiz } from '../../../reducer/quiz';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -23,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AppHeader() {
-  const classes = useStyles();
-
+function AppHeader(props) {
+  useEffect(() => {
+    props.getQuiz();
+  }, []);
+  
   return (
     <>
       <AppBar
@@ -33,8 +38,8 @@ function AppHeader() {
         style={{ backgroundColor: '#39424E', padding: '0 20px' }}
       >
         <Grid container style={{ height: 60 }} spacing={3}>
-          <Grid item md={1} xs={0} />
-          <Grid item md={5} xs={0}>
+          <Grid item md={1} xs={false} />
+          <Grid item md={5} xs={false}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Link href={ROUTER.HOME}>
                 <img src={code} alt="logo" height="36px" />
@@ -49,7 +54,7 @@ function AppHeader() {
               </div>
             </div>
           </Grid>
-          <Grid item md={5} xs={0}>
+          <Grid item md={5} xs={false}>
             <div
               style={{
                 cursor: 'pointer',
@@ -69,4 +74,14 @@ function AppHeader() {
   );
 }
 
-export default AppHeader;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getQuiz: () => dispatch(getQuiz()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(toJs(AppHeader));

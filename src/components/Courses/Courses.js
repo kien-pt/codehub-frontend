@@ -6,7 +6,6 @@ import QuizList from '../../containers/Courses/QuizList';
 function Courses(props) {
   const courseId = props.history.location.state.courseId;
   return (
-    // <QuizList courseId={courseId} />
     <Grid container spacing={3}>
       <Grid item md={1} xs={0} />
       <Grid item md={7} xs={12}>

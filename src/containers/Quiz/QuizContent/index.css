@@ -1,0 +1,20 @@
+.problem-sample .sample-type {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.problem-sample li div {
+  padding: 2px 8px;
+  border-bottom: 1px solid #bbb;
+}
+
+.problem-sample .sample-value {
+  font-family: Consolas, 'Courier New', sans-serif;
+  font-size: 112%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #bbb;
+}

@@ -40,11 +40,10 @@ function HomeCourses(props) {
             <CardContent>
               {tag?.quizList.map((quizId) => (
                 <Card style={{ marginBottom: '8px' }}>
-                  {console.log(quizId)}
                   <CardActionArea onClick={() => {
                     history.push({
                       pathname: `${ROUTER.QUIZ}/${quizId}`,
-                      state: { quizId: quizId },
+                      state: { quizId },
                     });
                   }}>
                     <CardContent>
