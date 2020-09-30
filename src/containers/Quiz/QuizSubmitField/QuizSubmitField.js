@@ -5,12 +5,17 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardActionArea,
+  TextareaAutosize,
 } from '@material-ui/core';
+
+import Editor from '@matthamlin/react-code-editor';
+import { highlight, languages } from 'prismjs/components/prism-core';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
+
+const code = "#include <cstring>";
 
 function QuizSubmitField(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
@@ -23,6 +28,8 @@ function QuizSubmitField(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
+        {/* <TextareaAutosize rowsMin={20} placeholder="Empty" style={{ minWidth:'98%', maxWidth: '98%' }} /> */}
+      
       </CardContent>
     </Card>
   );
