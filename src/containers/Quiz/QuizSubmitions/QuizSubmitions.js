@@ -1,29 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Card,
   CardContent,
   CardHeader,
-  LinearProgress,
-  Button,
 } from '@material-ui/core';
 import Interweave from 'interweave';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
-function QuizDiscuss(props) {
+function QuizSubmitions(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
 
   return (
-    <Card style={{ marginTop: 32 }}>
+    <Card>
       <CardHeader
-        title="Thảo luận"
+        title={quiz?.name}
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
+        <Interweave content={quiz?.content} />
       </CardContent>
     </Card>
   );
@@ -40,5 +37,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(toJs(QuizDiscuss));
+)(toJs(QuizSubmitions));
 

@@ -16,7 +16,7 @@ function QuizContent(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
 
   return (
-    <Card style={{ padding: 0 }}>
+    <Card>
       <CardHeader
         title={quiz?.name}
         style={{ color: 'white', backgroundColor: '#39424E' }}

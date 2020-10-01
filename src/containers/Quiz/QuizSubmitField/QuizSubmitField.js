@@ -38,7 +38,7 @@ function QuizSubmitField(props) {
   const [sourceCode, setSourceCode] = useState(code);
 
   return (
-    <Card style={{ padding: 0, marginTop: 32 }}>
+    <Card style={{ marginTop: 32 }}>
       <CardHeader
         title="Bài nộp"
         style={{ color: 'white', backgroundColor: '#39424E' }}
