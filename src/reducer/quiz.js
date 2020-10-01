@@ -23,6 +23,7 @@ export const getQuiz = () => async (dispatch) => {
     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
+  console.log(response);
   if (!error && response.status === 200) {
     dispatch({
       type: GET_QUIZ_SUCCESS,
@@ -58,10 +59,15 @@ export const getTags = () => async (dispatch) => {
   }
 };
 
-export const submitCode = () => async (dispatch) => {
-  // const { response, error } = await 
-  runCode();
-  // console.log(response, error);
+export const submitCode = (sourceCode) => async (dispatch) => {
+  const payload = {
+    client_secret: process.env.REACT_APP_HACKEREARTH_CLIENT_SECRET,
+    source: sourceCode,
+    lang: 'CPP',
+  };
+  const api = QUIZ_API.runCode();
+  const { response, error } = await apiCall({ ...api, payload });
+  console.log(response, error);
 };
 
 const initialState = fromJS({

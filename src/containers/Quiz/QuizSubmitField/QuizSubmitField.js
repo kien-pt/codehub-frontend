@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -35,7 +35,7 @@ int main()
 
 function QuizSubmitField(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
-  console.log(quiz);
+  const [sourceCode, setSourceCode] = useState(code);
 
   return (
     <Card style={{ padding: 0, marginTop: 32 }}>
@@ -52,6 +52,7 @@ function QuizSubmitField(props) {
             lineNumbers: true
           }}
           onChange={(editor, data, value) => {
+            setSourceCode(value);
           }}
         />
         <Button
@@ -62,7 +63,7 @@ function QuizSubmitField(props) {
             width: 160,
             float: 'right',
           }}
-          onClick={() => props.submitCode()}
+          onClick={() => props.submitCode(sourceCode)}
         >
           Nộp bài
         </Button>
@@ -77,7 +78,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: () => dispatch(submitCode()),
+  submitCode: (sourceCode) => dispatch(submitCode(sourceCode)),
 });
 
 export default connect(

@@ -16,7 +16,6 @@ import ROUTER from '../../../constant/router';
 
 function QuizDiscuss(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
-  console.log(quiz);
 
   return (
     <Card style={{ padding: 0 }}>

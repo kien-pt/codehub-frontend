@@ -31,8 +31,7 @@ export const apiCall = async ({
   try {
     const result = await axios({
       method,
-      // url: process.env.REACT_APP_DOMAIN + endPoint,
-      url: "http://localhost:8000/" + endPoint,
+      url: process.env.REACT_APP_DOMAIN + endPoint,
       headers,
       data: payload,
       params,
@@ -50,31 +49,35 @@ export const apiCall = async ({
   }
 };
 
-export const runCode = async () => {
+export const runCode = async ({
+  endPoint,
+  method,
+  payload,
+  headers,
+  params,
+}) => {
   try {
     const result = await fetch(
-      "https://cors-anywhere.herokuapp.com/" + process.env.REACT_APP_HACKEREARTH_ENDPOINT,
-      // 'https://cors-anywhere.herokuapp.com/https://api.hackerearth.com/v3/code/compile/',
+      process.env.REACT_APP_DOMAIN + endPoint,
       {
-        method: "POST",
+        method,
         body: JSON.stringify({
           client_secret: process.env.REACT_APP_HACKEREARTH_CLIENT_SECRET,
           source: 'int main() {   printf("Hello world\n");   return 0; }',
           lang: 'C',
         }),
+        headers,
       }
     );
-    console.log("OK", result);
-    // return {
-    //   response: result,
-    //   error: null,
-    // };
+    return {
+      response: result,
+      error: null,
+    };
   } catch (e) {
-    console.log("NOT OK", e);
-    // return {
-    //   response: null,
-    //   error: e.request,
-    // };
+    return {
+      response: null,
+      error: e.request,
+    };
   }
   // await fetch(
   //   process.env.REACT_APP_HACKEREARTH_ENDPOINT,

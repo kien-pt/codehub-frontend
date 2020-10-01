@@ -11,4 +11,9 @@ export const QUIZ_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  runCode: () => ({
+    endPoint: 'api/v1/run',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  })
 };

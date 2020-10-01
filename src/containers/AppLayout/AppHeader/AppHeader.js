@@ -48,7 +48,7 @@ function AppHeader(props) {
                 style={{
                   cursor: 'pointer',
                   margin: '0 24px',
-                  paddingTop: '18px',
+                  padding: '18px 6px 0',
                   borderBottom: 'solid 5px #1BA94C',
                 }}
               >
