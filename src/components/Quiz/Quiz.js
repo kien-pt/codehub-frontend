@@ -9,17 +9,15 @@ import QuizDiscuss from '../../containers/Quiz/QuizDiscuss';
 function Quiz(props) {
   const quizId = props.history.location.state?.quizId;
   return (
-    <Grid container spacing={3}>
-      <Grid item md={1} xs={false} />
-      <Grid item md={7} xs={12}>
+    <Grid container justify="center" spacing={3}>
+      <Grid item lg={7} md={8} xs={12}>
         <QuizContent quizId={quizId} />
         <QuizSubmitField quizId={quizId} />
       </Grid>
-      <Grid item md={3} xs={12}>
+      <Grid item lg={3} md={4} xs={12}>
         <QuizSubmissions quizId={quizId} />
         <QuizDiscuss quizId={quizId} />
       </Grid>
-      <Grid item md={1} xs={false} />
     </Grid>
   );
 }

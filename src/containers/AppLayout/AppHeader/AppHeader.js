@@ -37,9 +37,8 @@ function AppHeader(props) {
         position="fixed"
         style={{ backgroundColor: '#39424E', padding: '0 20px' }}
       >
-        <Grid container style={{ height: 60 }}>
-          <Grid item md={1} xs={false} />
-          <Grid item md={5} xs={6}>
+        <Grid container justify="center" style={{ height: 60 }}>
+          <Grid item lg={5} sm={6}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Link href={ROUTER.HOME}>
                 <img src={code} alt="logo" height="36px" style={{ padding: '10px 0' }} />
@@ -56,7 +55,7 @@ function AppHeader(props) {
               </div>
             </div>
           </Grid>
-          <Grid item md={5} xs={6}>
+          <Grid item lg={5} sm={6}>
             <div
               style={{
                 cursor: 'pointer',
@@ -70,7 +69,6 @@ function AppHeader(props) {
               <ExpandMore />
             </div>
           </Grid>
-          <Grid item md={5} xs={false} />
         </Grid>
       </AppBar>
     </>

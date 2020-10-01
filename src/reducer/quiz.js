@@ -23,7 +23,6 @@ export const getQuiz = () => async (dispatch) => {
     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
-  console.log(response);
   if (!error && response.status === 200) {
     dispatch({
       type: GET_QUIZ_SUCCESS,
