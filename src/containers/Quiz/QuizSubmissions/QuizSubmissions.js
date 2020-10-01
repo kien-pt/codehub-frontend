@@ -10,17 +10,16 @@ import Interweave from 'interweave';
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
-function QuizSubmitions(props) {
+function QuizSubmissions(props) {
   const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
 
   return (
     <Card>
       <CardHeader
-        title={quiz?.name}
+        title="Các lần bạn nộp"
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        <Interweave content={quiz?.content} />
       </CardContent>
     </Card>
   );
@@ -37,5 +36,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(toJs(QuizSubmitions));
+)(toJs(QuizSubmissions));
 
