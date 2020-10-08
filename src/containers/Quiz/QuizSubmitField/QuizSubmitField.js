@@ -6,6 +6,7 @@ import {
   CardContent,
   CardHeader,
   Button,
+  Grid,
 } from '@material-ui/core';
 
 import {UnControlled as CodeMirror} from 'react-codemirror2';
@@ -55,18 +56,22 @@ function QuizSubmitField(props) {
             setSourceCode(value);
           }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          style={{
-            margin: '16px 0',
-            width: 160,
-            float: 'right',
-          }}
-          onClick={() => props.submitCode(sourceCode)}
-        >
-          Nộp bài
-        </Button>
+        <Grid container justify="center">
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{
+                margin: '16px 0',
+                width: 160,
+                float: 'right',
+              }}
+              onClick={() => props.submitCode(sourceCode)}
+            >
+              Nộp bài
+            </Button>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

@@ -7,6 +7,7 @@ import AppHeader from '../../containers/AppLayout/AppHeader';
 import Home from '../Home';
 import Courses from '../Courses';
 import Quiz from '../Quiz';
+import Submission from '../Submission';
 
 function AppLayout() {
   return (
@@ -17,6 +18,7 @@ function AppLayout() {
           <Route exact path={ROUTER.HOME} component={Home} />
           <Route path={ROUTER.COURSES} component={Courses} />
           <Route path={ROUTER.QUIZ} component={Quiz} />
+          <Route path={ROUTER.SUBMISSION} component={Submission} />
         </Switch>
       </div>
     </>

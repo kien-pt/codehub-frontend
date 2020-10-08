@@ -11,7 +11,6 @@ import {
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-
 import ROUTER from '../../../constant/router';
 
 import { getCourses } from '../../../reducer/courses';
