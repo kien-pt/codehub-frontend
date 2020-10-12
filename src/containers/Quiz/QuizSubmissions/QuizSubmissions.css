@@ -1,21 +1,21 @@
 .quizSubmission {
   height: 48px;
-  color: rgb(51 51 51 / 75%);
+  color: rgb(51 51 51 / 50%);
   padding: 14px 8px;
   cursor: pointer;
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
 
 .success {
-  background-color: rgb(170 255 170 / 75%);
+  background-color: rgb(170 255 170 / 50%);
 }
 
 .finish {
-  background-color: rgb(255 243 191 / 75%);
+  background-color: rgb(255 243 191 / 50%);
 }
 
 .fail {
-  background-color: rgb(250 170 170 / 75%);
+  background-color: rgb(250 170 170 / 50%);
 }
 
 .quizSubmission:hover {

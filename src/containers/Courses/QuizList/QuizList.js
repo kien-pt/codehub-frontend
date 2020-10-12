@@ -18,17 +18,18 @@ import { getQuiz, getTags } from '../../../reducer/quiz';
 
 function HomeCourses(props) {
   const history = useHistory();
+  const { getCourses, getTags, getQuiz } = props;
 
   useEffect(() => {
-    props.getCourses();
-    props.getTags();
-    props.getQuiz();
-  }, []);
+    getCourses();
+    getTags();
+    getQuiz();
+  }, [getCourses, getQuiz, getTags]);
 
   return (
     <>
       {props.courses?.find((course) => course.id === props.courseId)?.tags?.map((tagId) => {
-        const tag = props.tags.find((e) => e.id == tagId);
+        const tag = props.tags.find((e) => e.id === tagId);
         return (
           <Card key={`tag-${tagId}`} style={{ padding: 0, marginBottom: 16 }}>
             <CardHeader
@@ -48,7 +49,7 @@ function HomeCourses(props) {
                       <Grid container>
                         <Grid item xs={8}>
                           <div style={{ fontSize: 24, padding: 8 }}>
-                            {props.quiz?.find((quiz) => quiz.id == quizId)?.name}
+                            {props.quiz?.find((quiz) => quiz.id === quizId)?.name}
                           </div>
                         </Grid>
                         <Grid item xs={4}>

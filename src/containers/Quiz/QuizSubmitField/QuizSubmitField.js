@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -13,7 +12,6 @@ import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 import { submitCode } from '../../../reducer/quiz';
 
@@ -21,7 +19,6 @@ require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
 require('codemirror/theme/neat.css');
 require('codemirror/mode/clike/clike.js');
-
 
 const code = `#include <iostream>
 
@@ -35,7 +32,6 @@ int main()
 `;
 
 function QuizSubmitField(props) {
-  const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
   const [sourceCode, setSourceCode] = useState(code);
 
   return (

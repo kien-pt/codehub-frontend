@@ -39,6 +39,7 @@ function QuizSubmissions(props) {
           if (point === 100) status = 'success';
           return (
             <Link
+              key={`submission${submission.id}`}
               to={{
                 pathname: `${ROUTER.SUBMISSION}/${submission.id}`,
                 state: { quizId: props.quizId, submissionId: submission.id },
