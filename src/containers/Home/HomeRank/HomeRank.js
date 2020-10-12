@@ -17,9 +17,11 @@ import select from '../../../utils/select';
 import { getStudents } from '../../../reducer/students';
 
 function HomeRank(props) {
+  const { getStudents } = props;
+
   useEffect(() => {
-    props.getStudents();
-  }, []);
+    getStudents();
+  }, [getStudents]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 

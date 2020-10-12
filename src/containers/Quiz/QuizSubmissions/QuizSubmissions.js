@@ -17,9 +17,11 @@ import ROUTER from '../../../constant/router';
 import { getSubmissionsByQuizId } from '../../../reducer/submissions';
 
 function QuizSubmissions(props) {
+  const { getSubmissionsByQuizId } = props;
+
   useEffect(() => {
-    props.getSubmissionsByQuizId(props.quizId);
-  }, []);
+    getSubmissionsByQuizId(props.quizId);
+  }, [getSubmissionsByQuizId, props.quizId]);
 
   return (
     <Card>
