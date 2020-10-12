@@ -16,10 +16,11 @@ import { getCourses } from '../../../reducer/courses';
 
 function HomeCourses(props) {
   const history = useHistory();
+  const { getCourses } = props;
 
   useEffect(() => {
-    props.getCourses();
-  }, []);
+    getCourses();
+  }, [getCourses]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>

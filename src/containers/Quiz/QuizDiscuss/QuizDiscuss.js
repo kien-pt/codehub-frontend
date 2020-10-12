@@ -1,22 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  LinearProgress,
-  Button,
-} from '@material-ui/core';
-import Interweave from 'interweave';
+import { Card, CardContent, CardHeader } from '@material-ui/core';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 function QuizDiscuss(props) {
-  const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
-
   return (
     <Card style={{ marginTop: 32 }}>
       <CardHeader

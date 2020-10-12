@@ -1,35 +1,21 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-  Link,
-  AppBar,
-  Grid,
-  makeStyles,
-} from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
-
-import { AccountCircle } from '@material-ui/icons';
+import { Link, AppBar, Grid } from '@material-ui/core';
+import { ExpandMore, AccountCircle } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
-import select from '../../../utils/select';
-
 import ROUTER from '../../../constant/router';
-import logo from '../../../assets/logo.png';
+
 import code from '../../../assets/code.png';
-import AppLayout from '../../../components/AppLayout/AppLayout';
 
 import { getQuiz } from '../../../reducer/quiz';
 
-const useStyles = makeStyles((theme) => ({
-  menuButton: {
-    flexGrow: 1,
-  },
-}));
-
 function AppHeader(props) {
+  const { getQuiz } = props;
+
   useEffect(() => {
-    props.getQuiz();
-  }, []);
+    getQuiz();
+  }, [getQuiz]);
   
   return (
     <>

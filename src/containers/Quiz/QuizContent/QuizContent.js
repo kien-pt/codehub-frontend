@@ -13,7 +13,7 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
 function QuizContent(props) {
-  const quiz = props.quizList.find((quiz) => quiz.id == props.quizId);
+  const quiz = props.quizList.find((quiz) => quiz.id === props.quizId);
 
   return (
     <Card>
