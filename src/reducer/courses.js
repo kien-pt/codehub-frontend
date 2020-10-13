@@ -48,7 +48,7 @@ export default function coursesReducer(state = initialState, action) {
 
     case GET_COURSES_SUCCESS:
       return state.merge({
-        courses: action.payload.sort((a, b) => a.id - b.id),
+        courses: [...action.payload.sort((a, b) => a.id - b.id)],
         isFetching: false,
       });
 

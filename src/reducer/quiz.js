@@ -66,7 +66,6 @@ export const submitCode = (sourceCode) => async (dispatch) => {
   };
   const api = QUIZ_API.runCode();
   const { response, error } = await apiCall({ ...api, payload });
-  console.log(response, error);
 };
 
 const initialState = fromJS({
