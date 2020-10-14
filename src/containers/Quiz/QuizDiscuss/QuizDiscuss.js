@@ -1,6 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, CardContent, CardHeader } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardActions,
+  Divider,
+  TextField,
+  FormControl,
+  InputAdornment,
+} from '@material-ui/core';
+import { Send } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -14,6 +24,10 @@ function QuizDiscuss(props) {
       />
       <CardContent>
       </CardContent>
+      <CardActions style={{ paddingLeft: 16, paddingRight: 16 }}>
+        <TextField placeholder="Để lại lời thảo luận..." variant="outlined" style={{ width: 'calc(100% - 32px)' }} />
+        <Send style={{ cursor: 'pointer' }} />
+      </CardActions>
     </Card>
   );
 }
