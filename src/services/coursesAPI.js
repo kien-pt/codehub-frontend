@@ -6,4 +6,9 @@ export const COURSES_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  getCourseById: (id) => ({
+    endPoint: `api/v1/courses/?id=${id}`,
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 };

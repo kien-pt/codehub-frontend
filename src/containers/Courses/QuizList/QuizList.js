@@ -13,18 +13,21 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-import { getCourses } from '../../../reducer/courses';
+import { getCourseById } from '../../../reducer/courses';
 import { getQuiz, getTags } from '../../../reducer/quiz';
 
 function HomeCourses(props) {
+  const temp = window.location.href.split('/');
+  const courseId = temp[temp.length - 1];
+
   const history = useHistory();
-  const { getCourses, getTags, getQuiz } = props;
+  const { getCourseById, getTags, getQuiz } = props;
 
   useEffect(() => {
-    getCourses();
+    getCourseById(courseId);
     getTags();
     getQuiz();
-  }, [getCourses, getQuiz, getTags]);
+  }, [getCourseById, getQuiz, getTags]);
 
   return (
     <>
@@ -37,30 +40,33 @@ function HomeCourses(props) {
               style={{ color: 'white', backgroundColor: '#39424E' }}
             />
             <CardContent>
-              {tag?.quizList.map((quizId) => (
-                <Card key={`quiz-${quizId}`} style={{ marginBottom: '8px' }}>
-                  <CardActionArea onClick={() => {
-                    history.push({
-                      pathname: `${ROUTER.QUIZ}/${quizId}`,
-                      state: { quizId },
-                    });
-                  }}>
-                    <CardContent>
-                      <Grid container>
-                        <Grid item xs={8}>
-                          <div style={{ fontSize: 24, padding: 8 }}>
-                            {props.quiz?.find((quiz) => quiz.id === quizId)?.name}
-                          </div>
+              {tag?.quizList.map((quizId) => {
+                const point = props.point.find((e) => e.quizId === quizId)?.point || 0;
+                return (
+                  <Card key={`quiz-${quizId}`} style={{ marginBottom: '8px' }}>
+                    <CardActionArea onClick={() => {
+                      history.push({
+                        pathname: `${ROUTER.QUIZ}/${quizId}`,
+                        state: { quizId },
+                      });
+                    }}>
+                      <CardContent>
+                        <Grid container>
+                          <Grid item xs={8}>
+                            <div style={{ fontSize: 24, padding: 8 }}>
+                              {props.quiz?.find((quiz) => quiz.id === quizId)?.name}
+                            </div>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <div className="cardButton" style={{ float: 'right' }}>{`${point}/100`}</div>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={4}>
-                          <div className="cardButton" style={{ float: 'right' }}>0/100</div>
-                        </Grid>
-                      </Grid>
-                      
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              ))}
+                        
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                );
+              })}
             </CardContent>
           </Card>
         )
@@ -72,6 +78,7 @@ function HomeCourses(props) {
 const mapStateToProps = (state) => ({
   quiz: select(state, 'quizReducer', 'quiz'),
   tags: select(state, 'quizReducer', 'tags'),
+  point: select(state, 'pointReducer', 'point'),
   courses: select(state, 'coursesReducer', 'courses'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),
 });
@@ -79,7 +86,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getQuiz: () => dispatch(getQuiz()),
   getTags: () => dispatch(getTags()),
-  getCourses: () => dispatch(getCourses()),
+  getCourseById: (courseId) => dispatch(getCourseById(courseId)),
 });
 
 export default connect(

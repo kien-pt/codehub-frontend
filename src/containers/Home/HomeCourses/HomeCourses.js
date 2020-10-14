@@ -13,18 +13,16 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
-import { getAllPoint } from '../../../reducer/point';
 import { getTags } from '../../../reducer/quiz';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getCourses, getAllPoint, getTags } = props;
+  const { getCourses, getTags } = props;
 
   useEffect(() => {
     getCourses();
-    getAllPoint();
     getTags();
-  }, [getCourses, getAllPoint, getTags]);
+  }, [getCourses, getTags]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
@@ -42,13 +40,12 @@ function HomeCourses(props) {
 
           var currentPoint = 0;
           props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
-          console.log(props.point);
 
           return (
             <Card key={course.id} style={{ marginBottom: 16 }}>
               <CardActionArea onClick={() => {
                 history.push({
-                  pathname: `${ROUTER.COURSES}/${course.code}`,
+                  pathname: `${ROUTER.COURSES}/${course.id}`,
                   state: { courseId: course.id },
                 });
               }}>
@@ -80,7 +77,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getCourses: () => dispatch(getCourses()),
-  getAllPoint: () => dispatch(getAllPoint()),
 });
 
 export default connect(
