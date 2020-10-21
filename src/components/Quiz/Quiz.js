@@ -6,8 +6,10 @@ import QuizSubmitField from '../../containers/Quiz/QuizSubmitField';
 import QuizSubmissions from '../../containers/Quiz/QuizSubmissions';
 import QuizDiscuss from '../../containers/Quiz/QuizDiscuss';
 
-function Quiz(props) {
-  const quizId = props.history.location.state?.quizId;
+function Quiz() {
+  const temp = window.location.href.split('/');
+  const quizId = parseInt(temp[temp.length - 1]);
+
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item lg={7} md={8} xs={12}>

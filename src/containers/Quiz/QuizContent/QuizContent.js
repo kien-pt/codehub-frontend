@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
@@ -12,8 +12,16 @@ import './index.css';
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
+import { getQuizById } from '../../../reducer/quiz';
+
 function QuizContent(props) {
-  const quiz = props.quizList.find((quiz) => quiz.id === props.quizId);
+  const { getQuizById, quizId } = props;
+
+  useEffect(() => {
+    getQuizById(quizId);
+  }, [getQuizById, quizId]);
+
+  const quiz = props.quizList.find((quiz) => quiz.id === quizId);
 
   return (
     <Card>
@@ -34,6 +42,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getQuizById: (id) => dispatch(getQuizById(id)),
 });
 
 export default connect(

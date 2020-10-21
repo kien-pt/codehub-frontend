@@ -54,8 +54,28 @@ export const getQuiz = () => async (dispatch) => {
   }
 };
 
+export const getQuizById = (id) => async (dispatch) => {
+  const api = QUIZ_API.getQuizById(id);
+  dispatch({
+    type: GET_QUIZ_LOADING,
+    meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: GET_QUIZ_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: GET_QUIZ_FAILURE,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
 export const getQuizByCourseId = (id) => async (dispatch) => {
-  console.log(id);
   const api = QUIZ_API.getQuizByCourseId(id);
   dispatch({
     type: GET_QUIZ_LOADING,
@@ -63,7 +83,6 @@ export const getQuizByCourseId = (id) => async (dispatch) => {
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
-    console.log(response.data);
     dispatch({
       type: GET_QUIZ_SUCCESS,
       payload: response.data,

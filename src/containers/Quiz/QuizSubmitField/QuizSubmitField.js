@@ -40,11 +40,8 @@ function QuizSubmitField(props) {
 
   const [sourceCode, setSourceCode] = useState(code);
   const [isSubmitting, setSubmitting] = useState(false);
-
-  const temp = window.location.href.split('/');
-  const quizId = parseInt(temp[temp.length - 1]);
   
-  const { getPointByQuizId } = props;
+  const { getPointByQuizId, quizId } = props;
 
   useEffect(() => {
     getPointByQuizId(quizId);
