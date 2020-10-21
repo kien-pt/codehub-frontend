@@ -8,23 +8,31 @@ const GET_POINT_LOADING = 'GET_POINT_LOADING';
 const GET_POINT_SUCCESS = 'GET_POINT_SUCCESS';
 const GET_POINT_FAILURE = 'GET_POINT_FAILURE';
 
+const INSERT_POINT_LOADING = 'INSERT_POINT_LOADING';
+const INSERT_POINT_SUCCESS = 'INSERT_POINT_SUCCESS';
+const INSERT_POINT_FAILURE = 'INSERT_POINT_FAILURE';
+
+const UPDATE_POINT_LOADING = 'UPDATE_POINT_LOADING';
+const UPDATE_POINT_SUCCESS = 'UPDATE_POINT_SUCCESS';
+const UPDATE_POINT_FAILURE = 'UPDATE_POINT_FAILURE';
+
 export const getAllPoint = () => async (dispatch) => {
   const api = POINT_API.getAllPoint();
   dispatch({
     type: GET_POINT_LOADING,
-    meta: { prefix: [PREFIX.COURSES, PREFIX.API_CALLING] },
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
       type: GET_POINT_SUCCESS,
       payload: response.data,
-      meta: { prefix: [PREFIX.COURSES, PREFIX.API_SUCCESS] },
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
       type: GET_POINT_FAILURE,
-      meta: { prefix: [PREFIX.COURSES, PREFIX.API_FAILURE] },
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
     });
   }
 };
@@ -33,19 +41,82 @@ export const getPointByCourseId = (id) => async (dispatch) => {
   const api = POINT_API.getPointByCourseId(id);
   dispatch({
     type: GET_POINT_LOADING,
-    meta: { prefix: [PREFIX.COURSES, PREFIX.API_CALLING] },
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
       type: GET_POINT_SUCCESS,
       payload: response.data,
-      meta: { prefix: [PREFIX.COURSES, PREFIX.API_SUCCESS] },
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
       type: GET_POINT_FAILURE,
-      meta: { prefix: [PREFIX.COURSES, PREFIX.API_FAILURE] },
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+export const getPointByQuizId = (id) => async (dispatch) => {
+  const api = POINT_API.getPointByQuizId(id);
+  dispatch({
+    type: GET_POINT_LOADING,
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: GET_POINT_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: GET_POINT_FAILURE,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+export const insertPoint = (payload) => async (dispatch) => {
+  const api = POINT_API.insertPoint();
+  dispatch({
+    type: INSERT_POINT_LOADING,
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: INSERT_POINT_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: INSERT_POINT_FAILURE,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+export const updatePoint = (id, payload) => async (dispatch) => {
+  const api = POINT_API.updatePoint(id);
+  dispatch({
+    type: UPDATE_POINT_LOADING,
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: UPDATE_POINT_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: UPDATE_POINT_FAILURE,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
     });
   }
 };

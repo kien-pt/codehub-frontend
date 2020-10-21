@@ -16,4 +16,14 @@ export const POINT_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  insertPoint: () => ({
+    endPoint: 'api/v1/point',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
+  updatePoint: (id) => ({
+    endPoint: `api/v1/point/${id}`,
+    method: 'PUT',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 };

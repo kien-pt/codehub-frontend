@@ -111,6 +111,7 @@ export const submitCode = (quizId, sourceCode, input, output) => async (dispatch
       dispatch(insertSubmission({
         quizId,
         testCase,
+        sourceCode,
       }));
     }
   } else {

@@ -13,7 +13,7 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
-import { getTags } from '../../../reducer/quiz';
+import { getTags, getQuiz } from '../../../reducer/quiz';
 import { getAllPoint } from '../../../reducer/point';
 
 function HomeCourses(props) {
@@ -24,6 +24,7 @@ function HomeCourses(props) {
     getCourses();
     getTags();
     getAllPoint();
+    getQuiz();
   }, [getCourses, getTags, getAllPoint]);
 
   return (
@@ -34,11 +35,12 @@ function HomeCourses(props) {
       />
       <CardContent>
         {props.courses.map((course) => {
+          console.log(course);
           var totalPoint = 0;
-          course.tags.forEach((current) => {
-            const quizList = props.tags.find((tag) => tag.id === current)?.quizList;
-            if (quizList !== undefined) totalPoint += quizList.length * 100;
-          });
+          // course.tags.forEach((current) => {
+          //   const quizList = props.tags.find((tag) => tag.id === current)?.quizList;
+          //   if (quizList !== undefined) totalPoint += quizList.length * 100;
+          // });
 
           var currentPoint = 0;
           props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
@@ -80,6 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getCourses: () => dispatch(getCourses()),
   getAllPoint: () => dispatch(getAllPoint()),
+  getQuiz: () => dispatch(getQuiz()),
 });
 
 export default connect(

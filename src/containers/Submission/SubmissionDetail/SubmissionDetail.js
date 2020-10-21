@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
@@ -14,9 +14,7 @@ import {
   TableRow,
   TableCell,
 } from '@material-ui/core';
-
 import { CheckRounded, CloseRounded } from '@material-ui/icons';
-
 import {Controlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
