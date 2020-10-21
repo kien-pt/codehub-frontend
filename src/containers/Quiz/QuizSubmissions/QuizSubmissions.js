@@ -33,10 +33,10 @@ function QuizSubmissions(props) {
         {props.submissions.map((submission) => {
           var point = 0;
           submission.testCase.map((e) => point += (e.get === e.want) ? 1 : 0);
-          point = ((point / submission.testCase.length) * 100).toFixed(0);
+          point = parseFloat(((point / submission.testCase.length) * 100).toFixed(0));
           var status = 'finish';
-          if (point == 0) status = 'fail';
-          if (point == 100) status = 'success';
+          if (point === 0) status = 'fail';
+          if (point === 100) status = 'success';
           return (
             <Link
               key={`submission${submission.id}`}

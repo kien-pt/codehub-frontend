@@ -86,7 +86,7 @@ export const insertPoint = (payload) => async (dispatch) => {
     meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api, payload });
-  if (!error && response.status === 200) {
+  if (!error && response.status === 201) {
     dispatch({
       type: INSERT_POINT_SUCCESS,
       payload: response.data,

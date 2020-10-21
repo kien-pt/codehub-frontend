@@ -7,6 +7,9 @@ import {
   CardHeader,
   Button,
   Grid,
+  Drawer,
+  CircularProgress,
+  withStyles,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
@@ -35,6 +38,22 @@ int main()
 }
 `;
 
+const StyledDrawer = withStyles({
+  '&::-webkit-scrollbar': {
+    width: 0
+  },
+  drawer: {
+    position: 'absolute',
+    overflow: 'hidden',
+  },
+  paper: {
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    width: '100%',
+    overflow: "hidden",
+  }
+})(Drawer);
+
 function QuizSubmitField(props) {
   const history = useHistory();
 
@@ -52,17 +71,15 @@ function QuizSubmitField(props) {
   const handleSubmit = () => {
     setSubmitting(true);
     props.resetTestCaseCount(quiz?.testCase?.length);
-    quiz?.testCase?.forEach((e) => props.submitCode(quizId, sourceCode, e.input, e.output));
-    
-    var point = 0;
-    props.testCase.forEach((e) => point += (e.get === e.want) ? 1 : 0);
-    point = ((point / props.testCase.length) * 100).toFixed(0);
-
-    if (props.point[0] === undefined) props.insertPoint({
+    quiz?.testCase?.forEach((e) => props.submitCode(
       quizId,
-      courseId: quiz.courseId,
-      point,
-    });
+      {
+        ...props.point[0],
+        courseId: quiz.courseId,
+      },
+      sourceCode,
+      e.input,
+      e.output));
   }
 
   if (isSubmitting && props.testCaseCount === 0 && !props.isSolving) {
@@ -71,42 +88,47 @@ function QuizSubmitField(props) {
   }
 
   return (
-    <Card style={{ marginTop: 32 }}>
-      <CardHeader
-        title="Bài nộp"
-        style={{ color: 'white', backgroundColor: '#39424E' }}
-      />
-      <CardContent>
-        <CodeMirror
-          value={code}
-          options={{
-            mode: 'text/x-c++src',
-            theme: 'material',
-            lineNumbers: true,
-            indentUnit: 4,
-          }}
-          onChange={(editor, data, value) => {
-            setSourceCode(value);
-          }}
+    <>
+      <StyledDrawer open={isSubmitting}>
+        <CircularProgress style={{ margin: 'auto' }} />
+      </StyledDrawer>
+      <Card style={{ marginTop: 32 }}>
+        <CardHeader
+          title="Bài nộp"
+          style={{ color: 'white', backgroundColor: '#39424E' }}
         />
-        <Grid container justify="center">
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{
-                margin: '16px 0',
-                width: 160,
-                float: 'right',
-              }}
-              onClick={() => handleSubmit()}
-            >
-              Nộp bài
-            </Button>
+        <CardContent>
+          <CodeMirror
+            value={code}
+            options={{
+              mode: 'text/x-c++src',
+              theme: 'material',
+              lineNumbers: true,
+              indentUnit: 4,
+            }}
+            onChange={(editor, data, value) => {
+              setSourceCode(value);
+            }}
+          />
+          <Grid container justify="center">
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{
+                  margin: '16px 0',
+                  width: 160,
+                  float: 'right',
+                }}
+                onClick={() => handleSubmit()}
+              >
+                Nộp bài
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </>
   );
 }
 
@@ -123,7 +145,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: (quizId, sourceCode, input, output) => dispatch(submitCode(quizId, sourceCode, input, output)),
+  submitCode: (quizId, point, sourceCode, input, output) => dispatch(submitCode(quizId, point, sourceCode, input, output)),
   resetTestCaseCount: (size) => dispatch(resetTestCaseCount(size)),
 
   getPointByQuizId: (id) => dispatch(getPointByQuizId(id)),

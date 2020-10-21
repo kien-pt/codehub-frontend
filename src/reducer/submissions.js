@@ -4,6 +4,8 @@ import { apiCall } from '../utils/api';
 import { PREFIX } from '../constant/enum';
 import { SUBMISSIONS_API } from '../services/submissionsAPI';
 
+import { insertPoint, updatePoint } from './point';
+
 const GET_SUBMISSIONS_LOADING = 'GET_SUBMISSIONS_LOADING';
 const GET_SUBMISSIONS_SUCCESS = 'GET_SUBMISSIONS_SUCCESS';
 const GET_SUBMISSIONS_FAILURE = 'GET_SUBMISSIONS_FAILURE';
@@ -54,7 +56,7 @@ export const getSubmissionsByQuizId = (id) => async (dispatch) => {
   }
 };
 
-export const insertSubmission = (payload) => async (dispatch) => {
+export const insertSubmission = (pointData, payload) => async (dispatch) => {
   const api = SUBMISSIONS_API.insertSubmission();
   dispatch({
     type: INSERT_SUBMISSIONS_LOADING,
@@ -67,6 +69,26 @@ export const insertSubmission = (payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
+    var point = 0;
+    response.data.testCase.forEach((e) => point += (e.get === e.want) ? 1 : 0);
+    point = parseFloat(((point / response.data.testCase.length) * 100).toFixed(0));
+
+    if (pointData.id === undefined) {
+      dispatch(insertPoint({
+        quizId: pointData.quizId,
+        courseId: pointData.courseId,
+        point,
+      }));
+    } else {
+      dispatch(updatePoint(
+        pointData.id,
+        {
+          quizId: pointData.quizId,
+          courseId: pointData.courseId,
+          point,
+        }
+      ));
+    }
   } else {
     dispatch({
       type: INSERT_SUBMISSIONS_FAILURE,

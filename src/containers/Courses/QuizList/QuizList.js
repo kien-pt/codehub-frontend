@@ -18,11 +18,14 @@ import { getQuizByCourseId, getTagsByCourseId } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
 
 function HomeCourses(props) {
-  const temp = window.location.href.split('/');
-  const courseId = parseInt(temp[temp.length - 1]);
-
   const history = useHistory();
-  const { getCourseById, getPointByCourseId, getTagsByCourseId, getQuizByCourseId } = props;
+  const {
+    getCourseById,
+    getPointByCourseId,
+    getTagsByCourseId,
+    getQuizByCourseId,
+    courseId,
+  } = props;
 
   useEffect(() => {
     getCourseById(courseId);
@@ -42,7 +45,6 @@ function HomeCourses(props) {
             />
             <CardContent>
               {props.quiz?.filter((e) => e.tagId === tag?.id).map((quiz) => {
-                console.log(quiz);
                 const point = props.point.find((e) => e.quizId === quiz.id)?.point || 0;
                 return (
                   <Card key={`quiz-${quiz.id}`} style={{ marginBottom: '8px' }}>
