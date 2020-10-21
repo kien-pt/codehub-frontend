@@ -8,6 +8,10 @@ const GET_SUBMISSIONS_LOADING = 'GET_SUBMISSIONS_LOADING';
 const GET_SUBMISSIONS_SUCCESS = 'GET_SUBMISSIONS_SUCCESS';
 const GET_SUBMISSIONS_FAILURE = 'GET_SUBMISSIONS_FAILURE';
 
+const INSERT_SUBMISSIONS_LOADING = 'INSERT_SUBMISSIONS_LOADING';
+const INSERT_SUBMISSIONS_SUCCESS = 'INSERT_SUBMISSIONS_SUCCESS';
+const INSERT_SUBMISSIONS_FAILURE = 'INSERT_SUBMISSIONS_FAILURE';
+
 export const getSubmissionsById = (id) => async (dispatch) => {
   const api = SUBMISSIONS_API.getSubmissionsById(id);
   dispatch({
@@ -50,9 +54,31 @@ export const getSubmissionsByQuizId = (id) => async (dispatch) => {
   }
 };
 
+export const insertSubmission = (payload) => async (dispatch) => {
+  const api = SUBMISSIONS_API.insertSubmission();
+  dispatch({
+    type: INSERT_SUBMISSIONS_LOADING,
+    meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 201) {
+    dispatch({
+      type: INSERT_SUBMISSIONS_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: INSERT_SUBMISSIONS_FAILURE,
+      meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
 const initialState = fromJS({
   submissions: [],
   isFetching: false,
+  isSolving: false,
 });
 
 export default function submissionsReducer(state = initialState, action) {
@@ -72,6 +98,23 @@ export default function submissionsReducer(state = initialState, action) {
         submissions: [...action.payload.sort((a, b) => a.id - b.id)],
         isFetching: false,
       });
+
+    case INSERT_SUBMISSIONS_LOADING:
+      return state.merge({
+        isSolving: true,
+      });
+
+    case INSERT_SUBMISSIONS_FAILURE:
+      return state.merge({
+        isSolving: false,
+      });
+
+    case INSERT_SUBMISSIONS_SUCCESS: {
+      return state.merge({
+        submissions: [action.payload],
+        isSolving: false,
+      });
+    }
 
     default: return state;
   }

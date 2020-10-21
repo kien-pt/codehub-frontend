@@ -69,7 +69,7 @@ export default function pointReducer(state = initialState, action) {
 
     case GET_POINT_SUCCESS:
       return state.merge({
-        point: state.get('point').concat([...action.payload]),
+        point: [...action.payload],
         isFetching: false,
       });
 

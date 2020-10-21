@@ -17,7 +17,7 @@ function QuizContent(props) {
   const { getSubmissionsById } = props;
 
   const temp = window.location.href.split('/');
-  const submissionId = temp[temp.length - 1];
+  const submissionId = parseInt(temp[temp.length - 1]);
 
   useEffect(() => {
     getSubmissionsById(submissionId);

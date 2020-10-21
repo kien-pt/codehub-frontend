@@ -11,4 +11,9 @@ export const SUBMISSIONS_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  insertSubmission: () => ({
+    endPoint: `api/v1/submissions`,
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  })
 };

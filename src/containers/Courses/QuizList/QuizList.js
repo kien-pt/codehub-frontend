@@ -15,19 +15,21 @@ import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
 import { getQuiz, getTags } from '../../../reducer/quiz';
+import { getPointByCourseId } from '../../../reducer/point';
 
 function HomeCourses(props) {
   const temp = window.location.href.split('/');
   const courseId = temp[temp.length - 1];
 
   const history = useHistory();
-  const { getCourseById, getTags, getQuiz } = props;
+  const { getCourseById, getPointByCourseId, getTags, getQuiz } = props;
 
   useEffect(() => {
     getCourseById(courseId);
+    getPointByCourseId(courseId);
     getTags();
     getQuiz();
-  }, [getCourseById, getQuiz, getTags]);
+  }, [getCourseById, getPointByCourseId, getQuiz, getTags]);
 
   return (
     <>
@@ -87,6 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
   getQuiz: () => dispatch(getQuiz()),
   getTags: () => dispatch(getTags()),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
+  getPointByCourseId: (courseId) => dispatch(getPointByCourseId(courseId)),
 });
 
 export default connect(

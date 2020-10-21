@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -7,13 +8,15 @@ import {
   Button,
   Grid,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router'; 
 
-import { submitCode } from '../../../reducer/quiz';
+import { submitCode, resetTestCaseCount } from '../../../reducer/quiz';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
@@ -32,7 +35,26 @@ int main()
 `;
 
 function QuizSubmitField(props) {
+  const history = useHistory();
+
   const [sourceCode, setSourceCode] = useState(code);
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const temp = window.location.href.split('/');
+  const quizId = temp[temp.length - 1];
+
+  const quiz = props.quizList.find((quiz) => quiz.id === quizId);
+
+  const handleSubmit = () => {
+    setSubmitting(true);
+    props.resetTestCaseCount(quiz?.testCase?.length);
+    quiz?.testCase?.forEach((e) => props.submitCode(quizId, sourceCode, e.input, e.output));
+  }
+
+  if (isSubmitting && props.testCaseCount === 0 && props.isSolving === false) {
+    setSubmitting(false);
+    history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1].id + 1}`);
+  }
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -46,7 +68,8 @@ function QuizSubmitField(props) {
           options={{
             mode: 'text/x-c++src',
             theme: 'material',
-            lineNumbers: true
+            lineNumbers: true,
+            indentUnit: 4,
           }}
           onChange={(editor, data, value) => {
             setSourceCode(value);
@@ -62,7 +85,7 @@ function QuizSubmitField(props) {
                 width: 160,
                 float: 'right',
               }}
-              onClick={() => props.submitCode(sourceCode)}
+              onClick={() => handleSubmit()}
             >
               Nộp bài
             </Button>
@@ -76,10 +99,15 @@ function QuizSubmitField(props) {
 const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
+  testCaseCount: select(state, 'quizReducer', 'testCaseCount'),
+
+  submissions: select(state, 'submissionsReducer', 'submissions'),
+  isSolving: select(state, 'submissionsReducer', 'isSolving'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: (sourceCode) => dispatch(submitCode(sourceCode)),
+  submitCode: (quizId, sourceCode, input, output) => dispatch(submitCode(quizId, sourceCode, input, output)),
+  resetTestCaseCount: (size) => dispatch(resetTestCaseCount(size)),
 });
 
 export default connect(

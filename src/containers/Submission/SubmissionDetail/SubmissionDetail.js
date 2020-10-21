@@ -29,7 +29,7 @@ require('codemirror/mode/clike/clike.js');
 
 function SubmissionDetail(props) {
   const temp = window.location.href.split('/');
-  const submissionId = temp[temp.length - 1];
+  const submissionId = parseInt(temp[temp.length - 1]);
 
   const submission = props.submissions?.find((e) => e.id === submissionId);
   const quiz = props.quizList.find((e) => e.id === submission?.quizId);

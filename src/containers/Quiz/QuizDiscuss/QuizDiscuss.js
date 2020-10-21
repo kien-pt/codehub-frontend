@@ -5,10 +5,7 @@ import {
   CardContent,
   CardHeader,
   CardActions,
-  Divider,
   TextField,
-  FormControl,
-  InputAdornment,
 } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 

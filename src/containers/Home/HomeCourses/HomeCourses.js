@@ -14,15 +14,17 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
 import { getTags } from '../../../reducer/quiz';
+import { getAllPoint } from '../../../reducer/point';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getCourses, getTags } = props;
+  const { getCourses, getTags, getAllPoint } = props;
 
   useEffect(() => {
     getCourses();
     getTags();
-  }, [getCourses, getTags]);
+    getAllPoint();
+  }, [getCourses, getTags, getAllPoint]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
@@ -77,6 +79,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getCourses: () => dispatch(getCourses()),
+  getAllPoint: () => dispatch(getAllPoint()),
 });
 
 export default connect(

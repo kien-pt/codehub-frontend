@@ -2,6 +2,7 @@
   height: 48px;
   color: rgb(51 51 51 / 50%);
   padding: 14px 8px;
+  margin: 8px 0;
   cursor: pointer;
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }

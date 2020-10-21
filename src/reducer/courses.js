@@ -4,8 +4,6 @@ import { apiCall } from '../utils/api';
 import { PREFIX } from '../constant/enum';
 import { COURSES_API } from '../services/coursesAPI';
 
-import { getPointByCourseId } from '../reducer/point';
-
 const GET_COURSES_LOADING = 'GET_COURSES_LOADING';
 const GET_COURSES_SUCCESS = 'GET_COURSES_SUCCESS';
 const GET_COURSES_FAILURE = 'GET_COURSES_FAILURE';
@@ -23,7 +21,6 @@ export const getCourseById = (id) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.COURSES, PREFIX.API_SUCCESS] },
     });
-    response.data.map((course) => dispatch(getPointByCourseId(course.id)))
   } else {
     dispatch({
       type: GET_COURSES_FAILURE,
@@ -45,7 +42,6 @@ export const getCourses = () => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.COURSES, PREFIX.API_SUCCESS] },
     });
-    response.data.map((course) => dispatch(getPointByCourseId(course.id)))
   } else {
     dispatch({
       type: GET_COURSES_FAILURE,
