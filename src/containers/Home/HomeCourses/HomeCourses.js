@@ -35,12 +35,7 @@ function HomeCourses(props) {
       />
       <CardContent>
         {props.courses.map((course) => {
-          console.log(course);
-          var totalPoint = 0;
-          // course.tags.forEach((current) => {
-          //   const quizList = props.tags.find((tag) => tag.id === current)?.quizList;
-          //   if (quizList !== undefined) totalPoint += quizList.length * 100;
-          // });
+          const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
 
           var currentPoint = 0;
           props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
@@ -73,6 +68,7 @@ function HomeCourses(props) {
 
 const mapStateToProps = (state) => ({
   tags: select(state, 'quizReducer', 'tags'),
+  quiz: select(state, 'quizReducer', 'quiz'),
   point: select(state, 'pointReducer', 'point'),
   courses: select(state, 'coursesReducer', 'courses'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),

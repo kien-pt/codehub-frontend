@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link, AppBar, Grid } from '@material-ui/core';
 import { ExpandMore, AccountCircle } from '@material-ui/icons';
@@ -8,15 +8,7 @@ import ROUTER from '../../../constant/router';
 
 import code from '../../../assets/code.png';
 
-import { getQuiz } from '../../../reducer/quiz';
-
 function AppHeader(props) {
-  const { getQuiz } = props;
-
-  useEffect(() => {
-    getQuiz();
-  }, [getQuiz]);
-  
   return (
     <>
       <AppBar
@@ -65,7 +57,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getQuiz: () => dispatch(getQuiz()),
 });
 
 export default connect(

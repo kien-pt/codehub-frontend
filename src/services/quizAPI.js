@@ -6,8 +6,18 @@ export const QUIZ_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  getTagsByCourseId: (id) => ({
+    endPoint: `api/v1/tags/?courseId=${id}`,
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
   getQuiz: () => ({
     endPoint: 'api/v1/quiz',
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
+  getQuizByCourseId: (id) => ({
+    endPoint: `api/v1/quiz/?courseId=${id}`,
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
