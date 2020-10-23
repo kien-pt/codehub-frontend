@@ -18,14 +18,14 @@ import { getAllPoint } from '../../../reducer/point';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getCourses, getTags, getAllPoint } = props;
+  const { getCourses, getTags, getAllPoint, getQuiz } = props;
 
   useEffect(() => {
     getCourses();
     getTags();
     getAllPoint();
     getQuiz();
-  }, [getCourses, getTags, getAllPoint]);
+  }, [getCourses, getTags, getAllPoint, getQuiz]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
@@ -35,6 +35,7 @@ function HomeCourses(props) {
       />
       <CardContent>
         {props.courses.map((course) => {
+          console.log(props.quiz?.filter((e) => e.courseId === course.id));
           const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
 
           var currentPoint = 0;

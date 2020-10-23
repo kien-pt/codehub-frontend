@@ -66,6 +66,13 @@ function QuizSubmitField(props) {
     getPointByQuizId(quizId);
   }, [getPointByQuizId, quizId]);
 
+  useEffect(() => {
+    if (isSubmitting && props.testCaseCount === 0) {
+      setSubmitting(false);
+      history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
+    }
+  }, [history, isSubmitting, props.submissions, props.testCaseCount]);
+
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
 
   const handleSubmit = () => {
@@ -75,6 +82,7 @@ function QuizSubmitField(props) {
       quizId,
       {
         ...props.point[0],
+        quizId,
         courseId: quiz.courseId,
       },
       sourceCode,
@@ -82,10 +90,10 @@ function QuizSubmitField(props) {
       e.output));
   }
 
-  if (isSubmitting && props.testCaseCount === 0 && !props.isSolving) {
-    setSubmitting(false);
-    history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
-  }
+  // if (isSubmitting && props.testCaseCount === 0 && !props.isSolving) {
+  //   setSubmitting(false);
+  //   history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
+  // }
 
   return (
     <>

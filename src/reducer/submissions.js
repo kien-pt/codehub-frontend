@@ -80,14 +80,17 @@ export const insertSubmission = (pointData, payload) => async (dispatch) => {
         point,
       }));
     } else {
-      dispatch(updatePoint(
-        pointData.id,
-        {
-          quizId: pointData.quizId,
-          courseId: pointData.courseId,
-          point,
-        }
-      ));
+      if (point > pointData.point) {
+        dispatch(updatePoint(
+          pointData.id,
+          {
+            quizId: pointData.quizId,
+            courseId: pointData.courseId,
+            point,
+          }
+        ));  
+      }
+      
     }
   } else {
     dispatch({

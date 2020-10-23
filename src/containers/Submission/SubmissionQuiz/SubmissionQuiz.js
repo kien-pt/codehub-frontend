@@ -12,23 +12,26 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
 import { getSubmissionsById } from '../../../reducer/submissions';
+import { getQuizById } from '../../../reducer/quiz';
 
 function QuizContent(props) {
-  const { getSubmissionsById } = props;
-
-  const temp = window.location.href.split('/');
-  const submissionId = parseInt(temp[temp.length - 1]);
+  const { getQuizById, getSubmissionsById, submissionId } = props;
 
   useEffect(() => {
     getSubmissionsById(submissionId);
   }, [getSubmissionsById, submissionId]);
 
   const submission = props.submissions.find((e) => e.id === submissionId);
+
+  useEffect(() => {
+    getQuizById(submission?.quizId);
+  }, [getQuizById, submission]);
+
   const quiz = props.quizList.find((e) => e.id === submission?.quizId);
 
   var point = 0;
   if (submission) submission.testCase.map((e) => point += (e.get === e.want) ? 1 : 0);
-  point = ((point / submission?.testCase.length) * 100).toFixed(0);
+  point = parseInt(((point / submission?.testCase.length) * 100).toFixed(0));
   var status = 'finish';
   if (point === 0) status = 'fail';
   if (point === 100) status = 'success';
@@ -40,7 +43,7 @@ function QuizContent(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        <span style={{ color: (status === 'finish') ? '#F8941D' : (status === 'fail') ? '#82B74B' : '#B94A48', fontSize: 24, fontWeight: 'bold' }}>
+        <span style={{ color: (status === 'finish') ? '#F8941D' : (status === 'fail') ? '#B94A48' : '#82B74B', fontSize: 24, fontWeight: 'bold' }}>
           {
             (status === 'finish')
             ? 'Đúng một phần'
@@ -64,7 +67,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSubmissionsById : (id) => dispatch(getSubmissionsById(id)),
+  getSubmissionsById: (id) => dispatch(getSubmissionsById(id)),
+  getQuizById: (id) => dispatch(getQuizById(id)),
 });
 
 export default connect(
