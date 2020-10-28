@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, AppBar, Grid } from '@material-ui/core';
 import { ExpandMore, AccountCircle } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
 import ROUTER from '../../../constant/router';
@@ -9,6 +10,13 @@ import ROUTER from '../../../constant/router';
 import code from '../../../assets/code.png';
 
 function AppHeader(props) {
+  const history = useHistory();
+
+  useEffect(() => {
+    const userId = parseInt(sessionStorage.getItem("userId"));
+    if (!(userId >= 0)) history.push(ROUTER.LOGIN);
+  }, []);
+
   return (
     <>
       <AppBar
