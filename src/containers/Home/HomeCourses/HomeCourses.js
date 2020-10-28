@@ -55,7 +55,7 @@ function HomeCourses(props) {
                     <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
                     <span>&nbsp; {` ${currentPoint}/${totalPoint}`}</span>
                   </div>
-                  <div className="cardButton" style={{ width: '20%' }}>Tiếp tục luyện tập</div>
+                  <div className="cardButton" style={{ minWidth: 120, width: '20%' }}>Tiếp tục luyện tập</div>
                 </CardContent>
               </CardActionArea>
             </Card>

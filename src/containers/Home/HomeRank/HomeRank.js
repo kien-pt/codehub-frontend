@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
@@ -18,12 +18,18 @@ import { getStudents } from '../../../reducer/students';
 
 function HomeRank(props) {
   const { getStudents } = props;
+  const [courseId, setCourseId] = useState(props.courseId);
 
   useEffect(() => {
     getStudents();
   }, [getStudents]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleSelect = (index) => {
+    setCourseId(index);
+    handleClose();
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -61,8 +67,14 @@ function HomeRank(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        <Button variant="contained" color="primary" onClick={handleClick} style={{ width: '100%' }}>
-          {props.courses[0]?.name}
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={props.disabled}
+          onClick={handleClick}
+          style={{ width: '100%' }}
+        >
+          {props.courses.find((course) => course.id === courseId)?.name}
         </Button>
         <StyledMenu
           id="customized-menu"
@@ -72,19 +84,23 @@ function HomeRank(props) {
           onClose={handleClose}
         >
           {props.courses?.map((e) => (
-            <MenuItem key={e.id}>{e.name}</MenuItem>
+            <MenuItem key={e.id} onClick={() => handleSelect(e.id)}>{e.name}</MenuItem>
           ))}
         </StyledMenu>
-        {props.students.slice(0, 10).map((e, index) => (
-          <div key={e.id}>
-            <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
-            <Grid container>
-              <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
-              <Grid item xs={8}>{e.name}</Grid>
-              <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{e.point}</Grid>
-            </Grid>
-          </div>
-        ))}
+        {props.students.slice(0, 10).map((student, index) => {
+          var totalPoint = 0;
+          props.point.forEach((e) => totalPoint += (e.courseId === props.courses.find((course) => course.id === courseId)?.id && e.userId === student.id) ? e.point : 0);
+          return (
+            <div key={student.id}>
+              <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
+              <Grid container>
+                <Grid item xs={4} md={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
+                <Grid item xs={4} md={8} style={{ textAlign: 'center'}}>{student.name}</Grid>
+                <Grid item xs={4} md={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{totalPoint}</Grid>
+              </Grid>
+            </div>
+          );
+        })}
       </CardContent>
     </Card>
   );
@@ -93,6 +109,7 @@ function HomeRank(props) {
 const mapStateToProps = (state) => ({
   courses: select(state, 'coursesReducer', 'courses'),
   students: select(state, 'studentsReducer', 'students'),
+  point: select(state, 'pointReducer', 'point'),
   isFetching: select(state, 'studentsReducer', 'isFetching'),
 });
 

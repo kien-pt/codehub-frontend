@@ -5,6 +5,7 @@ import { ExpandMore, AccountCircle } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import code from '../../../assets/code.png';
@@ -12,8 +13,10 @@ import code from '../../../assets/code.png';
 function AppHeader(props) {
   const history = useHistory();
 
+  const userId = parseInt(sessionStorage.getItem("userId"));
+  const userName = props.students.find((student) => student.id === userId)?.name;
+
   useEffect(() => {
-    const userId = parseInt(sessionStorage.getItem("userId"));
     if (!(userId >= 0)) history.push(ROUTER.LOGIN);
   }, []);
 
@@ -51,7 +54,7 @@ function AppHeader(props) {
               }}
             >
               <AccountCircle style={{ padding: '0 4px' }} />
-              18070737
+              {userName}
               <ExpandMore />
             </div>
           </Grid>
@@ -62,6 +65,7 @@ function AppHeader(props) {
 }
 
 const mapStateToProps = (state) => ({
+  students: select(state, 'studentsReducer', 'students'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

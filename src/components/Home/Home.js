@@ -11,7 +11,7 @@ function Home() {
         <HomeCourses />
       </Grid>
       <Grid item lg={3} md={4} xs={12}>
-        <HomeRank />
+        <HomeRank courseId={1} disabled={false} />
       </Grid>
     </Grid>
   );
