@@ -17,6 +17,8 @@ import ROUTER from '../../../constant/router';
 
 import code from '../../../assets/code.png';
 
+import { login } from '../../../reducer/users';
+
 function Login(props) {
   const history = useHistory();
   const [username, setUsername] = useState('');
@@ -24,10 +26,9 @@ function Login(props) {
 
   useEffect(() => {
     const userId = parseInt(sessionStorage.getItem("userId"));
-    if (!(userId >= 0)) history.push(ROUTER.LOGIN);
-  }, []);
-
-  console.log(window.innerHeight);
+    console.log(userId);
+    if (userId >= 0) history.push(ROUTER.HOME);
+  }, [parseInt(sessionStorage.getItem("userId"))]);
 
   return (
     <Grid container style={{ display: 'flex', height: window.innerHeight }}>
@@ -41,7 +42,10 @@ function Login(props) {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(username, password);
+                props.login({
+                  email: username,
+                  password,
+                });
               }
             }>
               <FormControl style={{ width: '100%' }}>
@@ -78,6 +82,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  login: (payload) => dispatch(login(payload)),
 });
 
 export default connect(
