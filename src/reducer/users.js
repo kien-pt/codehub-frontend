@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 
 import { apiCall } from '../utils/api';
 import { PREFIX } from '../constant/enum';
+import ROUTER from '../constant/router';
 import { USERS_API } from '../services/usersAPI';
 
 const LOGIN_LOADING = 'LOGIN_LOADING';
@@ -12,7 +13,7 @@ const initialState = fromJS({
   isFetching: false,
 });
 
-export const login = (payload) => async (dispatch) => {
+export const login = (history, payload) => async (dispatch) => {
   const api = USERS_API.login();
   dispatch({
     type: LOGIN_LOADING,
@@ -27,6 +28,7 @@ export const login = (payload) => async (dispatch) => {
     });
     sessionStorage.setItem("accessToken", response.data.accessToken);
     sessionStorage.setItem("userId", response.data.user.id);
+    history.push(ROUTER.HOME);
   } else {
     dispatch({
       type: LOGIN_FAILURE,

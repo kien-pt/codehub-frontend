@@ -15,8 +15,6 @@ import { useHistory } from 'react-router-dom';
 import toJs from '../../../hoc/ToJS';
 import ROUTER from '../../../constant/router';
 
-import code from '../../../assets/code.png';
-
 import { login } from '../../../reducer/users';
 
 function Login(props) {
@@ -24,11 +22,16 @@ function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    const userId = parseInt(sessionStorage.getItem("userId"));
-    console.log(userId);
-    if (userId >= 0) history.push(ROUTER.HOME);
-  }, [parseInt(sessionStorage.getItem("userId"))]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.login(
+      history,
+      {
+        email: username,
+        password,
+      }
+    );
+  }
 
   return (
     <Grid container style={{ display: 'flex', height: window.innerHeight }}>
@@ -39,31 +42,23 @@ function Login(props) {
             style={{ color: 'white', backgroundColor: '#39424E' }}
           />
           <CardContent>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                props.login({
-                  email: username,
-                  password,
-                });
-              }
-            }>
+            <form onSubmit={handleSubmit}>
               <FormControl style={{ width: '100%' }}>
                 <OutlinedInput
                   required
                   startAdornment={<Person position="start" />}
                   onChange={(e) => setUsername(e.target.value)}
-                  inputProps={{style: {fontSize: 22, paddingLeft: 10, marginLeft: 10 }}}
+                  inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
                   style={{ height: 40 }}
                 />
               </FormControl>
               <FormControl style={{ width: '100%', paddingTop: 12 }}>
                 <OutlinedInput
-                  type="password"
                   required
+                  type="password"
                   startAdornment={<Lock position="start" />}
                   onChange={(e) => setPassword(e.target.value)}
-                  inputProps={{style: {fontSize: 22, paddingLeft: 10, marginLeft: 10 }}}
+                  inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
                   style={{ height: 40 }}
                 />
               </FormControl>
@@ -82,7 +77,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (payload) => dispatch(login(payload)),
+  login: (history, payload) => dispatch(login(history, payload)),
 });
 
 export default connect(

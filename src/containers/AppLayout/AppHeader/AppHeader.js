@@ -18,7 +18,7 @@ function AppHeader(props) {
 
   useEffect(() => {
     if (!(userId >= 0)) history.push(ROUTER.LOGIN);
-  }, []);
+  }, [history, userId]);
 
   return (
     <>

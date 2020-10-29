@@ -38,16 +38,16 @@ function HomeCourses(props) {
     <>
       {props.tags?.map((tag) => {
         return (
-          <Card key={`tag-${tag?.id}`} style={{ padding: 0, marginBottom: 16 }}>
+          <Card key={`tag-${tag?.id}`} style={{ padding: 0 }}>
             <CardHeader
               title={tag?.name}
               style={{ color: 'white', backgroundColor: '#39424E' }}
             />
             <CardContent>
-              {props.quiz?.filter((e) => e.tagId === tag?.id).map((quiz) => {
+              {props.quiz?.filter((e) => e.tagId === tag?.id).map((quiz, index) => {
                 const point = props.point.find((e) => e.quizId === quiz.id)?.point || 0;
                 return (
-                  <Card key={`quiz-${quiz.id}`} style={{ marginBottom: '8px' }}>
+                  <Card key={`quiz-${quiz.id}`} style={{ marginTop: index === 0 ? 0 : 12 }}>
                     <CardActionArea onClick={() => history.push(`${ROUTER.QUIZ}/${quiz.id}`)}>
                       <CardContent>
                         <Grid container>

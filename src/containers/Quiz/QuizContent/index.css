@@ -4,7 +4,7 @@
 }
 
 .problem-sample li div {
-  padding: 2px 8px;
+  padding: 0px 8px;
   border-bottom: 1px solid #bbb;
 }
 
@@ -16,5 +16,11 @@
 ul {
   list-style-type: none;
   padding: 0;
-  border: 1px solid #bbb;
+}
+
+li {
+  margin-bottom: 16px;
+  border-top: 1px solid #bbb;
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
 }
