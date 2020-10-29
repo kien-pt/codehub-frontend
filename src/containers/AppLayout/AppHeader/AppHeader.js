@@ -89,6 +89,17 @@ function AppHeader(props) {
               >
                 Bài tập
               </div>
+              <div
+                style={{
+                  height: 55,
+                  margin: '0 12px',
+                  padding: '0 8px',
+                  cursor: 'pointer',
+                  lineHeight: '60px',
+                }}
+              >
+                API
+              </div>
             </div>
           </Grid>
           <Grid

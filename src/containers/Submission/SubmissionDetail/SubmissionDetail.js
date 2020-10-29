@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
@@ -14,11 +14,13 @@ import {
   TableRow,
   TableCell,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { CheckRounded, CloseRounded } from '@material-ui/icons';
 import {Controlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
@@ -26,6 +28,8 @@ require('codemirror/theme/neat.css');
 require('codemirror/mode/clike/clike.js');
 
 function SubmissionDetail(props) {
+  const history = useHistory();
+
   const temp = window.location.href.split('/');
   const submissionId = parseInt(temp[temp.length - 1]);
 
@@ -90,6 +94,7 @@ function SubmissionDetail(props) {
                 width: 160,
                 float: 'right',
               }}
+              onClick={() => history.push(`${ROUTER.QUIZ}/${submission?.quizId}`)}
             >
               Làm lại
             </Button>

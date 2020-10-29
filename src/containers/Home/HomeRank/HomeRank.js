@@ -94,9 +94,9 @@ function HomeRank(props) {
             <div key={student.id}>
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
               <Grid container>
-                <Grid item xs={4} md={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
-                <Grid item xs={4} md={8} style={{ textAlign: 'center'}}>{student.name}</Grid>
-                <Grid item xs={4} md={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{totalPoint}</Grid>
+                <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
+                <Grid item xs={8} style={{ textAlign: 'center'}}>{student.name}</Grid>
+                <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{totalPoint}</Grid>
               </Grid>
             </div>
           );

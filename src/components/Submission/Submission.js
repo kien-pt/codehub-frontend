@@ -11,8 +11,8 @@ function Quiz(props) {
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item lg={7} md={8} xs={12}>
-        <SubmissionQuiz  submissionId={submissionId} />
-        <SubmissionDetail  submissionId={submissionId} /> 
+        <SubmissionQuiz submissionId={submissionId} />
+        <SubmissionDetail submissionId={submissionId} /> 
       </Grid>
       <Grid item lg={3} md={4} xs={12}>
         {/* <QuizSubmissions quizId={quizId} />
