@@ -140,6 +140,7 @@ export const getTagsByCourseId = (id) => async (dispatch) => {
 
 export const resetTestCaseCount = (size) => async (dispatch) => {
   testCaseCount = size;
+  testCase = [];
   dispatch({
     type: RESET_TEST_CASE_COUNT,
     payload: size,
@@ -161,10 +162,12 @@ export const submitCode = (history, quizId, point, sourceCode, input, output) =>
   });
   const { response, error } = await apiCall({ ...api, payload });
   if (!error && response.status === 200) {
+    var get = String(response.data);
+    while (get.slice(-1) === '\n') get = get.slice(0, -1);
     dispatch({
       type: SUBMIT_CODE_SUCCESS,
       payload: {
-        get: String(response.data),
+        get,
         want: output,
       },
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
@@ -218,6 +221,7 @@ export default function quizReducer(state = initialState, action) {
       case RESET_TEST_CASE_COUNT:
         return state.merge({
           testCaseCount: action.payload,
+          testCase: [],
         });
 
       case SUBMIT_CODE_LOADING:

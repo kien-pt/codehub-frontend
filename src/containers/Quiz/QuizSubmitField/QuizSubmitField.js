@@ -17,7 +17,6 @@ import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router'; 
 
 import { submitCode, resetTestCaseCount } from '../../../reducer/quiz';
 import { insertPoint, updatePoint, getPointByQuizId } from '../../../reducer/point';
@@ -66,13 +65,6 @@ function QuizSubmitField(props) {
     getPointByQuizId(quizId);
   }, [getPointByQuizId, quizId]);
 
-  // useEffect(() => {
-  //   if (isSubmitting && props.testCaseCount === 0) {
-  //     setSubmitting(false);
-  //     history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
-  //   }
-  // }, [history, isSubmitting, props.submissions, props.testCaseCount]);
-
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
 
   const handleSubmit = () => {
@@ -90,11 +82,6 @@ function QuizSubmitField(props) {
       e.input,
       e.output));
   }
-
-  // if (isSubmitting && props.testCaseCount === 0 && !props.isSolving) {
-  //   setSubmitting(false);
-  //   history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
-  // }
 
   return (
     <>

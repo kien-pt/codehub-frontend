@@ -93,7 +93,6 @@ export const insertSubmission = (history, pointData, payload) => async (dispatch
       }
     }
 
-    console.log(response.data);
     history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
   } else {
     dispatch({
