@@ -66,12 +66,12 @@ function QuizSubmitField(props) {
     getPointByQuizId(quizId);
   }, [getPointByQuizId, quizId]);
 
-  useEffect(() => {
-    if (isSubmitting && props.testCaseCount === 0) {
-      setSubmitting(false);
-      history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
-    }
-  }, [history, isSubmitting, props.submissions, props.testCaseCount]);
+  // useEffect(() => {
+  //   if (isSubmitting && props.testCaseCount === 0) {
+  //     setSubmitting(false);
+  //     history.push(`${ROUTER.SUBMISSION}/${props.submissions[props.submissions.length - 1]?.id || 0 + 1 }`);
+  //   }
+  // }, [history, isSubmitting, props.submissions, props.testCaseCount]);
 
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
 
@@ -79,6 +79,7 @@ function QuizSubmitField(props) {
     setSubmitting(true);
     props.resetTestCaseCount(quiz?.testCase?.length);
     quiz?.testCase?.forEach((e) => props.submitCode(
+      history,
       quizId,
       {
         ...props.point[0],
@@ -153,7 +154,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: (quizId, point, sourceCode, input, output) => dispatch(submitCode(quizId, point, sourceCode, input, output)),
+  submitCode: (history, quizId, point, sourceCode, input, output) => dispatch(submitCode(history, quizId, point, sourceCode, input, output)),
   resetTestCaseCount: (size) => dispatch(resetTestCaseCount(size)),
 
   getPointByQuizId: (id) => dispatch(getPointByQuizId(id)),

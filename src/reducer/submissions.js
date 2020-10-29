@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 
 import { apiCall } from '../utils/api';
+import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { SUBMISSIONS_API } from '../services/submissionsAPI';
 
@@ -56,7 +57,7 @@ export const getSubmissionsByQuizId = (id) => async (dispatch) => {
   }
 };
 
-export const insertSubmission = (pointData, payload) => async (dispatch) => {
+export const insertSubmission = (history, pointData, payload) => async (dispatch) => {
   const api = SUBMISSIONS_API.insertSubmission();
   dispatch({
     type: INSERT_SUBMISSIONS_LOADING,
@@ -90,8 +91,10 @@ export const insertSubmission = (pointData, payload) => async (dispatch) => {
           }
         ));  
       }
-      
     }
+
+    console.log(response.data);
+    history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
   } else {
     dispatch({
       type: INSERT_SUBMISSIONS_FAILURE,

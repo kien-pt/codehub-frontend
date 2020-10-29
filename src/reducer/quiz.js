@@ -147,7 +147,7 @@ export const resetTestCaseCount = (size) => async (dispatch) => {
   });
 }
 
-export const submitCode = (quizId, point, sourceCode, input, output) => async (dispatch) => {
+export const submitCode = (history, quizId, point, sourceCode, input, output) => async (dispatch) => {
   const payload = {
     client_secret: process.env.REACT_APP_HACKEREARTH_CLIENT_SECRET,
     source: sourceCode,
@@ -172,6 +172,7 @@ export const submitCode = (quizId, point, sourceCode, input, output) => async (d
 
     if (testCaseCount === 0) {
       dispatch(insertSubmission(
+        history,
         point,
         {
           quizId,
