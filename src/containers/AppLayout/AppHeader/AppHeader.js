@@ -26,6 +26,8 @@ import ROUTER from '../../../constant/router';
 
 import code from '../../../assets/code.png';
 
+import { getUserById } from '../../../reducer/users';
+
 function AppHeader(props) {
   const history = useHistory();
 
@@ -36,6 +38,11 @@ function AppHeader(props) {
   useEffect(() => {
     if (!(userId >= 0)) history.push(ROUTER.LOGIN);
   }, [history, userId]);
+
+  useEffect(() => {
+    console.log('ok');
+    props.getUserById(userId);
+  }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setLogout] = useState(false);
@@ -226,6 +233,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getUserById: (id) => dispatch(getUserById(id)),
 });
 
 export default connect(

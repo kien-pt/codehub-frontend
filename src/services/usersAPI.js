@@ -5,5 +5,10 @@ export const USERS_API = {
     endPoint: 'api/v1/login',
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
+  }),
+  getUserById: (id) => ({
+    endPoint: `api/v1/users/${id}`,
+    method: 'GET',
+    headers: HEADERS.TOKEN_HEADER,
   })
 };
