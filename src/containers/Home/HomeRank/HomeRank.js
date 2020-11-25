@@ -89,6 +89,7 @@ function HomeRank(props) {
         </StyledMenu>
         {props.students.slice(0, 10).map((student, index) => {
           var totalPoint = 0;
+          console.log(props.point, courseId);
           props.point.forEach((e) => totalPoint += (e.courseId === props.courses.find((course) => course.id === courseId)?.id && e.userId === student.id) ? e.point : 0);
           return (
             <div key={student.id}>

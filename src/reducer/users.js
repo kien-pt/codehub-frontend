@@ -20,6 +20,7 @@ export const login = (history, payload) => async (dispatch) => {
     meta: { prefix: [PREFIX.USER, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api, payload });
+  console.log(payload, response);
   if (!error && response.status === 200) {
     dispatch({
       type: LOGIN_SUCCESS,

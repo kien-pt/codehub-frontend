@@ -64,7 +64,7 @@ function HomeCourses(props) {
             </Card>
           )
         })}
-        <InsertCourseModal />
+        {/* <InsertCourseModal /> */}
       </CardContent>
     </Card>
   );

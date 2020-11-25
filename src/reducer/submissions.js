@@ -76,6 +76,7 @@ export const insertSubmission = (history, pointData, payload) => async (dispatch
 
     if (pointData.id === undefined) {
       dispatch(insertPoint({
+        userId: parseInt(sessionStorage.getItem("userId")),
         quizId: pointData.quizId,
         courseId: pointData.courseId,
         point,
@@ -85,6 +86,7 @@ export const insertSubmission = (history, pointData, payload) => async (dispatch
         dispatch(updatePoint(
           pointData.id,
           {
+            userId: parseInt(sessionStorage.getItem("userId")),
             quizId: pointData.quizId,
             courseId: pointData.courseId,
             point,
