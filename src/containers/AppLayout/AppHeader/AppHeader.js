@@ -32,8 +32,8 @@ function AppHeader(props) {
   const history = useHistory();
 
   const userId = parseInt(sessionStorage.getItem("userId"));
-  const userName = props.students.find((student) => student.id === userId)?.name;
-  const studentCode = props.students.find((student) => student.id === userId)?.code;
+  const userName = props.user?.name;
+  const studentCode = props.user?.studentCode;
 
   useEffect(() => {
     if (!(userId >= 0)) history.push(ROUTER.LOGIN);
@@ -229,7 +229,7 @@ function AppHeader(props) {
 }
 
 const mapStateToProps = (state) => ({
-  students: select(state, 'studentsReducer', 'students'),
+  user: select(state, 'usersReducer', 'user'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

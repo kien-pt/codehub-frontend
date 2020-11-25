@@ -45,7 +45,7 @@ function QuizDiscuss(props) {
                   <Grid container>
                     <Grid item><AccountCircle style={{ fontSize: 32 }} /></Grid>
                     <Grid item direction="column" style={{ marginLeft: 12 }}>
-                      <Grid item style={{ fontWeight: 'bold' }}>{comment.userId}</Grid>
+                      <Grid item style={{ fontWeight: 'bold' }}>{props.user?.name}</Grid>
                       <Grid item style={{ fontSize: 10, color: '#8c8c8c' }}>{`${day}-${month}-${year}`}</Grid>
                       <Grid item style={{ marginTop: 8 }}>{comment.content}</Grid>
                     </Grid>
@@ -65,6 +65,7 @@ function QuizDiscuss(props) {
 }
 
 const mapStateToProps = (state) => ({
+  user: select(state, 'usersReducer', 'user'),
   comments: select(state, 'commentsReducer', 'comments'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
 });
