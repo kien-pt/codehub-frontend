@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -6,6 +6,7 @@ import {
   CardContent,
   CardHeader,
   CardActionArea,
+  Button,
   LinearProgress,
 } from '@material-ui/core';
 
@@ -15,6 +16,8 @@ import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
 import { getTags, getQuiz } from '../../../reducer/quiz';
 import { getAllPoint } from '../../../reducer/point';
+
+import InsertCourseModal from '../../Courses/InsertCourseModal';
 
 function HomeCourses(props) {
   const history = useHistory();
@@ -61,6 +64,7 @@ function HomeCourses(props) {
             </Card>
           )
         })}
+        <InsertCourseModal />
       </CardContent>
     </Card>
   );

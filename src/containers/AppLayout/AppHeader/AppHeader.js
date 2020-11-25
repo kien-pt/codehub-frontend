@@ -199,7 +199,6 @@ function AppHeader(props) {
 
       <Dialog
         open={isLogout}
-        // TransitionComponent={Transition}
         keepMounted
         onClose={() => setLogout(false)}
       >
