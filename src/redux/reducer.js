@@ -6,6 +6,7 @@ import studentsReducer from '../reducer/students';
 import submissionsReducer from '../reducer/submissions';
 import pointReducer from '../reducer/point';
 import usersReducer from '../reducer/users';
+import commentsReducer from '../reducer/comments';
 
 export default combineReducers({
   quizReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   submissionsReducer,
   pointReducer,
   usersReducer,
+  commentsReducer,
 });

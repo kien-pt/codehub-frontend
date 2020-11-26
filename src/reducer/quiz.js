@@ -178,6 +178,7 @@ export const submitCode = (history, quizId, point, sourceCode, input, output) =>
         history,
         point,
         {
+          userId: parseInt(sessionStorage.getItem("userId")),
           quizId,
           testCase,
           sourceCode,
