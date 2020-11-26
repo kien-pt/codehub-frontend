@@ -32,8 +32,8 @@ export const login = (history, payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
-    sessionStorage.setItem("accessToken", response.data.accessToken);
-    sessionStorage.setItem("userId", response.data.user.id);
+    // sessionStorage.setItem("accessToken", response.data.accessToken);
+    sessionStorage.setItem("userId", response.data.id);
     history.push(ROUTER.HOME);
   } else {
     dispatch({
