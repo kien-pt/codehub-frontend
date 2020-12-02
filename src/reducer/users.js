@@ -25,16 +25,13 @@ export const login = (history, payload) => async (dispatch) => {
     meta: { prefix: [PREFIX.USER, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api, payload });
-  console.log(payload, response);
   if (!error && response.status === 200) {
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
-    sessionStorage.setItem("accessToken", response.data.accessToken);
-    sessionStorage.setItem("userId", response.data.user.id);
-    // sessionStorage.setItem("userId", response.data.id);
+    sessionStorage.setItem("userId", response.data.id);
     history.push(ROUTER.HOME);
   } else {
     dispatch({
@@ -58,6 +55,7 @@ export const getUserById = (id) => async (dispatch) => {
       meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
     });
   } else {
+    console.log(error);
     dispatch({
       type: GET_USER_FAILURE,
       meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },

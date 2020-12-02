@@ -7,7 +7,7 @@ export const USERS_API = {
     headers: HEADERS.DEFAULT_HEADER,
   }),
   getUserById: (id) => ({
-    endPoint: `api/v1/users/${id}`,
+    endPoint: `api/v1/users/id/?id=${id}`,
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   })

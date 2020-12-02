@@ -36,6 +36,7 @@ export const apiCall = async ({
       data: payload,
       params,
       paramsSerializer: (params) => parseParams(params),
+      withCredentials: true,
     });
     return {
       response: result,

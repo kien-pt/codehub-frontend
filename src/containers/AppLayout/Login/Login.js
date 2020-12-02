@@ -27,7 +27,7 @@ function Login(props) {
     props.login(
       history,
       {
-        email: username,
+        username,
         password,
       }
     );
