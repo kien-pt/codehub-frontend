@@ -31,7 +31,6 @@ export const login = (history, payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
-    sessionStorage.setItem("userId", response.data.id);
     history.push(ROUTER.HOME);
   } else {
     dispatch({
@@ -55,7 +54,6 @@ export const getUserById = (id) => async (dispatch) => {
       meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
     });
   } else {
-    console.log(error);
     dispatch({
       type: GET_USER_FAILURE,
       meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
@@ -77,10 +75,15 @@ export default function usersReducer(state = initialState, action) {
         isFetching: false,
       });
 
-    case LOGIN_SUCCESS:
+    case LOGIN_SUCCESS: {
+      const expiredTime = new Date();
+      expiredTime.setHours(expiredTime.getHours() + 1);
+      sessionStorage.setItem("expiredTime", expiredTime);
+      sessionStorage.setItem("userId", action.payload.id);
       return state.merge({
         isFetching: false,
       });
+    }
 
     case GET_USER_SUCCESS:
       return state.merge({

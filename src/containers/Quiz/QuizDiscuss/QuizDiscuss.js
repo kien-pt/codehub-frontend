@@ -24,7 +24,6 @@ function QuizDiscuss(props) {
   }, [getCommentsByQuizId, quizId]);
 
   const commentsList = props.comments.sort((a, b) => Date.parse(a.createAt) - Date.parse(b.createAt));
-  // console.log(commentsList);
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -36,7 +35,6 @@ function QuizDiscuss(props) {
           {
             commentsList.map((comment) => {
               const date = new Date(Date.parse(comment.createAt));
-              console.log(date);
               const month = date.getMonth();
               const day = date.getDate();
               const year = date.getFullYear();

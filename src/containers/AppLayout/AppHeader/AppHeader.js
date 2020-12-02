@@ -32,15 +32,25 @@ function AppHeader(props) {
   const history = useHistory();
 
   const userId = parseInt(sessionStorage.getItem("userId"));
+  const expiredTime = Date.parse(sessionStorage.getItem("expiredTime"));
   const userName = props.user?.name;
   const studentCode = props.user?.studentCode;
 
-  useEffect(() => {
-    if (!(userId >= 0)) history.push(ROUTER.LOGIN);
-  }, [history, userId]);
+  const currentTime = Date.parse(new Date());
+
+  console.log(expiredTime - currentTime);
+
 
   useEffect(() => {
-    console.log('ok');
+    if (expiredTime - currentTime <= 0) {
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("expiredTime");
+      history.push(ROUTER.LOGIN);
+    } 
+    if (!(userId >= 0)) history.push(ROUTER.LOGIN);
+  }, [history, userId, currentTime]);
+
+  useEffect(() => {
     props.getUserById(userId);
   }, []);
 
