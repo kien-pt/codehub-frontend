@@ -33,19 +33,29 @@ function AppHeader(props) {
 
   const userId = parseInt(sessionStorage.getItem("userId"));
   const expiredTime = Date.parse(sessionStorage.getItem("expiredTime"));
+  const isAdmin = props.user?.admin;
   const fullname = props.user?.fullname;
 
   const currentTime = Date.parse(new Date());
 
-  console.log(expiredTime - currentTime);
+  const menuList = [
+    {
+      name: 'Bài tập',
+      link: ROUTER.HOME,
+    }
+  ];
+  if (isAdmin) menuList.push({
+    name: 'Quản lý',
+    link: ROUTER.HOME,
+  });
 
+  const itemFocus = 0;
+  if (window.location.pathname === ROUTER.HOME) {
+    
+  }
 
   useEffect(() => {
-    if (expiredTime - currentTime <= 0) {
-      sessionStorage.removeItem("userId");
-      sessionStorage.removeItem("expiredTime");
-      history.push(ROUTER.LOGIN);
-    } 
+    if (expiredTime - currentTime <= 0) logout();
     if (!(userId >= 0)) history.push(ROUTER.LOGIN);
   }, [history, userId, currentTime]);
 
@@ -55,6 +65,12 @@ function AppHeader(props) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setLogout] = useState(false);
+
+  const logout = () => {
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("expiredTime");
+    history.push(ROUTER.LOGIN);
+  }
 
   const handleSelect = () => {
     setLogout(true);
@@ -142,7 +158,26 @@ function AppHeader(props) {
               <Link href={ROUTER.HOME}>
                 <img src={code} alt="logo" height="36px" style={{ padding: '12px 0' }} />
               </Link>
-              <div
+              {
+                menuList.map((item, index) => (
+                  <Link
+                    href={item.link}
+                    style={{
+                      height: 55,
+                      color: 'white',
+                      textDecoration: 'none',
+                      margin: '0 12px',
+                      padding: '0 8px',
+                      cursor: 'pointer',
+                      lineHeight: '60px',
+                      borderBottom: (itemFocus === index) ? '5px solid #1BA94C' : 'none',
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))
+              }
+              {/* <div
                 style={{
                   height: 55,
                   margin: '0 12px',
@@ -164,8 +199,8 @@ function AppHeader(props) {
                 }}
               >
                 API
-              </div>
-            </div>
+              </div>*/}
+            </div> 
           </Grid>
           <Grid
             item
@@ -225,10 +260,19 @@ function AppHeader(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setLogout(false)} color="secondary">
+          <Button
+            onClick={() => setLogout(false)}
+            color="secondary"
+          >
             Huỷ
           </Button>
-          <Button onClick={() => setLogout(false)} color="primary">
+          <Button
+            onClick={() => {
+              logout();
+              setLogout(false);
+            }}
+            color="primary"
+          >
             Đồng ý
           </Button>
         </DialogActions>
