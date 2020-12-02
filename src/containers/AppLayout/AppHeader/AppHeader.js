@@ -33,8 +33,7 @@ function AppHeader(props) {
 
   const userId = parseInt(sessionStorage.getItem("userId"));
   const expiredTime = Date.parse(sessionStorage.getItem("expiredTime"));
-  const userName = props.user?.name;
-  const studentCode = props.user?.studentCode;
+  const fullname = props.user?.fullname;
 
   const currentTime = Date.parse(new Date());
 
@@ -184,7 +183,7 @@ function AppHeader(props) {
               }}
             >
               <AccountCircle style={{ padding: '0 4px' }} />
-              {userName}
+              {fullname}
               <ExpandMore />
             </div>
           </Grid>
@@ -201,7 +200,7 @@ function AppHeader(props) {
       >
         <MenuItem>
           <Person fontSize="small" style={{ paddingRight: 16 }} />
-          <Typography variant="inherit" noWrap>{studentCode}</Typography>
+          <Typography variant="inherit" noWrap>{fullname}</Typography>
         </MenuItem>
         <MenuItem>
           <Build fontSize="small" style={{ paddingRight: 16 }} />
