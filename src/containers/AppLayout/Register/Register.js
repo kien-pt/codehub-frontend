@@ -10,27 +10,29 @@ import {
   OutlinedInput,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { Person, Lock } from '@material-ui/icons';
+import { Person, Lock, Autorenew, AssignmentInd } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import ROUTER from '../../../constant/router';
 
+import { insertUser } from '../../../reducer/users';
+import Notification from '../../../components/Notification/notification';
 
 function Register(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [fullname, setFullname] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [focus, setFocus] = useState(false);
+  const [noti, setNoti] = useState(null);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // props.login(
-    //   history,
-    //   {
-    //     username,
-    //     password,
-    //   }
-    // );
+    props.insertUser()
+    .then(result => setNoti(result))
+    .catch();
   }
-  
   return (
     <Grid container style={{ display: 'flex', height: window.innerHeight }}>
       <Grid item lg={4} md={6} sm={8} xs={10} style={{ margin: 'auto' }}>
@@ -41,28 +43,54 @@ function Register(props) {
           />
           <CardContent>
             <form onSubmit={handleSubmit}>
-              <FormControl style={{ width: '100%' }}>
+              <FormControl style={{ width: '100%', paddingBottom: 6 }}>
                 <OutlinedInput
                   required
+                  placeholder="Tên đăng nhập"
                   startAdornment={<Person position="start" />}
                   onChange={(e) => setUsername(e.target.value)}
                   inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
                   style={{ height: 40 }}
                 />
               </FormControl>
-              <FormControl style={{ width: '100%', padding: '12px 0' }}>
+              <FormControl style={{ width: '100%', padding: '6px 0' }}>
                 <OutlinedInput
                   required
                   type="password"
+                  placeholder="Mật khẩu"
                   startAdornment={<Lock position="start" />}
                   onChange={(e) => setPassword(e.target.value)}
                   inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
                   style={{ height: 40 }}
                 />
               </FormControl>
+              <FormControl style={{ width: '100%', padding: '6px 0' }}>
+                <OutlinedInput
+                  required
+                  type="password"
+                  placeholder="Xác nhận mật khẩu"
+                  startAdornment={<Autorenew position="start" />}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onFocus={() => setFocus(true)}
+                  onBlur={() => setFocus(false)}
+                  inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
+                  style={{ height: 40 }}
+                />
+              </FormControl>
+              <span style={{ display: (focus && password !== confirmPassword) ? 'inline' : 'none', color: 'red' }}>Mật khẩu không khớp!</span>
+              <FormControl style={{ width: '100%', padding: '6px 0 12px 0' }}>
+                <OutlinedInput
+                  required
+                  placeholder="Họ và tên"
+                  startAdornment={<AssignmentInd position="start" />}
+                  onChange={(e) => setFullname(e.target.value)}
+                  inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
+                  style={{ height: 40 }}
+                />
+              </FormControl>
               <FormControl style={{ width: '100%' }}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   type="submit"
                 >
@@ -72,6 +100,7 @@ function Register(props) {
             </form>
           </CardContent>
         </Card>
+        <Notification type={noti?.type} message={noti?.message} />
       </Grid>
     </Grid>
   );
@@ -81,7 +110,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  Register: (history, payload) => dispatch(Register(history, payload)),
+  insertUser: () => dispatch(insertUser()),
 });
 
 export default connect(

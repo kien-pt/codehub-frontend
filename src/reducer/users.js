@@ -13,8 +13,13 @@ const GET_USER_LOADING = 'GET_USER_LOADING';
 const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 const GET_USER_FAILURE = 'GET_USER_FAILURE';
 
+const INSERT_USER_LOADING = 'INSERT_USER_LOADING';
+const INSERT_USER_SUCCESS = 'INSERT_USER_SUCCESS';
+const INSERT_USER_FAILURE = 'INSERT_USER_FAILURE';
+
 const initialState = fromJS({
   user: null,
+  notification: null,
   isFetching: false,
 });
 
@@ -61,16 +66,48 @@ export const getUserById = (id) => async (dispatch) => {
   }
 };
 
+export const insertUser = () => async (dispatch) => {
+  dispatch({
+    type: INSERT_USER_SUCCESS,
+    // payload: response.data,
+    meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
+  });
+  return ({
+    type: 'success',
+    message: 'OK',
+  });
+  // const api = USERS_API.insertUser();
+  // dispatch({
+  //   type: INSERT_USER_LOADING,
+  //   meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
+  // });
+  // const { response, error } = await apiCall({ ...api });
+  // if (!error && response.status === 200) {
+  //   dispatch({
+  //     type: INSERT_USER_SUCCESS,
+  //     payload: response.data,
+  //     meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
+  //   });
+  // } else {
+  //   dispatch({
+  //     type: INSERT_USER_FAILURE,
+  //     meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
+  //   });
+  // }
+};
+
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_LOADING:
     case GET_USER_LOADING:
+    case INSERT_USER_LOADING:
       return state.merge({
         isFetching: true,
       });
 
     case LOGIN_FAILURE:
     case GET_USER_FAILURE:
+    case INSERT_USER_FAILURE:
       return state.merge({
         isFetching: false,
       });
@@ -90,7 +127,13 @@ export default function usersReducer(state = initialState, action) {
         user: action.payload,
         isFetching: false,
       });
-    
+
+    case INSERT_USER_SUCCESS:
+      return state.merge({
+        // notification: notification(),
+        isFetching: false,
+      });
+
 
     default: return state;
   }
