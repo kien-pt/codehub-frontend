@@ -9,6 +9,7 @@ import ROUTER from './constant/router';
 
 import AppLayout from './components/AppLayout';
 import Login from './containers/AppLayout/Login';
+import Register from './containers/AppLayout/Register';
 
 import './index.css';
 
@@ -17,6 +18,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route exact path={ROUTER.LOGIN} component={Login} />
+        <Route exact path={ROUTER.REGISTER} component={Register} />
         <Route path={ROUTER.HOME} component={AppLayout} />
       </Switch>
     </Router>

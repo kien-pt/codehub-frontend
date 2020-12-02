@@ -9,36 +9,34 @@ import {
   FormControl,
   OutlinedInput,
 } from '@material-ui/core';
-import { Person, Lock } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
+import { Person, Lock } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import ROUTER from '../../../constant/router';
 
-import { login } from '../../../reducer/users';
 
-function Login(props) {
-  const history = useHistory();
+function Register(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.login(
-      history,
-      {
-        username,
-        password,
-      }
-    );
+    // props.login(
+    //   history,
+    //   {
+    //     username,
+    //     password,
+    //   }
+    // );
   }
-
+  
   return (
     <Grid container style={{ display: 'flex', height: window.innerHeight }}>
       <Grid item lg={4} md={6} sm={8} xs={10} style={{ margin: 'auto' }}>
         <Card style={{ width: '100%' }}>
           <CardHeader
-            title="Đăng nhập"
+            title="Đăng ký"
             style={{ color: 'white', backgroundColor: '#39424E' }}
           />
           <CardContent>
@@ -62,21 +60,13 @@ function Login(props) {
                   style={{ height: 40 }}
                 />
               </FormControl>
-              <FormControl style={{ display: 'inline', width: '100%' }}>
+              <FormControl style={{ width: '100%' }}>
                 <Button
                   variant="outlined"
-                  href={ROUTER.REGISTER}
-                  style={{ width: '48%' }}
-                >
-                  Đăng ký
-                </Button>
-                <Button
-                  variant="contained"
                   color="primary"
                   type="submit"
-                  style={{ width: '48%', float: 'right' }}
                 >
-                  Đăng nhập
+                  Đăng ký
                 </Button>
               </FormControl>
             </form>
@@ -91,10 +81,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (history, payload) => dispatch(login(history, payload)),
+  Register: (history, payload) => dispatch(Register(history, payload)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(toJs(Login));
+)(toJs(Register));

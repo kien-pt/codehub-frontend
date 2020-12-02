@@ -33,10 +33,12 @@ function AppHeader(props) {
 
   const userId = parseInt(sessionStorage.getItem("userId"));
   const expiredTime = Date.parse(sessionStorage.getItem("expiredTime"));
+  const currentTime = Date.parse(new Date());
+
+  const currentRoute = window.location.pathname;
+
   const isAdmin = props.user?.admin;
   const fullname = props.user?.fullname;
-
-  const currentTime = Date.parse(new Date());
 
   const menuList = [
     {
@@ -50,17 +52,17 @@ function AppHeader(props) {
   });
 
   const itemFocus = 0;
-  if (window.location.pathname === ROUTER.HOME) {
+  if (currentRoute === ROUTER.HOME) {
     
   }
 
   useEffect(() => {
     if (expiredTime - currentTime <= 0) logout();
-    if (!(userId >= 0)) history.push(ROUTER.LOGIN);
+    if (!(userId >= 0) && currentRoute !== ROUTER.REGISTER) history.push(ROUTER.LOGIN);
   }, [history, userId, currentTime]);
 
   useEffect(() => {
-    props.getUserById(userId);
+    if (userId >= 0) props.getUserById(userId);
   }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
