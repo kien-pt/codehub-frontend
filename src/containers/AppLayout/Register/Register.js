@@ -34,7 +34,11 @@ function Register(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.insertUser()
+    props.insertUser({
+      username,
+      password,
+      fullname,
+    })
     .then(result => setNoti(result))
     .catch();
   }
@@ -112,18 +116,48 @@ function Register(props) {
       <Dialog
         open={noti}
         keepMounted
-        onClose={() => setNoti(false)}
+        onClose={() => {
+          if (noti.type === 'success') history.push(ROUTER.LOGIN);
+          setNoti(false);
+        }}
       >
-        <DialogTitle>Đăng ký thành công</DialogTitle>
-        <DialogContent>
+        <DialogTitle
+          style={{
+            backgroundColor:
+            noti.type === 'success'
+            ? 'rgb(170 250 170 / 75%)'
+            : 'rgb(250 170 170 / 75%)'
+          }}>
+          {`Đăng ký ${noti.type === 'success' ? 'thành công' : 'thất bại'}`}
+        </DialogTitle>
+        <DialogContent
+          style={{
+            backgroundColor:
+            noti.type === 'success'
+            ? 'rgb(170 250 170 / 75%)'
+            : 'rgb(250 170 170 / 75%)'
+          }}
+        >
           <DialogContentText>
-            Bạn đã đăng ký thành công tài khoản. Xin mời đăng nhập!
+            {
+              noti.type === 'success'
+              ? 'Bạn đã đăng ký thành công tài khoản. Xin mời đăng nhập!'
+
+              : 'Đăng ký tài khoản không thành công. Tài khoản đã tồn tại!'
+            }
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          style={{
+            backgroundColor:
+            noti.type === 'success'
+            ? 'rgb(170 250 170 / 75%)'
+            : 'rgb(250 170 170 / 75%)'
+          }}
+        >
           <Button
             onClick={() => {
-              history.push(ROUTER.LOGIN);
+              if (noti.type === 'success') history.push(ROUTER.LOGIN);
               setNoti(false);
             }}
             color="primary"
@@ -140,7 +174,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  insertUser: () => dispatch(insertUser()),
+  insertUser: (payload) => dispatch(insertUser(payload)),
 });
 
 export default connect(

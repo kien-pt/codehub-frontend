@@ -66,34 +66,33 @@ export const getUserById = (id) => async (dispatch) => {
   }
 };
 
-export const insertUser = () => async (dispatch) => {
+export const insertUser = (payload) => async (dispatch) => {
+  const api = USERS_API.insertUser();
   dispatch({
-    type: INSERT_USER_SUCCESS,
-    // payload: response.data,
-    meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
+    type: INSERT_USER_LOADING,
+    meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
   });
-  return ({
-    type: 'success',
-    message: 'OK',
-  });
-  // const api = USERS_API.insertUser();
-  // dispatch({
-  //   type: INSERT_USER_LOADING,
-  //   meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
-  // });
-  // const { response, error } = await apiCall({ ...api });
-  // if (!error && response.status === 200) {
-  //   dispatch({
-  //     type: INSERT_USER_SUCCESS,
-  //     payload: response.data,
-  //     meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
-  //   });
-  // } else {
-  //   dispatch({
-  //     type: INSERT_USER_FAILURE,
-  //     meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
-  //   });
-  // }
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: INSERT_USER_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
+    });
+    return ({
+      type: 'success',
+      message: error,
+    });
+  } else {
+    dispatch({
+      type: INSERT_USER_FAILURE,
+      meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'fail',
+      message: error,
+    });
+  }
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -130,7 +129,6 @@ export default function usersReducer(state = initialState, action) {
 
     case INSERT_USER_SUCCESS:
       return state.merge({
-        // notification: notification(),
         isFetching: false,
       });
 
