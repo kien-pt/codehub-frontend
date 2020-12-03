@@ -16,6 +16,7 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Avatar,
 } from '@material-ui/core';
 import { Person, ExitToApp, Build, ExpandMore, AccountCircle } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
@@ -144,7 +145,6 @@ function AppHeader(props) {
             display={{ xs: 'block', sm: 'none' }}
           >
             <IconButton onClick={handleClick} style={{ float: 'right', color: 'white' }}>
-              <AccountCircle />
             </IconButton>
           </Grid>
 
@@ -192,15 +192,21 @@ function AppHeader(props) {
             <div
               onClick={handleClick}
               style={{
-                cursor: 'pointer',
                 display: 'flex',
+                flexDirection: 'row',
                 float: 'right',
+                cursor: 'pointer'
               }}
             >
-              <AccountCircle style={{ padding: '0 4px' }} />
-              {fullname}
-              <ExpandMore />
-            </div>
+              <Link href={ROUTER.HOME}>
+                <img
+                  src="https://i.pinimg.com/originals/63/db/21/63db2105d5418f5e5c7763d28d9ebb36.jpg"
+                  alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }}
+                />
+              </Link>
+              <div style={{ lineHeight: '60px' }}>{fullname}</div>
+              <ExpandMore style={{ padding: '18px 0' }} />
+            </div> 
           </Grid>
         </Grid>
       </AppBar>
