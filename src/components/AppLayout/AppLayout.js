@@ -8,6 +8,7 @@ import Home from '../Home';
 import Courses from '../Courses';
 import Quiz from '../Quiz';
 import Submission from '../Submission';
+import Manager from '../Manager';
 
 function AppLayout() {
   return (
@@ -19,6 +20,7 @@ function AppLayout() {
           <Route path={ROUTER.COURSES} component={Courses} />
           <Route path={ROUTER.QUIZ} component={Quiz} />
           <Route path={ROUTER.SUBMISSION} component={Submission} />
+          <Route path={ROUTER.MANAGER} component={Manager} />
         </Switch>
       </div>
     </>

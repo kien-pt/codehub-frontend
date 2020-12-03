@@ -1,9 +1,10 @@
 const ROUTER = {
   HOME: '/',
-  LOGIN: '/login',
-  REGISTER: '/register',
   QUIZ: '/quiz',
+  LOGIN: '/login',
+  MANAGER: '/manager',
   COURSES: '/courses',
+  REGISTER: '/register',
   SUBMISSION: '/submission',
 };
 

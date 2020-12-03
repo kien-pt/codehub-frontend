@@ -49,7 +49,7 @@ function AppHeader(props) {
   ];
   if (isAdmin) menuList.push({
     name: 'Quản lý',
-    link: ROUTER.HOME,
+    link: ROUTER.MANAGER,
   });
 
   const itemFocus = 0;
