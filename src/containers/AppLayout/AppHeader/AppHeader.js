@@ -38,6 +38,7 @@ function AppHeader(props) {
   const currentRoute = window.location.pathname;
 
   const isAdmin = props.user?.admin;
+  const username = props.user?.username;
   const fullname = props.user?.fullname;
 
   const menuList = [
@@ -124,7 +125,6 @@ function AppHeader(props) {
             display={{ xs: 'block', sm: 'none' }}
           >
             <IconButton style={{ color: 'white' }}>
-              <Menu />
             </IconButton>
           </Grid>
           <Grid
@@ -163,6 +163,7 @@ function AppHeader(props) {
               {
                 menuList.map((item, index) => (
                   <Link
+                    key={item.name}
                     href={item.link}
                     style={{
                       height: 55,
@@ -179,29 +180,6 @@ function AppHeader(props) {
                   </Link>
                 ))
               }
-              {/* <div
-                style={{
-                  height: 55,
-                  margin: '0 12px',
-                  padding: '0 8px',
-                  cursor: 'pointer',
-                  lineHeight: '60px',
-                  borderBottom: '5px solid #1BA94C',
-                }}
-              >
-                Bài tập
-              </div>
-              <div
-                style={{
-                  height: 55,
-                  margin: '0 12px',
-                  padding: '0 8px',
-                  cursor: 'pointer',
-                  lineHeight: '60px',
-                }}
-              >
-                API
-              </div>*/}
             </div> 
           </Grid>
           <Grid
@@ -237,7 +215,7 @@ function AppHeader(props) {
       >
         <MenuItem>
           <Person fontSize="small" style={{ paddingRight: 16 }} />
-          <Typography variant="inherit" noWrap>{fullname}</Typography>
+          <Typography variant="inherit" noWrap>{username}</Typography>
         </MenuItem>
         <MenuItem>
           <Build fontSize="small" style={{ paddingRight: 16 }} />
