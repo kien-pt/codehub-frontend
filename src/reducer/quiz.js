@@ -127,7 +127,7 @@ export const getTagsByCourseId = (id) => async (dispatch) => {
   if (!error && response.status === 200) {
     dispatch({
       type: GET_TAGS_SUCCESS,
-      payload: response.data,
+      payload: response.data.tags,
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
     });
   } else {
