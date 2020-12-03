@@ -37,11 +37,13 @@ export const login = (history, payload) => async (dispatch) => {
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
     history.push(ROUTER.HOME);
+    return 'success';
   } else {
     dispatch({
       type: LOGIN_FAILURE,
       meta: { prefix: [PREFIX.USER, PREFIX.API_FAILURE] },
     });
+    return 'error';
   }
 };
 

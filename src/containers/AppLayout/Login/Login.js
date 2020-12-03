@@ -8,7 +8,9 @@ import {
   Button,
   FormControl,
   OutlinedInput,
+  Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { Person, Lock } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
@@ -21,6 +23,7 @@ function Login(props) {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [noti, setNoti] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +33,8 @@ function Login(props) {
         username,
         password,
       }
-    );
+    ).then(result => setNoti(result === 'error' ? true : false))
+    .catch();
   }
 
   return (
@@ -82,6 +86,12 @@ function Login(props) {
             </form>
           </CardContent>
         </Card>
+
+        <Snackbar open={noti} autoHideDuration={6000} onClose={() => setNoti(false)}>
+          <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
+            Sai tên đăng nhập hoặc mật khẩu!
+          </Alert>
+        </Snackbar>
       </Grid>
     </Grid>
   );
