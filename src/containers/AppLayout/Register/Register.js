@@ -121,23 +121,10 @@ function Register(props) {
           setNoti(false);
         }}
       >
-        <DialogTitle
-          style={{
-            backgroundColor:
-            noti.type === 'success'
-            ? 'rgb(170 250 170 / 75%)'
-            : 'rgb(250 170 170 / 75%)'
-          }}>
+        <DialogTitle>
           {`Đăng ký ${noti.type === 'success' ? 'thành công' : 'thất bại'}`}
         </DialogTitle>
-        <DialogContent
-          style={{
-            backgroundColor:
-            noti.type === 'success'
-            ? 'rgb(170 250 170 / 75%)'
-            : 'rgb(250 170 170 / 75%)'
-          }}
-        >
+        <DialogContent>
           <DialogContentText>
             {
               noti.type === 'success'
@@ -147,14 +134,7 @@ function Register(props) {
             }
           </DialogContentText>
         </DialogContent>
-        <DialogActions
-          style={{
-            backgroundColor:
-            noti.type === 'success'
-            ? 'rgb(170 250 170 / 75%)'
-            : 'rgb(250 170 170 / 75%)'
-          }}
-        >
+        <DialogActions>
           <Button
             onClick={() => {
               if (noti.type === 'success') history.push(ROUTER.LOGIN);
