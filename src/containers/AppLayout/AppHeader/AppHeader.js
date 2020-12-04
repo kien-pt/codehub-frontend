@@ -16,7 +16,9 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { Person, ExitToApp, Build, ExpandMore, AccountCircle } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
@@ -26,7 +28,7 @@ import ROUTER from '../../../constant/router';
 
 import code from '../../../assets/code.png';
 
-import { getUserById } from '../../../reducer/users';
+import { logout, getUserById } from '../../../reducer/users';
 
 function AppHeader(props) {
   const history = useHistory();
@@ -44,6 +46,7 @@ function AppHeader(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setLogout] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [noti, setNoti] = useState(false);
 
   const menuList = [
     {
@@ -69,9 +72,9 @@ function AppHeader(props) {
   }, []);
 
   const logout = () => {
-    sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("expiredTime");
-    history.push(ROUTER.LOGIN);
+    props.logout(history)
+    .then(result => setNoti(result === 'error' ? true : false))
+    .catch();
   }
 
   const handleSelect = () => {
@@ -264,6 +267,12 @@ function AppHeader(props) {
           </Button>
         </DialogActions>
       </Dialog>
+
+        <Snackbar open={noti} autoHideDuration={6000} onClose={() => setNoti(false)}>
+          <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
+            Đăng xuất thất bại hoặc mật khẩu!
+          </Alert>
+        </Snackbar>
     </>
   );
 }
@@ -274,6 +283,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getUserById: (id) => dispatch(getUserById(id)),
+  logout: (history) => dispatch(logout(history)),
 });
 
 export default connect(

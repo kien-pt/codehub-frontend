@@ -6,7 +6,7 @@ export const USERS_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
-  login: () => ({
+  logout: () => ({
     endPoint: 'api/v1/logout',
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,

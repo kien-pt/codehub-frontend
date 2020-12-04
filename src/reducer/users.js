@@ -64,13 +64,13 @@ export const login = (history, payload) => async (dispatch) => {
   }
 };
 
-export const logout = (history, payload) => async (dispatch) => {
+export const logout = (history) => async (dispatch) => {
   const api = USERS_API.logout();
   dispatch({
     type: LOGOUT_LOADING,
     meta: { prefix: [PREFIX.USER, PREFIX.API_CALLING] },
   });
-  const { response, error } = await apiCall({ ...api, payload });
+  const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
       type: LOGOUT_SUCCESS,
@@ -78,6 +78,8 @@ export const logout = (history, payload) => async (dispatch) => {
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
     history.push(ROUTER.LOGIN);
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("expiredTime");
     return 'success';
   } else {
     dispatch({
