@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 
 import Profile from '../../containers/User/Profile';
+import SubmissionList from '../../containers/User/SubmissionList';
 
 function User() {
   return (
@@ -10,6 +11,7 @@ function User() {
         <Profile />
       </Grid>
       <Grid item lg={7} md={8} xs={12}>
+        <SubmissionList />
       </Grid>
     </Grid>
   );
