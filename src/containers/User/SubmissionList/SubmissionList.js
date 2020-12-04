@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Button,
-  Typography,
   Card,
   CardHeader,
   CardContent,
-  FormControl,
-  OutlinedInput,
-  Divider,
 } from '@material-ui/core';
-import { AssignmentInd, Person } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 import { updateUser } from '../../../reducer/users';
 
-function SubmissionList(props) {
+function SubmissionList() {
   return (
     <Card style={{ color: 'white', padding: 0 }}>
       <CardHeader
