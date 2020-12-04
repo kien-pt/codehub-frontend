@@ -11,9 +11,14 @@ export const COURSES_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
-  insertCourses: () => ({
+  insertCourse: () => ({
     endPoint: 'api/v1/courses/new',
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  deleteCourse: (id) => ({
+    endPoint: `api/v1/courses/delete/id/?id=${id}`,
+    method: 'DELETE',
+    headers: HEADERS.DEFAULT_HEADER,
+  })
 };

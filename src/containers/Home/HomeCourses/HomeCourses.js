@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import { AddBox, Clear } from '@material-ui/icons';
 
+import InsertCourseModal from '../../Courses/InsertCourseModal';
+
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
@@ -20,7 +22,7 @@ import { getCourses } from '../../../reducer/courses';
 import { getTags } from '../../../reducer/quiz';
 import { getAllPoint } from '../../../reducer/point';
 
-import InsertCourseModal from '../../Courses/InsertCourseModal';
+import { deleteCourse } from '../../../reducer/courses';
 
 function HomeCourses(props) {
   const history = useHistory();
@@ -63,25 +65,40 @@ function HomeCourses(props) {
 
           return (
             <Card key={course.id} style={{ marginBottom: 16 }}>
-              <CardActionArea onClick={() => {
+              {/* <CardActionArea onClick={() => {
                 history.push({
                   pathname: `${ROUTER.COURSES}/${course.id}`,
                   state: { courseId: course.id },
                 });
-              }}>
-                <CardContent style={{ position: 'relative' }}>
-                  <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{course.name}</div>
-                  <IconButton style={{ position: 'absolute', right: 4, top: 4 }}>
-                    <Clear />
-                  </IconButton>
-                  <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
-                  <div style={{ padding: '12px 0' }}>
-                    <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
-                    <span>&nbsp; {` ${currentPoint}/${totalPoint}`}</span>
-                  </div>
-                  <div className="cardButton" style={{ minWidth: 120, width: '20%' }}>Tiếp tục luyện tập</div>
-                </CardContent>
-              </CardActionArea>
+              }}> */}
+              <CardContent style={{ position: 'relative' }}>
+                <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{course.name}</div>
+                <IconButton
+                  // onClick={() => props.deleteCourse(course.id)}
+                  style={{ position: 'absolute', right: 4, top: 4 }}
+                >
+                  <Clear />
+                </IconButton>
+                <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
+                <div style={{ padding: '12px 0' }}>
+                  <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
+                  <span>&nbsp; {` ${currentPoint}/${totalPoint}`}</span>
+                </div>
+                {/* <div className="cardButton" style={{ minWidth: 140, width: '20%' }}></div> */}
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => {
+                    history.push({
+                      pathname: `${ROUTER.COURSES}/${course.id}`,
+                      state: { courseId: course.id },
+                    });
+                  }}
+                >
+                  Tiếp tục luyện tập
+                </Button>
+              </CardContent>
+              {/* </CardActionArea> */}
             </Card>
           )
         })}
@@ -103,6 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getCourses: () => dispatch(getCourses()),
   getAllPoint: () => dispatch(getAllPoint()),
+  deleteCourse: (id) => dispatch(deleteCourse(id)),
 });
 
 export default connect(

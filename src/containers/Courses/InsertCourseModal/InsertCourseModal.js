@@ -17,7 +17,7 @@ import { AssignmentTurnedIn, AssignmentLate } from '@material-ui/icons';
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
-import { insertCourses } from '../../../reducer/courses';
+import { insertCourse } from '../../../reducer/courses';
 
 function InsertCourseModal(props) {
   const { isInserting, handleClick } = props;
@@ -27,7 +27,7 @@ function InsertCourseModal(props) {
   const [noti, setNoti] = useState(null);
 
   const handleSubmit = () => {
-    props.insertCourses({
+    props.insertCourse({
       code,
       name,
     }).then(result => setNoti(result))
@@ -91,7 +91,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  insertCourses: (payload) => dispatch(insertCourses(payload)),
+  insertCourse: (payload) => dispatch(insertCourse(payload)),
 });
 
 export default connect(
