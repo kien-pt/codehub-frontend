@@ -7,7 +7,9 @@ import {
   CardContent,
   CardActionArea,
   Grid,
+  Fab,
 } from '@material-ui/core';
+import { Clear } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -45,7 +47,7 @@ function HomeCourses(props) {
               {props.quiz?.filter((e) => e.tagId === tag?.id).map((quiz, index) => {
                 const point = props.point.find((e) => e.quizId === quiz.id)?.point || 0;
                 return (
-                  <Card key={`quiz-${quiz.id}`} style={{ marginTop: index === 0 ? 0 : 12 }}>
+                  <Card key={`quiz-${quiz.id}`} style={{ position: 'relative', marginTop: index === 0 ? 0 : 12 }}>
                     <CardActionArea onClick={() => history.push(`${ROUTER.QUIZ}/${quiz.id}`)}>
                       <CardContent>
                         <Grid container>
@@ -54,13 +56,28 @@ function HomeCourses(props) {
                               {quiz?.title}
                             </div>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={4} style={{ margin: 'auto 0', paddingRight: 8 }}>
                             <div className="cardButton" style={{ float: 'right' }}>{`${point}/100`}</div>
                           </Grid>
                         </Grid>
-                        
                       </CardContent>
                     </CardActionArea>
+                    <Fab
+                      size="small"
+                      style={{
+                        backgroundColor: 'transparent',
+                        position: 'absolute',
+                        color: 'rgb(0 0 0 / 50%)',
+                        boxShadow: 'none',
+                        top: 0,
+                        right: 0,
+                        width: 24,
+                        height: 24,
+                        minHeight: 24,
+                      }}
+                    >
+                      <Clear style={{ fontSize: 16 }} />
+                    </Fab>
                   </Card>
                 );
               })}
