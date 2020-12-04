@@ -201,12 +201,10 @@ function AppHeader(props) {
                 cursor: 'pointer'
               }}
             >
-              <Link href={ROUTER.HOME}>
-                <img
-                  src="https://i.pinimg.com/originals/63/db/21/63db2105d5418f5e5c7763d28d9ebb36.jpg"
-                  alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }}
-                />
-              </Link>
+              <img
+                src="https://i.pinimg.com/originals/63/db/21/63db2105d5418f5e5c7763d28d9ebb36.jpg"
+                alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }}
+              />
               <div style={{ lineHeight: '60px' }}>{fullname}</div>
               <ExpandMore style={{ padding: '18px 0' }} />
             </div> 
