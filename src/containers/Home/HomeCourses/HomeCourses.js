@@ -25,9 +25,8 @@ function HomeCourses(props) {
 
   useEffect(() => {
     getCourses();
-    getTags();
     getAllPoint();
-  }, [getCourses, getTags, getAllPoint]);
+  }, [getCourses, getAllPoint]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>

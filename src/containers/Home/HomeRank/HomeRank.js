@@ -14,15 +14,17 @@ import {
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import { getStudents } from '../../../reducer/students';
+
+import { getAllUsers } from '../../../reducer/users';
+// import { getStudents } from '../../../reducer/students';
 
 function HomeRank(props) {
-  const { getStudents } = props;
+  const { getAllUsers } = props;
   const [courseId, setCourseId] = useState(props.courseId);
 
   useEffect(() => {
-    getStudents();
-  }, [getStudents]);
+    getAllUsers();
+  }, [getAllUsers]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -87,7 +89,7 @@ function HomeRank(props) {
             <MenuItem key={e.id} onClick={() => handleSelect(e.id)}>{e.name}</MenuItem>
           ))}
         </StyledMenu>
-        {props.students.slice(0, 10).map((student, index) => {
+        {props.usersList?.filter((user) => !user.admin).slice(0, 10).map((student, index) => {
           var totalPoint = 0;
           props.point.forEach((e) => totalPoint += (e.courseId === props.courses.find((course) => course.id === courseId)?.id && e.userId === student.id) ? e.point : 0);
           return (
@@ -95,7 +97,7 @@ function HomeRank(props) {
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
               <Grid container>
                 <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
-                <Grid item xs={8} style={{ textAlign: 'center'}}>{student.name}</Grid>
+                <Grid item xs={8} style={{ textAlign: 'center'}}>{student.fullname}</Grid>
                 <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{totalPoint}</Grid>
               </Grid>
             </div>
@@ -108,13 +110,13 @@ function HomeRank(props) {
 
 const mapStateToProps = (state) => ({
   courses: select(state, 'coursesReducer', 'courses'),
-  students: select(state, 'studentsReducer', 'students'),
+  usersList: select(state, 'usersReducer', 'usersList'),
   point: select(state, 'pointReducer', 'point'),
   isFetching: select(state, 'studentsReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getStudents: () => dispatch(getStudents()),
+  getAllUsers: () => dispatch(getAllUsers()),
 });
 
 export default connect(
