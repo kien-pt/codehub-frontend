@@ -51,7 +51,7 @@ function HomeCourses(props) {
                         <Grid container>
                           <Grid item xs={8}>
                             <div style={{ fontSize: 24, padding: 8 }}>
-                              {quiz?.name}
+                              {quiz?.title}
                             </div>
                           </Grid>
                           <Grid item xs={4}>

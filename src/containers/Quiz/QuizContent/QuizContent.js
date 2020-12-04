@@ -26,7 +26,7 @@ function QuizContent(props) {
   return (
     <Card>
       <CardHeader
-        title={quiz?.name}
+        title={quiz?.title}
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>

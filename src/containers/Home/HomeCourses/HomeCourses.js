@@ -14,21 +14,20 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
-import { getTags, getQuiz } from '../../../reducer/quiz';
+import { getTags } from '../../../reducer/quiz';
 import { getAllPoint } from '../../../reducer/point';
 
 import InsertCourseModal from '../../Courses/InsertCourseModal';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getCourses, getTags, getAllPoint, getQuiz } = props;
+  const { getCourses, getTags, getAllPoint } = props;
 
   useEffect(() => {
     getCourses();
     getTags();
     getAllPoint();
-    getQuiz();
-  }, [getCourses, getTags, getAllPoint, getQuiz]);
+  }, [getCourses, getTags, getAllPoint]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
@@ -82,7 +81,6 @@ const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getCourses: () => dispatch(getCourses()),
   getAllPoint: () => dispatch(getAllPoint()),
-  getQuiz: () => dispatch(getQuiz()),
 });
 
 export default connect(

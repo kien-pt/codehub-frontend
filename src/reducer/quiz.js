@@ -8,9 +8,9 @@ import { insertSubmission } from '../reducer/submissions';
 
 const EMPTY_QUIZ_LIST = 'EMPTY_QUIZ_LIST';
 
-const GET_QUIZ_LOADING = 'GET_QUIZ_LOADING';
-const GET_QUIZ_SUCCESS = 'GET_QUIZ_SUCCESS';
-const GET_QUIZ_FAILURE = 'GET_QUIZ_FAILURE';
+const GET_QUIZ_BY_ID_LOADING = 'GET_QUIZ_BY_ID_LOADING';
+const GET_QUIZ_BY_ID_SUCCESS = 'GET_QUIZ_BY_ID_SUCCESS';
+const GET_QUIZ_BY_ID_FAILURE = 'GET_QUIZ_BY_ID_FAILURE';
 
 const GET_QUIZ_BY_TAG_ID_LOADING = 'GET_QUIZ_BY_TAG_ID_LOADING';
 const GET_QUIZ_BY_TAG_ID_SUCCESS = 'GET_QUIZ_BY_TAG_ID_SUCCESS';
@@ -39,43 +39,43 @@ const initialState = fromJS({
   isSubmitting: false,
 });
 
-export const getQuiz = () => async (dispatch) => {
-  const api = QUIZ_API.getQuiz();
-  dispatch({
-    type: GET_QUIZ_LOADING,
-    meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
-  });
-  const { response, error } = await apiCall({ ...api });
-  if (!error && response.status === 200) {
-    dispatch({
-      type: GET_QUIZ_SUCCESS,
-      payload: response.data,
-      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
-    });
-  } else {
-    dispatch({
-      type: GET_QUIZ_FAILURE,
-      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
-    });
-  }
-};
+// export const getQuiz = () => async (dispatch) => {
+//   const api = QUIZ_API.getQuiz();
+//   dispatch({
+//     type: GET_QUIZ_LOADING,
+//     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
+//   });
+//   const { response, error } = await apiCall({ ...api });
+//   if (!error && response.status === 200) {
+//     dispatch({
+//       type: GET_QUIZ_SUCCESS,
+//       payload: response.data,
+//       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
+//     });
+//   } else {
+//     dispatch({
+//       type: GET_QUIZ_FAILURE,
+//       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
+//     });
+//   }
+// };
 
 export const getQuizById = (id) => async (dispatch) => {
   const api = QUIZ_API.getQuizById(id);
   dispatch({
-    type: GET_QUIZ_LOADING,
+    type: GET_QUIZ_BY_ID_LOADING,
     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_QUIZ_SUCCESS,
-      payload: response.data,
+      type: GET_QUIZ_BY_ID_SUCCESS,
+      payload: [response.data],
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
-      type: GET_QUIZ_FAILURE,
+      type: GET_QUIZ_BY_ID_FAILURE,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
     });
   }
@@ -94,7 +94,6 @@ export const getQuizByTagId = (id) => async (dispatch) => {
       payload: response.data.quizzes,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
-    console.log(response.data.quizzes);
   } else {
     dispatch({
       type: GET_QUIZ_BY_TAG_ID_FAILURE,
@@ -207,21 +206,21 @@ export const submitCode = (history, quizId, point, sourceCode, input, output) =>
 
 export default function quizReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_QUIZ_LOADING:
+    case GET_QUIZ_BY_ID_LOADING:
     case GET_TAGS_LOADING:
     case GET_QUIZ_BY_TAG_ID_LOADING:
       return state.merge({
         isFetching: true,
       });
 
-    case GET_QUIZ_FAILURE:
+    case GET_QUIZ_BY_ID_FAILURE:
     case GET_TAGS_FAILURE:
     case GET_QUIZ_BY_TAG_ID_FAILURE:
       return state.merge({
         isFetching: false,
       });
 
-    case GET_QUIZ_SUCCESS:
+    case GET_QUIZ_BY_ID_SUCCESS:
       return state.merge({
         quiz: [...action.payload],
         isFetching: false,
