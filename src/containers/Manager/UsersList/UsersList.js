@@ -61,7 +61,7 @@ function UsersList(props) {
     <>
       <Card style={{ color: 'white', padding: 0 }}>
         <CardHeader
-          title="ok"
+          title="Danh sách người dùng"
           style={{ backgroundColor: '#39424E', height: 32 }}
         />
         <CardContent>
