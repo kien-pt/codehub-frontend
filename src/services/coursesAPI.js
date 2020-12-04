@@ -11,4 +11,9 @@ export const COURSES_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  insertCourses: () => ({
+    endPoint: 'api/v1/courses/new',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 };
