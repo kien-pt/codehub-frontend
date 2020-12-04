@@ -21,6 +21,10 @@ const INSERT_USER_LOADING = 'INSERT_USER_LOADING';
 const INSERT_USER_SUCCESS = 'INSERT_USER_SUCCESS';
 const INSERT_USER_FAILURE = 'INSERT_USER_FAILURE';
 
+const UPDATE_USER_LOADING = 'UPDATE_USER_LOADING';
+const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+
 const DELETE_USER_LOADING = 'DELETE_USER_LOADING';
 const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
@@ -127,6 +131,35 @@ export const insertUser = (payload) => async (dispatch) => {
   }
 };
 
+export const updateUser = (payload) => async (dispatch) => {
+  const api = USERS_API.updateUser();
+  dispatch({
+    type: UPDATE_USER_LOADING,
+    meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
+    });
+    return ({
+      type: 'success',
+      message: error,
+    });
+  } else {
+    dispatch({
+      type: UPDATE_USER_FAILURE,
+      meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'fail',
+      message: error,
+    });
+  }
+};
+
 export const deleteUser = (id) => async (dispatch) => {
   const api = USERS_API.deleteUser(id);
   dispatch({
@@ -161,6 +194,7 @@ export default function usersReducer(state = initialState, action) {
     case LOGIN_LOADING:
     case GET_USER_BY_ID_LOADING:
     case INSERT_USER_LOADING:
+    case UPDATE_USER_LOADING:
     case DELETE_USER_LOADING:
     case GET_ALL_USERS_LOADING:
       return state.merge({
@@ -170,6 +204,7 @@ export default function usersReducer(state = initialState, action) {
     case LOGIN_FAILURE:
     case GET_USER_BY_ID_FAILURE:
     case INSERT_USER_FAILURE:
+    case UPDATE_USER_FAILURE:
     case DELETE_USER_FAILURE:
     case GET_ALL_USERS_FAILURE:
       return state.merge({
@@ -188,7 +223,7 @@ export default function usersReducer(state = initialState, action) {
 
     case GET_USER_BY_ID_SUCCESS:
       return state.merge({
-        user: action.payload,
+        user: {...action.payload},
         isFetching: false,
       });
 
@@ -203,11 +238,33 @@ export default function usersReducer(state = initialState, action) {
         isFetching: false,
       });
 
+    case UPDATE_USER_SUCCESS: {
+      const newList = state.get('usersList');
+      const id = newList.findIndex((e) => e.id === action.payload.id);
+      const tempUser = {
+        ...newList[id],
+        username: action.payload.username,
+        fullname: action.payload.fullname,
+      }
+      newList.splice(id, 1, tempUser);
+      
+      const newUser = state.get('user');
+      if (newUser.id === action.payload.id) {
+        newUser.username = action.payload.username;
+        newUser.fullname = action.payload.fullname;
+      }
+      console.log(newUser);
+      return state.merge({
+        user: {...newUser},
+        usersList: [...newList],
+        isFetching: false,
+      });
+    }
+
     case DELETE_USER_SUCCESS: {
       const newList = state.get('usersList');
       const id = newList.findIndex((e) => e.id === action.id);
       newList.splice(id, 1);
-      console.log(id, newList);
       return state.merge({
         usersList: [...newList],
         isFetching: false,

@@ -21,6 +21,11 @@ export const USERS_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  updateUser: () => ({
+    endPoint: 'api/v1/users/update',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,  
+  }),
   deleteUser: (id) => ({
     endPoint: `api/v1/users/delete/id/?id=${id}`,
     method: 'DELETE',
