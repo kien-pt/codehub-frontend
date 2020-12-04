@@ -88,15 +88,17 @@ function UsersList(props) {
                     </TableCell>
                   </TableRow>
                 ))}
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5]}
+                    rowsPerPage={rowsPerPage}
+                    count={props.usersList.length}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                  />  
+                </TableRow>
               </TableBody>
-              <TablePagination
-                rowsPerPageOptions={[5]}
-                rowsPerPage={rowsPerPage}
-                count={props.usersList.length}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-              />
             </Table>
           </TableContainer>
         </CardContent>

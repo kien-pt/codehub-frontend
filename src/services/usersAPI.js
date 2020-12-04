@@ -6,6 +6,11 @@ export const USERS_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  login: () => ({
+    endPoint: 'api/v1/logout',
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
   getAllUsers: (id) => ({
     endPoint: 'api/v1/users/all',
     method: 'GET',

@@ -9,6 +9,10 @@ const LOGIN_LOADING = 'LOGIN_LOADING';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+const LOGOUT_LOADING = 'LOGOUT_LOADING';
+const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
 const GET_ALL_USERS_LOADING = 'GET_ALL_USERS_LOADING';
 const GET_ALL_USERS_SUCCESS = 'GET_ALL_USERS_SUCCESS';
 const GET_ALL_USERS_FAILURE = 'GET_ALL_USERS_FAILURE';
@@ -54,6 +58,30 @@ export const login = (history, payload) => async (dispatch) => {
   } else {
     dispatch({
       type: LOGIN_FAILURE,
+      meta: { prefix: [PREFIX.USER, PREFIX.API_FAILURE] },
+    });
+    return 'error';
+  }
+};
+
+export const logout = (history, payload) => async (dispatch) => {
+  const api = USERS_API.logout();
+  dispatch({
+    type: LOGOUT_LOADING,
+    meta: { prefix: [PREFIX.USER, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: LOGOUT_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
+    });
+    history.push(ROUTER.LOGIN);
+    return 'success';
+  } else {
+    dispatch({
+      type: LOGOUT_FAILURE,
       meta: { prefix: [PREFIX.USER, PREFIX.API_FAILURE] },
     });
     return 'error';
