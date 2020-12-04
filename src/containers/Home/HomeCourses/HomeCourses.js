@@ -7,8 +7,10 @@ import {
   CardHeader,
   CardActionArea,
   Button,
+  Grid,
   LinearProgress,
 } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -21,7 +23,15 @@ import InsertCourseModal from '../../Courses/InsertCourseModal';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getCourses, getTags, getAllPoint } = props;
+  const { getCourses, getAllPoint } = props;
+
+  const [isInserting, setInserting] = useState(false);
+
+  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+
+  const handleClick = (inserting) => {
+    setInserting(inserting);
+  }
 
   useEffect(() => {
     getCourses();
@@ -31,7 +41,21 @@ function HomeCourses(props) {
   return (
     <Card style={{ color: 'white', padding: 0 }}>
       <CardHeader
-        title="Các lớp học phần"
+        title={
+          <Grid container>
+            <Grid item xs={10}>Các lớp học phần</Grid>
+            <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => handleClick(true)}
+                style={{ float: 'right', borderColor: 'white' }}
+              >
+                <Add fontSize="small" style={{ color: 'white' }} />
+              </Button>
+            </Grid>
+          </Grid>
+        }
         style={{ backgroundColor: '#39424E' }}
       />
       <CardContent>
@@ -62,7 +86,7 @@ function HomeCourses(props) {
             </Card>
           )
         })}
-        {/* <InsertCourseModal /> */}
+        <InsertCourseModal isInserting={isInserting} handleClick={handleClick} />
       </CardContent>
     </Card>
   );

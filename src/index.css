@@ -60,3 +60,10 @@ input.MuiOutlinedInput-input {
   padding: 6px 4px;
   font-size: 13px;
 }
+
+div.MuiDialogTitle-root {
+  background-color: #39424E;
+  color: white;
+  font-size: 24px;
+  padding: 8px 16px;
+}

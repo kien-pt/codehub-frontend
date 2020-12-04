@@ -78,8 +78,6 @@ export const logout = (history) => async (dispatch) => {
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
     history.push(ROUTER.LOGIN);
-    sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("expiredTime");
     return 'success';
   } else {
     dispatch({
@@ -222,6 +220,7 @@ export const deleteUser = (id) => async (dispatch) => {
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_LOADING:
+    case LOGOUT_LOADING:
     case GET_USER_BY_ID_LOADING:
     case INSERT_USER_LOADING:
     case UPDATE_USER_LOADING:
@@ -232,6 +231,7 @@ export default function usersReducer(state = initialState, action) {
       });
 
     case LOGIN_FAILURE:
+    case LOGOUT_FAILURE:
     case GET_USER_BY_ID_FAILURE:
     case INSERT_USER_FAILURE:
     case UPDATE_USER_FAILURE:
@@ -246,6 +246,16 @@ export default function usersReducer(state = initialState, action) {
       expiredTime.setHours(expiredTime.getHours() + 1);
       sessionStorage.setItem("expiredTime", expiredTime);
       sessionStorage.setItem("userId", action.payload.id);
+      sessionStorage.setItem("isAdmin", action.payload.admin);
+      return state.merge({
+        isFetching: false,
+      });
+    }
+
+    case LOGIN_SUCCESS: {
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("expiredTime");
+      sessionStorage.removeItem("isAdmin");
       return state.merge({
         isFetching: false,
       });
@@ -283,7 +293,6 @@ export default function usersReducer(state = initialState, action) {
         newUser.username = action.payload.username;
         newUser.fullname = action.payload.fullname;
       }
-      console.log(newUser);
       return state.merge({
         user: {...newUser},
         usersList: [...newList],
