@@ -21,6 +21,10 @@ const INSERT_USER_LOADING = 'INSERT_USER_LOADING';
 const INSERT_USER_SUCCESS = 'INSERT_USER_SUCCESS';
 const INSERT_USER_FAILURE = 'INSERT_USER_FAILURE';
 
+const DELETE_USER_LOADING = 'DELETE_USER_LOADING';
+const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
+
 const initialState = fromJS({
   user: null,
   usersList: [],
@@ -59,7 +63,6 @@ export const getAllUsers = () => async (dispatch) => {
     meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
-  console.log(response);
   if (!error && response.status === 200) {
     dispatch({
       type: GET_ALL_USERS_SUCCESS,
@@ -124,11 +127,40 @@ export const insertUser = (payload) => async (dispatch) => {
   }
 };
 
+export const deletetUser = (id) => async (dispatch) => {
+  const api = USERS_API.deletetUser(id);
+  dispatch({
+    type: DELETE_USER_LOADING,
+    meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
+    });
+    return ({
+      type: 'success',
+      message: error,
+    });
+  } else {
+    dispatch({
+      type: DELETE_USER_FAILURE,
+      meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'fail',
+      message: error,
+    });
+  }
+};
+
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_LOADING:
     case GET_USER_BY_ID_LOADING:
     case INSERT_USER_LOADING:
+    case DELETE_USER_LOADING:
     case GET_ALL_USERS_LOADING:
       return state.merge({
         isFetching: true,
@@ -137,6 +169,7 @@ export default function usersReducer(state = initialState, action) {
     case LOGIN_FAILURE:
     case GET_USER_BY_ID_FAILURE:
     case INSERT_USER_FAILURE:
+    case DELETE_USER_FAILURE:
     case GET_ALL_USERS_FAILURE:
       return state.merge({
         isFetching: false,
@@ -168,6 +201,12 @@ export default function usersReducer(state = initialState, action) {
         usersList: [...action.payload],
         isFetching: false,
       });
+
+    case DELETE_USER_SUCCESS:
+      return state.merge({
+        usersList: [...action.payload],
+        isFetching: false,
+      }); 
 
     default: return state;
   }
