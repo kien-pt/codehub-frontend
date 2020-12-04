@@ -12,9 +12,11 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  CardActionArea,
   DialogContentText,
   DialogActions,
   Snackbar,
+  Fab,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
 import { AddBox, Clear } from '@material-ui/icons';
@@ -73,39 +75,45 @@ function HomeCourses(props) {
             props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
 
             return (
-              <Card key={course.id} style={{ marginBottom: 16 }}>
-                <CardContent style={{ position: 'relative' }}>
-                  <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{course.name}</div>
-                  <IconButton
-                    onClick={() => setDeletedCourse(course)}
-                    style={{ position: 'absolute', right: 4, top: 4 }}
-                  >
-                    <Clear />
-                  </IconButton>
-                  <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
-                  <div style={{ padding: '12px 0' }}>
-                    <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
-                    <span>&nbsp; {` ${currentPoint}/${totalPoint}`}</span>
-                  </div>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => {
-                      history.push({
-                        pathname: `${ROUTER.COURSES}/${course.id}`,
-                        state: { courseId: course.id },
-                      });
-                    }}
-                  >
-                    Tiếp tục luyện tập
-                  </Button>
-                </CardContent>
+              <Card key={course.id} style={{ marginBottom: 16, position: 'relative' }}>
+                <CardActionArea onClick={() => {
+                  history.push({
+                    pathname: `${ROUTER.COURSES}/${course.id}`,
+                    state: { courseId: course.id },
+                  });
+                }}>
+                  <CardContent>
+                    <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{course.name}</div>
+                    <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
+                    <div style={{ padding: '12px 0' }}>
+                      <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
+                      <span>&nbsp; {` ${currentPoint}/${totalPoint}`}</span>
+                    </div>
+                    <div className="cardButton" style={{ minWidth: 120, width: '20%' }}>Tiếp tục luyện tập</div>
+                  </CardContent>
+                </CardActionArea>
+
+                <Fab
+                  size="small"
+                  onClick={() => setDeletedCourse(course)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    color: 'rgb(0 0 0 / 50%)',
+                    boxShadow: 'none',
+                    top: 0,
+                    right: 0,
+                  }}
+                >
+                  <Clear />
+                </Fab>
               </Card>
             )
           })}
-          <InsertCourseModal isInserting={isInserting} handleClick={handleClick} />
         </CardContent>
       </Card>
+
+      <InsertCourseModal isInserting={isInserting} handleClick={handleClick} />
 
       <Dialog
         open={deletedCourse !== null}
