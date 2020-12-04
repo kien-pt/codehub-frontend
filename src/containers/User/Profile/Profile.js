@@ -16,7 +16,6 @@ import { AssignmentInd, Person } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 import { updateUser } from '../../../reducer/users';
 
