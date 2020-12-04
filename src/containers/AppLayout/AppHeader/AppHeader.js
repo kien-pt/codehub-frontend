@@ -79,6 +79,11 @@ function AppHeader(props) {
     handleClose();
   };
 
+  const linkToUser = () => {
+    history.push(`${ROUTER.USER}/${userId}`);
+    handleClose();
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -217,7 +222,7 @@ function AppHeader(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={linkToUser}>
           <Person fontSize="small" style={{ paddingRight: 16 }} />
           <Typography variant="inherit" noWrap>{username}</Typography>
         </MenuItem>
