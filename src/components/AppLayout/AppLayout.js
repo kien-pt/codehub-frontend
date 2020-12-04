@@ -9,6 +9,7 @@ import Courses from '../Courses';
 import Quiz from '../Quiz';
 import Submission from '../Submission';
 import Manager from '../Manager';
+import User from '../User';
 
 function AppLayout() {
   return (
@@ -21,7 +22,7 @@ function AppLayout() {
           <Route path={ROUTER.QUIZ} component={Quiz} />
           <Route path={ROUTER.SUBMISSION} component={Submission} />
           <Route path={ROUTER.MANAGER} component={Manager} />
-          <Route path={ROUTER.USER} component={Manager} />
+          <Route path={ROUTER.USER} component={User} />
         </Switch>
       </div>
     </>

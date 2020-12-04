@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
-import Profile from '../../containers/Manager/Profile';
+import Profile from '../../containers/User/Profile';
 import UsersList from '../../containers/Manager/UsersList';
 
 function Manager() {
