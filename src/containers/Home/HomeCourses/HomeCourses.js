@@ -9,8 +9,9 @@ import {
   Button,
   Grid,
   LinearProgress,
+  IconButton,
 } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { AddBox, Clear } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -45,14 +46,9 @@ function HomeCourses(props) {
           <Grid container>
             <Grid item xs={10}>Các lớp học phần</Grid>
             <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => handleClick(true)}
-                style={{ float: 'right', borderColor: 'white' }}
-              >
-                <Add fontSize="small" style={{ color: 'white' }} />
-              </Button>
+              <IconButton size="small" onClick={() => handleClick(true)} style={{ float: 'right', marginBottom: 2 }}>
+                <AddBox style={{ color: 'white' }} />
+              </IconButton>
             </Grid>
           </Grid>
         }
@@ -73,8 +69,11 @@ function HomeCourses(props) {
                   state: { courseId: course.id },
                 });
               }}>
-                <CardContent>
+                <CardContent style={{ position: 'relative' }}>
                   <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{course.name}</div>
+                  <IconButton style={{ position: 'absolute', right: 4, top: 4 }}>
+                    <Clear />
+                  </IconButton>
                   <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
                   <div style={{ padding: '12px 0' }}>
                     <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
