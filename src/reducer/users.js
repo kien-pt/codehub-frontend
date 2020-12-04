@@ -127,8 +127,8 @@ export const insertUser = (payload) => async (dispatch) => {
   }
 };
 
-export const deletetUser = (id) => async (dispatch) => {
-  const api = USERS_API.deletetUser(id);
+export const deleteUser = (id) => async (dispatch) => {
+  const api = USERS_API.deleteUser(id);
   dispatch({
     type: DELETE_USER_LOADING,
     meta: { prefix: [PREFIX.USERS, PREFIX.API_CALLING] },
@@ -137,6 +137,7 @@ export const deletetUser = (id) => async (dispatch) => {
   if (!error && response.status === 200) {
     dispatch({
       type: DELETE_USER_SUCCESS,
+      id,
       meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
     });
     return ({
@@ -202,11 +203,16 @@ export default function usersReducer(state = initialState, action) {
         isFetching: false,
       });
 
-    case DELETE_USER_SUCCESS:
+    case DELETE_USER_SUCCESS: {
+      const newList = state.get('usersList');
+      const id = newList.findIndex((e) => e.id === action.id);
+      newList.splice(id, 1);
+      console.log(id, newList);
       return state.merge({
-        usersList: [...action.payload],
+        usersList: [...newList],
         isFetching: false,
-      }); 
+      });
+    }
 
     default: return state;
   }

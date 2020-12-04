@@ -16,7 +16,6 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  Avatar,
 } from '@material-ui/core';
 import { Person, ExitToApp, Build, ExpandMore, AccountCircle } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
