@@ -22,8 +22,6 @@ function HomeRank(props) {
   const { getAllUsers } = props;
   const [courseIndex, setCourseIndex] = useState(0);
 
-  console.log(courseIndex);
-
   useEffect(() => {
     getAllUsers();
   }, [getAllUsers]);
@@ -63,8 +61,6 @@ function HomeRank(props) {
       {...props}
     />
   ));
-
-  console.log(props.courses[courseIndex]);
 
   return (
     <Card style={{ padding: 0 }}>
