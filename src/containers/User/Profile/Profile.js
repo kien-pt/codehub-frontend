@@ -9,7 +9,9 @@ import {
   FormControl,
   OutlinedInput,
   Divider,
+  Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab'; 
 import { AssignmentInd, Person } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
@@ -22,6 +24,7 @@ function Profile(props) {
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
   const [isEditting, setEditting] = useState(false);
+  const [noti, setNoti] = useState(null);
 
   useEffect(() => {
     setUsername(props.user?.username);
@@ -38,7 +41,9 @@ function Profile(props) {
       id: parseInt(sessionStorage.getItem("userId")),
       username,
       fullname,
-    });
+    })
+    .then(result => setNoti(result))
+    .catch();
   }
 
   return (
@@ -113,6 +118,12 @@ function Profile(props) {
         >
           Sửa thông tin
         </Button>
+
+        <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
+          <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
+            {noti?.message}
+          </Alert>
+        </Snackbar>
       </CardContent>
     </Card>
   );

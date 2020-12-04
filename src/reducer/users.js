@@ -146,7 +146,7 @@ export const updateUser = (payload) => async (dispatch) => {
     });
     return ({
       type: 'success',
-      message: error,
+      message: 'Thay đổi thông tin thành công!',
     });
   } else {
     dispatch({
@@ -155,7 +155,7 @@ export const updateUser = (payload) => async (dispatch) => {
     });
     return ({
       type: 'fail',
-      message: error,
+      message: 'Thay đổi thông tin thất bại!',
     });
   }
 };
