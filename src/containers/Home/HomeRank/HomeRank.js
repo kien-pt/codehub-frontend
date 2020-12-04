@@ -20,7 +20,9 @@ import { getAllUsers } from '../../../reducer/users';
 
 function HomeRank(props) {
   const { getAllUsers } = props;
-  const [courseId, setCourseId] = useState(props.courseId);
+  const [courseIndex, setCourseIndex] = useState(0);
+
+  console.log(courseIndex);
 
   useEffect(() => {
     getAllUsers();
@@ -29,7 +31,7 @@ function HomeRank(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleSelect = (index) => {
-    setCourseId(index);
+    setCourseIndex(index);
     handleClose();
   };
 
@@ -62,6 +64,8 @@ function HomeRank(props) {
     />
   ));
 
+  console.log(props.courses[courseIndex]);
+
   return (
     <Card style={{ padding: 0 }}>
       <CardHeader
@@ -76,7 +80,7 @@ function HomeRank(props) {
           onClick={handleClick}
           style={{ width: '100%' }}
         >
-          {props.courses.find((course) => course.id === courseId)?.name}
+          {props.courses?.length > 0 ? props.courses[courseIndex].name : null}
         </Button>
         <StyledMenu
           id="customized-menu"
@@ -85,13 +89,13 @@ function HomeRank(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {props.courses?.map((e) => (
-            <MenuItem key={e.id} onClick={() => handleSelect(e.id)}>{e.name}</MenuItem>
+          {props.courses?.map((e, index) => (
+            <MenuItem key={e.id} onClick={() => handleSelect(index)}>{e.name}</MenuItem>
           ))}
         </StyledMenu>
         {props.usersList?.filter((user) => !user.admin).slice(0, 10).map((student, index) => {
           var totalPoint = 0;
-          props.point.forEach((e) => totalPoint += (e.courseId === props.courses.find((course) => course.id === courseId)?.id && e.userId === student.id) ? e.point : 0);
+          props.point.forEach((e) => totalPoint += (e.courseIndex === props.courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
           return (
             <div key={student.id}>
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
