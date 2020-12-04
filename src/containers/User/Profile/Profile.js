@@ -27,11 +27,11 @@ function Profile(props) {
   const [noti, setNoti] = useState(null);
 
   useEffect(() => {
-    setUsername(props.user?.username);
+    setUsername(props.user?.username || '');
   }, [props.user?.username]);
 
   useEffect(() => {
-    setFullname(props.user?.fullname);
+    setFullname(props.user?.fullname || '');
   }, [props.user?.fullname]);
 
   const handleSubmit = (e) => {
@@ -68,7 +68,7 @@ function Profile(props) {
       <CardContent style={{ height: 220 }} />
       <CardContent style={{ color: 'black' }}>
         <Typography variant="h5">{props.user?.fullname}</Typography>
-        <Typography variant="caption" display="block" color="a2a2a2">{`@${props.user?.username}`}</Typography>
+        <Typography variant="caption" display="block" style={{ color: 'a2a2a2' }}>{`@${props.user?.username}`}</Typography>
         <Divider style={{ margin: '8px 0' }} />
         <form onSubmit={handleSubmit} style={{ display: isEditting ? 'block' : 'none' }}>
           <FormControl style={{ width: '100%', paddingBottom: 6 }}>

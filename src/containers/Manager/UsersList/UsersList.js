@@ -19,8 +19,10 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Snackbar,
 } from '@material-ui/core';
-import { Delete, ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab'; 
+import { Delete } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -34,10 +36,17 @@ function UsersList(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [deleteUser, setDeleteUser] = useState(null);
+  const [noti, setNoti] = useState(null);
 
   useEffect(() => {
     getAllUsers();
   }, [getAllUsers]);
+
+  const handleDelete = () => {
+    props.deleteUser(deleteUser.id)
+    .then(result => setNoti(result))
+    .catch();
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -109,7 +118,7 @@ function UsersList(props) {
           <Button onClick={() => setDeleteUser(null)} color="secondary">Huỷ</Button>
           <Button 
             onClick={() => {
-              props.deleteUser(deleteUser.id);
+              handleDelete();
               setDeleteUser(null);
             }}
             color="primary"
@@ -118,6 +127,12 @@ function UsersList(props) {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
+        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
+          {noti?.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

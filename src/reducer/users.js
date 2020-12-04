@@ -175,7 +175,7 @@ export const deleteUser = (id) => async (dispatch) => {
     });
     return ({
       type: 'success',
-      message: error,
+      message: 'Xoá tài khoản thành công!',
     });
   } else {
     dispatch({
@@ -184,7 +184,7 @@ export const deleteUser = (id) => async (dispatch) => {
     });
     return ({
       type: 'fail',
-      message: error,
+      message: 'Xoá tài khoản thất bại!',
     });
   }
 };

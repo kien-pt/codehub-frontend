@@ -11,7 +11,7 @@ function Manager() {
         <Profile />
       </Grid>
       <Grid item lg={7} md={8} xs={12}>
-        <UsersList />
+        {/* <UsersList /> */}
       </Grid>
     </Grid>
   );
