@@ -21,6 +21,7 @@ function AppLayout() {
           <Route path={ROUTER.QUIZ} component={Quiz} />
           <Route path={ROUTER.SUBMISSION} component={Submission} />
           <Route path={ROUTER.MANAGER} component={Manager} />
+          <Route path={ROUTER.USER} component={Manager} />
         </Switch>
       </div>
     </>
