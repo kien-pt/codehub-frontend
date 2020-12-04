@@ -41,6 +41,10 @@ function AppHeader(props) {
   const username = props.user?.username;
   const fullname = props.user?.fullname;
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isLogout, setLogout] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+
   const menuList = [
     {
       name: 'Bài tập',
@@ -52,10 +56,8 @@ function AppHeader(props) {
     link: ROUTER.MANAGER,
   });
 
-  const itemFocus = 0;
-  if (currentRoute === ROUTER.HOME) {
-    
-  }
+  if (currentRoute === ROUTER.HOME && selectedId !== 0) setSelectedId(0);
+  if (currentRoute === ROUTER.MANAGER && selectedId !== 1) setSelectedId(1);
 
   useEffect(() => {
     if (expiredTime - currentTime <= 0) logout();
@@ -65,9 +67,6 @@ function AppHeader(props) {
   useEffect(() => {
     if (userId >= 0) props.getUserById(userId);
   }, []);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [isLogout, setLogout] = useState(false);
 
   const logout = () => {
     sessionStorage.removeItem("userId");
@@ -172,7 +171,7 @@ function AppHeader(props) {
                       padding: '0 8px',
                       cursor: 'pointer',
                       lineHeight: '60px',
-                      borderBottom: (itemFocus === index) ? '5px solid #1BA94C' : 'none',
+                      borderBottom: (selectedId === index) ? '5px solid #1BA94C' : 'none',
                     }}
                   >
                     {item.name}
