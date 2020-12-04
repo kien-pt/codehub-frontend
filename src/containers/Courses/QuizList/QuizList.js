@@ -14,7 +14,7 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getQuizByCourseId, getTagsByCourseId } from '../../../reducer/quiz';
+import { getTagsByCourseId } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
 
 function HomeCourses(props) {
@@ -23,7 +23,6 @@ function HomeCourses(props) {
     getCourseById,
     getPointByCourseId,
     getTagsByCourseId,
-    getQuizByCourseId,
     courseId,
   } = props;
 
@@ -31,8 +30,7 @@ function HomeCourses(props) {
     getCourseById(courseId);
     getPointByCourseId(courseId);
     getTagsByCourseId(courseId);
-    getQuizByCourseId(courseId);
-  }, [courseId, getCourseById, getPointByCourseId, getQuizByCourseId, getTagsByCourseId]);
+  }, [courseId, getCourseById, getPointByCourseId, , getTagsByCourseId]);
 
   return (
     <>
@@ -83,7 +81,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getQuizByCourseId: (id) => dispatch(getQuizByCourseId(id)),
   getTagsByCourseId: (id) => dispatch(getTagsByCourseId(id)),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
   getPointByCourseId: (courseId) => dispatch(getPointByCourseId(courseId)),

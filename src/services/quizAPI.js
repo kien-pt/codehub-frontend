@@ -21,8 +21,8 @@ export const QUIZ_API = {
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),
-  getQuizByCourseId: (id) => ({
-    endPoint: `api/v1/quiz/?courseId=${id}`,
+  getQuizByTagId: (id) => ({
+    endPoint: `api/v1/quizzes/tags/id/?id=${id}`,
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),

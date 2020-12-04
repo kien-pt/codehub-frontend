@@ -6,9 +6,15 @@ import { QUIZ_API } from '../services/quizAPI';
 
 import { insertSubmission } from '../reducer/submissions';
 
+const EMPTY_QUIZ_LIST = 'EMPTY_QUIZ_LIST';
+
 const GET_QUIZ_LOADING = 'GET_QUIZ_LOADING';
 const GET_QUIZ_SUCCESS = 'GET_QUIZ_SUCCESS';
 const GET_QUIZ_FAILURE = 'GET_QUIZ_FAILURE';
+
+const GET_QUIZ_BY_TAG_ID_LOADING = 'GET_QUIZ_BY_TAG_ID_LOADING';
+const GET_QUIZ_BY_TAG_ID_SUCCESS = 'GET_QUIZ_BY_TAG_ID_SUCCESS';
+const GET_QUIZ_BY_TAG_ID_FAILURE = 'GET_QUIZ_BY_TAG_ID_FAILURE';
 
 const GET_TAGS_LOADING = 'GET_TAGS_LOADING';
 const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
@@ -75,22 +81,23 @@ export const getQuizById = (id) => async (dispatch) => {
   }
 };
 
-export const getQuizByCourseId = (id) => async (dispatch) => {
-  const api = QUIZ_API.getQuizByCourseId(id);
+export const getQuizByTagId = (id) => async (dispatch) => {
+  const api = QUIZ_API.getQuizByTagId(id);
   dispatch({
-    type: GET_QUIZ_LOADING,
+    type: GET_QUIZ_BY_TAG_ID_LOADING,
     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_QUIZ_SUCCESS,
-      payload: response.data,
+      type: GET_QUIZ_BY_TAG_ID_SUCCESS,
+      payload: response.data.quizzes,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
+    console.log(response.data.quizzes);
   } else {
     dispatch({
-      type: GET_QUIZ_FAILURE,
+      type: GET_QUIZ_BY_TAG_ID_FAILURE,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
     });
   }
@@ -130,6 +137,11 @@ export const getTagsByCourseId = (id) => async (dispatch) => {
       payload: response.data.tags,
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
     });
+    dispatch({
+      type: EMPTY_QUIZ_LIST,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
+    });
+    response.data.tags.forEach((tag) => dispatch(getQuizByTagId(tag.id)))
   } else {
     dispatch({
       type: GET_TAGS_FAILURE,
@@ -197,12 +209,14 @@ export default function quizReducer(state = initialState, action) {
   switch (action.type) {
     case GET_QUIZ_LOADING:
     case GET_TAGS_LOADING:
+    case GET_QUIZ_BY_TAG_ID_LOADING:
       return state.merge({
         isFetching: true,
       });
 
     case GET_QUIZ_FAILURE:
     case GET_TAGS_FAILURE:
+    case GET_QUIZ_BY_TAG_ID_FAILURE:
       return state.merge({
         isFetching: false,
       });
@@ -234,7 +248,18 @@ export default function quizReducer(state = initialState, action) {
         return state.merge({
           isSubmitting: false,
         });
-      
+
+      case EMPTY_QUIZ_LIST: 
+        return state.merge({
+          quiz: [],
+        });
+
+      case GET_QUIZ_BY_TAG_ID_SUCCESS:
+        return state.merge({
+          quiz: [...state.get('quiz'), ...action.payload],
+          isFetching: false,
+        });
+
       case SUBMIT_CODE_SUCCESS: {
         testCaseCount = state.get('testCaseCount') - 1;
         testCase = [...state.get('testCase'), action.payload];
