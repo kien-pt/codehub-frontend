@@ -1,0 +1,12 @@
+.text-area {
+  font-size: 16px; 
+  width: calc(100% - 11px); 
+  padding: 4px; 
+  border: solid 1px #00000030; 
+  resize: unset;
+  font-family: inherit;
+}
+
+.text-area:focus {
+  outline: none;
+}
