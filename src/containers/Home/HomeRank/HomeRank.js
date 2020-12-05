@@ -86,14 +86,14 @@ function HomeRank(props) {
           onClose={handleClose}
         >
           {props.courses?.map((e, index) => (
-            <MenuItem key={e.id} onClick={() => handleSelect(index)}>{e.name}</MenuItem>
+            <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>
           ))}
         </StyledMenu>
         {props.usersList?.filter((user) => !user.admin).slice(0, 10).map((student, index) => {
           var totalPoint = 0;
           props.point.forEach((e) => totalPoint += (e.courseIndex === props.courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
           return (
-            <div key={student.id}>
+            <div key={student.username}>
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
               <Grid container>
                 <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>

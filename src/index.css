@@ -67,3 +67,7 @@ div.MuiDialogTitle-root {
   font-size: 24px;
   padding: 8px 16px;
 }
+
+div.MuiDialog-paperWidthSm {
+  min-width: 600px;
+}

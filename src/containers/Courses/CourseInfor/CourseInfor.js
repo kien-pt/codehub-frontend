@@ -23,6 +23,7 @@ import InsertTagModal from '../../Manager/InsertTagModal';
 import { insertCourse } from '../../../reducer/courses';
 
 function CourseInfor(props) {
+  const { courseId } = props;
   const [isInserting, setInserting] = useState(false);
 
   const handleClick = (inserting) => {
@@ -48,7 +49,7 @@ function CourseInfor(props) {
         </CardContent>
       </Card>
 
-      <InsertTagModal isInserting={isInserting} handleClick={handleClick} />
+      <InsertTagModal isInserting={isInserting} courseId={courseId} handleClick={handleClick} />
     </>
   );
 }

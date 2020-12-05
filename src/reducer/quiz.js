@@ -24,6 +24,10 @@ const GET_TAGS_LOADING = 'GET_TAGS_LOADING';
 const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
 const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
 
+const INSERT_TAG_LOADING = 'INSERT_TAG_LOADING';
+const INSERT_TAG_SUCCESS = 'INSERT_TAG_SUCCESS';
+const INSERT_TAG_FAILURE = 'INSERT_TAG_FAILURE';
+
 const RESET_TEST_CASE_COUNT = 'RESET_TEST_CASE_COUNT';
 
 const SUBMIT_CODE_LOADING = 'SUBMIT_CODE_LOADING';
@@ -127,6 +131,27 @@ export const getTags = () => async (dispatch) => {
   }
 };
 
+export const insertTag = (payload) => async (dispatch) => {
+  const api = QUIZ_API.insertTag();
+  dispatch({
+    type: INSERT_TAG_LOADING,
+    meta: { prefix: [PREFIX.TAGS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: INSERT_TAG_SUCCESS,
+      payload: [response.data],
+      meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: INSERT_TAG_FAILURE,
+      meta: { prefix: [PREFIX.TAGS, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
 export const getTagsByCourseId = (id) => async (dispatch) => {
   const api = QUIZ_API.getTagsByCourseId(id);
   dispatch({
@@ -213,6 +238,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_ALL_QUIZ_LOADING:
     case GET_QUIZ_BY_ID_LOADING:
     case GET_TAGS_LOADING:
+    case INSERT_TAG_LOADING:
     case GET_QUIZ_BY_TAG_ID_LOADING:
       return state.merge({
         isFetching: true,
@@ -221,6 +247,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_ALL_QUIZ_FAILURE:
     case GET_QUIZ_BY_ID_FAILURE:
     case GET_TAGS_FAILURE:
+    case INSERT_TAG_FAILURE:
     case GET_QUIZ_BY_TAG_ID_FAILURE:
       return state.merge({
         isFetching: false,
@@ -277,6 +304,12 @@ export default function quizReducer(state = initialState, action) {
       case GET_ALL_QUIZ_SUCCESS:
         return state.merge({
           quiz: [...action.payload],
+          isFetching: false,
+        });
+      
+      case INSERT_TAG_SUCCESS:
+        return state.merge({
+          tags: [...state.get('tags'), ...action.payload],
           isFetching: false,
         });
 

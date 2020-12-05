@@ -16,7 +16,7 @@ function Courses() {
       </Grid>
       <Grid item lg={3} md={4} xs={12}>
         <HomeRank courseId={courseId} disabled={true} />
-        <CourseInfor />
+        <CourseInfor courseId={courseId} />
       </Grid>
     </Grid>
   );
