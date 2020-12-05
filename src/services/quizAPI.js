@@ -11,8 +11,8 @@ export const QUIZ_API = {
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),
-  getQuiz: () => ({
-    endPoint: 'api/v1/quiz',
+  getAllQuiz: () => ({
+    endPoint: 'api/v1/quizzes/all',
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),

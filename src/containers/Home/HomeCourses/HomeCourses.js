@@ -27,14 +27,14 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
-import { getTags } from '../../../reducer/quiz';
+import { getAllQuiz, getTags } from '../../../reducer/quiz';
 import { getAllPoint } from '../../../reducer/point';
 
 import { deleteCourse } from '../../../reducer/courses';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getCourses, getAllPoint } = props;
+  const { getAllQuiz, getCourses, getAllPoint } = props;
 
   const [isInserting, setInserting] = useState(false);
   const [deletedCourse, setDeletedCourse] = useState(null);
@@ -49,7 +49,8 @@ function HomeCourses(props) {
   useEffect(() => {
     getCourses();
     getAllPoint();
-  }, [getCourses, getAllPoint]);
+    getAllQuiz();
+  }, [getAllQuiz, getCourses, getAllPoint]);
 
   return (
     <>
@@ -162,6 +163,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
+  getAllQuiz: () => dispatch(getAllQuiz()),
   getCourses: () => dispatch(getCourses()),
   getAllPoint: () => dispatch(getAllPoint()),
   deleteCourse: (id) => dispatch(deleteCourse(id)),
