@@ -22,7 +22,7 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
-import { Delete } from '@material-ui/icons';
+import { Delete, Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -65,7 +65,7 @@ function UsersList(props) {
           style={{ backgroundColor: '#39424E', height: 32 }}
         />
         <CardContent>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} style={{ marginTop: 12 }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -76,6 +76,7 @@ function UsersList(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
+
                 {props.usersList.slice(rowsPerPage * page, rowsPerPage * (page + 1)).map((user) => (
                   <TableRow key={user.username}>
                     <TableCell align="left" width="10%">{user.id}</TableCell>
@@ -89,6 +90,13 @@ function UsersList(props) {
                   </TableRow>
                 ))}
                 <TableRow>
+                  <Button
+                    variant="outlined"
+                    startIcon={<Add />}
+                    style={{ height: 35, margin: '10px 16px', minWidth: 150 }}
+                  >
+                    Thêm mới
+                  </Button>
                   <TablePagination
                     rowsPerPageOptions={[5]}
                     rowsPerPage={rowsPerPage}
