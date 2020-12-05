@@ -46,7 +46,7 @@ export const getSubmissionsByQuizId = (id) => async (dispatch) => {
   if (!error && response.status === 200) {
     dispatch({
       type: GET_SUBMISSIONS_SUCCESS,
-      payload: response.data,
+      payload: [response.data],
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
   } else {
