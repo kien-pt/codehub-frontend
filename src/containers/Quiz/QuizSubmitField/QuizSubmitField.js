@@ -7,9 +7,8 @@ import {
   CardHeader,
   Button,
   Grid,
-  Drawer,
+  Backdrop,
   CircularProgress,
-  withStyles,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
@@ -36,22 +35,6 @@ int main()
 	return 0;
 }
 `;
-
-const StyledDrawer = withStyles({
-  '&::-webkit-scrollbar': {
-    width: 0
-  },
-  drawer: {
-    position: 'absolute',
-    overflow: 'hidden',
-  },
-  paper: {
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
-    width: '100%',
-    overflow: "hidden",
-  }
-})(Drawer);
 
 function QuizSubmitField(props) {
   const history = useHistory();
@@ -85,9 +68,6 @@ function QuizSubmitField(props) {
 
   return (
     <>
-      <StyledDrawer open={isSubmitting}>
-        <CircularProgress style={{ margin: 'auto' }} />
-      </StyledDrawer>
       <Card style={{ marginTop: 32 }}>
         <CardHeader
           title="Bài nộp"
@@ -124,6 +104,9 @@ function QuizSubmitField(props) {
           </Grid>
         </CardContent>
       </Card>
+      <Backdrop open={false} style={{ zIndex: 10 }}>
+        <CircularProgress /> 
+      </Backdrop>
     </>
   );
 }
