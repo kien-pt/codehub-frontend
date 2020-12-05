@@ -97,6 +97,7 @@ function HomeCourses(props) {
                   size="small"
                   onClick={() => setDeletedCourse(course)}
                   style={{
+                    display: isAdmin ? 'inline-flex' : 'none',
                     backgroundColor: 'transparent',
                     position: 'absolute',
                     color: 'rgb(0 0 0 / 50%)',

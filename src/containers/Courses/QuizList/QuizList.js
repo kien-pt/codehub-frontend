@@ -8,8 +8,9 @@ import {
   CardActionArea,
   Grid,
   Fab,
+  IconButton,
 } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
+import { Clear, AddBox } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -34,13 +35,24 @@ function HomeCourses(props) {
     getTagsByCourseId(courseId);
   }, [courseId, getCourseById, getPointByCourseId, , getTagsByCourseId]);
 
+  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+
   return (
     <>
       {props.tags?.map((tag) => {
         return (
           <Card key={`tag-${tag?.id}`} style={{ padding: 0 }}>
             <CardHeader
-              title={tag?.name}
+              title={
+                <Grid container>
+                  <Grid item xs={10}>{tag?.name}</Grid>
+                  <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
+                    <IconButton size="small" style={{ float: 'right', marginBottom: 2 }}>
+                      <AddBox style={{ color: 'white' }} />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              }
               style={{ color: 'white', backgroundColor: '#39424E' }}
             />
             <CardContent>
@@ -65,6 +77,7 @@ function HomeCourses(props) {
                     <Fab
                       size="small"
                       style={{
+                        display: isAdmin ? 'inline-flex' : 'none',
                         backgroundColor: 'transparent',
                         position: 'absolute',
                         color: 'rgb(0 0 0 / 50%)',
