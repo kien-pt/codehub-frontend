@@ -28,6 +28,10 @@ const INSERT_TAG_LOADING = 'INSERT_TAG_LOADING';
 const INSERT_TAG_SUCCESS = 'INSERT_TAG_SUCCESS';
 const INSERT_TAG_FAILURE = 'INSERT_TAG_FAILURE';
 
+const DELETE_TAG_LOADING = 'DELETE_TAG_LOADING';
+const DELETE_TAG_SUCCESS = 'DELETE_TAG_SUCCESS';
+const DELETE_TAG_FAILURE = 'DELETE_TAG_FAILURE';
+
 const RESET_TEST_CASE_COUNT = 'RESET_TEST_CASE_COUNT';
 
 const SUBMIT_CODE_LOADING = 'SUBMIT_CODE_LOADING';
@@ -152,6 +156,35 @@ export const insertTag = (payload) => async (dispatch) => {
   }
 };
 
+export const deleteTag = (id) => async (dispatch) => {
+  const api = QUIZ_API.deleteTag(id);
+  dispatch({
+    type: DELETE_TAG_LOADING,
+    meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: DELETE_TAG_SUCCESS,
+      id,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
+    });
+    return ({
+      type: 'success',
+      message: 'Xoá danh mục thành công!',
+    });
+  } else {
+    dispatch({
+      type: DELETE_TAG_FAILURE,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'error',
+      message: 'Xoá danh mục thất bại!',
+    });
+  }
+};
+
 export const getTagsByCourseId = (id) => async (dispatch) => {
   const api = QUIZ_API.getTagsByCourseId(id);
   dispatch({
@@ -239,6 +272,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_ID_LOADING:
     case GET_TAGS_LOADING:
     case INSERT_TAG_LOADING:
+    case DELETE_TAG_LOADING:
     case GET_QUIZ_BY_TAG_ID_LOADING:
       return state.merge({
         isFetching: true,
@@ -248,6 +282,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_ID_FAILURE:
     case GET_TAGS_FAILURE:
     case INSERT_TAG_FAILURE:
+    case DELETE_TAG_FAILURE:
     case GET_QUIZ_BY_TAG_ID_FAILURE:
       return state.merge({
         isFetching: false,
@@ -312,6 +347,16 @@ export default function quizReducer(state = initialState, action) {
           tags: [...state.get('tags'), ...action.payload],
           isFetching: false,
         });
+
+        case DELETE_TAG_SUCCESS: {
+          const newList = state.get('tags');
+          const id = newList.findIndex((e) => e.id === action.id);
+          newList.splice(id, 1);
+          return state.merge({
+            tags: [...newList],
+            isFetching: false,
+          });
+        }
 
     default: return state;
   }

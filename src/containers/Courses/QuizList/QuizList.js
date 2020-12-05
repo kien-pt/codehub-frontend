@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -9,15 +9,23 @@ import {
   Grid,
   Fab,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Snackbar,
+  Button,
 } from '@material-ui/core';
-import { Clear, AddBox } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab'; 
+import { Clear } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getTagsByCourseId } from '../../../reducer/quiz';
+import { getTagsByCourseId, deleteTag } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
 
 function HomeCourses(props) {
@@ -28,6 +36,9 @@ function HomeCourses(props) {
     getTagsByCourseId,
     courseId,
   } = props;
+
+  const [deletedTag, setDeletedTag] = useState(null);
+  const [noti, setNoti] = useState(null);
 
   useEffect(() => {
     getCourseById(courseId);
@@ -41,14 +52,18 @@ function HomeCourses(props) {
     <>
       {props.tags?.map((tag) => {
         return (
-          <Card key={`tag-${tag?.id}`} style={{ padding: 0 }}>
+          <Card key={`tag-${tag?.id}`} style={{ padding: 0, marginBottom: 32 }}>
             <CardHeader
               title={
                 <Grid container>
                   <Grid item xs={10}>{tag?.name}</Grid>
                   <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
-                    <IconButton size="small" style={{ float: 'right', marginBottom: 2 }}>
-                      <AddBox style={{ color: 'white' }} />
+                    <IconButton
+                      size="small"
+                      onClick={() => setDeletedTag(tag)}
+                      style={{ float: 'right', marginBottom: 2 }}
+                    >
+                      <Clear style={{ color: 'white' }} />
                     </IconButton>
                   </Grid>
                 </Grid>
@@ -98,6 +113,39 @@ function HomeCourses(props) {
           </Card>
         )
       })}
+    
+      <Dialog
+        open={deletedTag !== null}
+        keepMounted
+        onClose={() => setDeletedTag(null)}
+      >
+        <DialogTitle>Xác nhận xoá</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {`Bạn có thực sự muốn xoá danh mục "${deletedTag?.name}" khỏi hệ thống?`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeletedTag(null)} color="secondary">Huỷ</Button>
+          <Button 
+            onClick={() => {
+              props.deleteTag(deletedTag.id)
+              .then(result => setNoti(result))
+              .catch();
+              setDeletedTag(null);
+            }}
+            color="primary"
+          >
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
+        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
+          {noti?.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
@@ -114,6 +162,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTagsByCourseId: (id) => dispatch(getTagsByCourseId(id)),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
   getPointByCourseId: (courseId) => dispatch(getPointByCourseId(courseId)),
+  deleteTag: (id) => dispatch(deleteTag(id)),
 });
 
 export default connect(

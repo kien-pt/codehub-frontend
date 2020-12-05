@@ -1,6 +1,7 @@
 import HEADERS from '../constant/headers';
 
 export const QUIZ_API = {
+  /** TAGS */
   getTags: () => ({
     endPoint: 'api/v1/tags',
     method: 'GET',
@@ -16,6 +17,13 @@ export const QUIZ_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  deleteTag: (id) => ({
+    endPoint: `api/v1/tags/delete/id/?id=${id}`,
+    method: 'DELETE',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
+
+  /** QUIZZES */
   getAllQuiz: () => ({
     endPoint: 'api/v1/quizzes/all',
     method: 'GET',
@@ -31,6 +39,8 @@ export const QUIZ_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+
+  /** RUN CODE */
   runCode: () => ({
     endPoint: 'api/v1/run',
     method: 'POST',
