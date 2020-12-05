@@ -48,11 +48,11 @@ button.MuiButton-root {
   border-radius: 2px;
 }
 
-button.MuiButton-containedPrimary {
+button.MuiButton-containedPrimary, a.MuiButton-containedPrimary {
   background-color: #1BA94C;
 }
 
-button.MuiButton-containedPrimary:hover {
+button.MuiButton-containedPrimary:hover, a.MuiButton-containedPrimary:hover {
   background-color: #199644;
 }
 

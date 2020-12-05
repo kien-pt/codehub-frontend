@@ -17,12 +17,15 @@ import { AssignmentTurnedIn, AssignmentLate } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 import InsertTagModal from '../../Manager/InsertTagModal';
 
 import { insertCourse } from '../../../reducer/courses';
 
 function CourseInfor(props) {
+  const history = useHistory();
+
   const { courseId } = props;
   const [isInserting, setInserting] = useState(false);
 
@@ -46,6 +49,19 @@ function CourseInfor(props) {
           </Grid>
           <Divider style={{ margin: '8px 0' }} />
           <Button variant="outlined" onClick={() => handleClick(true)} style={{ width: '100%' }}>Thêm danh mục khoá học</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => history.push({
+              pathname: `${ROUTER.QUIZ}/new`,
+              state: {
+                courseId,
+              }
+            })}
+            style={{ width: '100%', marginTop: 8 }}
+          >
+            Thêm bài tập
+          </Button>
         </CardContent>
       </Card>
 
