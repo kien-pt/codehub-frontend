@@ -30,7 +30,7 @@ function QuizSubmissions(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        {props.submissions.map((submission) => {
+        {props.submissions.map((submission, index) => {
           const point = submission?.point;
           // submission.testCase.map((e) => point += (e.get === e.want) ? 1 : 0);
           // point = parseFloat(((point / submission.testCase.length) * 100).toFixed(0));
@@ -50,7 +50,7 @@ function QuizSubmissions(props) {
                 className={`quizSubmission ${status}`}
                 container
               >
-                <Grid item xs={6}>#{submission.id}</Grid>
+                <Grid item xs={6}>#{index + 1}</Grid>
                 <Grid item xs={6}>
                   <div style={{ float: 'right' }}>{point}/100</div>
                 </Grid>
