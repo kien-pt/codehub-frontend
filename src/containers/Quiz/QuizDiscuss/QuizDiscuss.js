@@ -23,7 +23,7 @@ function QuizDiscuss(props) {
     getCommentsByQuizId(quizId);
   }, [getCommentsByQuizId, quizId]);
 
-  const commentsList = props.comments.sort((a, b) => Date.parse(a.createAt) - Date.parse(b.createAt));
+  const commentsList = props.comments.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -34,7 +34,7 @@ function QuizDiscuss(props) {
       <CardContent>
           {
             commentsList.map((comment) => {
-              const date = new Date(Date.parse(comment.createAt));
+              const date = new Date(Date.parse(comment.createdAt));
               const month = date.getMonth();
               const day = date.getDate();
               const year = date.getFullYear();
@@ -64,7 +64,7 @@ function QuizDiscuss(props) {
 
 const mapStateToProps = (state) => ({
   user: select(state, 'usersReducer', 'user'),
-  comments: select(state, 'commentsReducer', 'comments'),
+  comments: select(state, 'quizReducer', 'comments'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 

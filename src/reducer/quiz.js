@@ -44,6 +44,7 @@ var testCase = [];
 const initialState = fromJS({
   tags: [],
   quiz: [],
+  comments: [],
   submission: null,
   testCaseCount: 0,
   testCase: [],
@@ -79,10 +80,11 @@ export const getQuizById = (id) => async (dispatch) => {
     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
+  console.log(response.data.comments);
   if (!error && response.status === 200) {
     dispatch({
       type: GET_QUIZ_BY_ID_SUCCESS,
-      payload: [response.data],
+      payload: response.data,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
   } else {
@@ -290,7 +292,8 @@ export default function quizReducer(state = initialState, action) {
 
     case GET_QUIZ_BY_ID_SUCCESS:
       return state.merge({
-        quiz: [...action.payload],
+        comments: [...action.payload.comments],
+        quiz: [...[action.payload]],
         isFetching: false,
       });
 
