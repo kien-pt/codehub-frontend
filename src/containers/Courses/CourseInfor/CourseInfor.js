@@ -29,6 +29,8 @@ function CourseInfor(props) {
   const { courseId } = props;
   const [isInserting, setInserting] = useState(false);
 
+  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+
   const handleClick = (inserting) => {
     setInserting(inserting);
   }
@@ -47,21 +49,23 @@ function CourseInfor(props) {
             <Grid item xs={10}>Tổng số lượng bài nộp:</Grid>
             <Grid item xs={2} style={{ textAlign: 'end' }}></Grid>
           </Grid>
-          <Divider style={{ margin: '8px 0' }} />
-          <Button variant="outlined" onClick={() => handleClick(true)} style={{ width: '100%' }}>Thêm danh mục khoá học</Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => history.push({
-              pathname: `${ROUTER.QUIZ}/new`,
-              state: {
-                courseId,
-              }
-            })}
-            style={{ width: '100%', marginTop: 8 }}
-          >
-            Thêm bài tập
-          </Button>
+          <div style={{ display: isAdmin ? 'block' : 'none' }}>
+            <Divider style={{ margin: '8px 0' }} />
+            <Button variant="outlined" onClick={() => handleClick(true)} style={{ width: '100%' }}>Thêm danh mục khoá học</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => history.push({
+                pathname: `${ROUTER.QUIZ}/new`,
+                state: {
+                  courseId,
+                }
+              })}
+              style={{ width: '100%', marginTop: 8 }}
+            >
+              Thêm bài tập
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

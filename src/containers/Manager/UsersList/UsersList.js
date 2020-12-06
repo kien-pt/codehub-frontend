@@ -28,25 +28,20 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-import { getAllUsers, deleteUser } from '../../../reducer/users';
+import { getAllUsers } from '../../../reducer/users';
+
+import DeleteUserModal from '../DeleteUserModal';
 
 function UsersList(props) {
   const { getAllUsers } = props;
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [deleteUser, setDeleteUser] = useState(null);
-  const [noti, setNoti] = useState(null);
+  const [deletedUser, setDeletedUser] = useState(null);
 
   useEffect(() => {
     getAllUsers();
   }, [getAllUsers]);
-
-  const handleDelete = () => {
-    props.deleteUser(deleteUser.id)
-    .then(result => setNoti(result))
-    .catch();
-  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -83,7 +78,7 @@ function UsersList(props) {
                     <TableCell align="center">{user.username}</TableCell>
                     <TableCell align="center">{user.fullname}</TableCell>
                     <TableCell align="right" width="20%">
-                      <IconButton size="small" onClick={() => setDeleteUser(user)}>
+                      <IconButton size="small" onClick={() => setDeletedUser(user)}>
                         <Delete fontSize="inherit" />
                       </IconButton>
                     </TableCell>
@@ -112,37 +107,7 @@ function UsersList(props) {
         </CardContent>
       </Card>
 
-
-      <Dialog
-        open={deleteUser !== null}
-        keepMounted
-        onClose={() => setDeleteUser(null)}
-      >
-        <DialogTitle>Xác nhận xoá</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {`Bạn có thực sự muốn xoá tài khoản "${deleteUser?.username}" khỏi hệ thống?`}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteUser(null)} color="secondary">Huỷ</Button>
-          <Button 
-            onClick={() => {
-              handleDelete();
-              setDeleteUser(null);
-            }}
-            color="primary"
-          >
-            Đồng ý
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
-        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
-          {noti?.message}
-        </Alert>
-      </Snackbar>
+      <DeleteUserModal deletedUser={deletedUser} setDeletedUser={setDeletedUser} />
     </>
   );
 }
@@ -153,7 +118,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllUsers: () => dispatch(getAllUsers()),
-  deleteUser: (id) => dispatch(deleteUser(id)),
 });
 
 export default connect(
