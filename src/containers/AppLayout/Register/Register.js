@@ -42,6 +42,7 @@ function Register(props) {
     .then(result => setNoti(result))
     .catch();
   }
+  
   return (
     <>
       <Grid container style={{ display: 'flex', height: window.innerHeight }}>

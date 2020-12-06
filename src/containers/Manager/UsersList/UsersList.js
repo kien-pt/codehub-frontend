@@ -19,6 +19,7 @@ import { Delete, Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import InsertUserModal from '../InsertUserModal';
 import DeleteUserModal from '../DeleteUserModal';
 import { getAllUsers } from '../../../reducer/users';
 
@@ -27,6 +28,7 @@ function UsersList(props) {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isInserting, setInserting] = useState(false);
   const [deletedUser, setDeletedUser] = useState(null);
 
   useEffect(() => {
@@ -78,6 +80,7 @@ function UsersList(props) {
                   <Button
                     variant="outlined"
                     startIcon={<Add />}
+                    onClick={() => setInserting(true)}
                     style={{ height: 35, margin: '10px 16px', minWidth: 150 }}
                   >
                     Thêm mới
@@ -97,6 +100,7 @@ function UsersList(props) {
         </CardContent>
       </Card>
 
+      <InsertUserModal isInserting={isInserting} setInserting={setInserting} />
       <DeleteUserModal deletedUser={deletedUser} setDeletedUser={setDeletedUser} />
     </>
   );
