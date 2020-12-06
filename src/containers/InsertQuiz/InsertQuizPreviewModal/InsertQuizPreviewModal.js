@@ -1,35 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardActions,
   Button,
-  Grid,
-  LinearProgress,
-  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
-  CardActionArea,
   DialogContentText,
   DialogActions,
-  Snackbar,
-  Fab,
-  Typography,
-  TextareaAutosize,
 } from '@material-ui/core';
 import Interweave from 'interweave';
-import { Alert } from '@material-ui/lab'; 
-import { AddBox, Clear } from '@material-ui/icons';
 
-import InsertCourseModal from '../../Courses/InsertCourseModal';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 function InsertQuizPreviewModal(props) {
   const {
