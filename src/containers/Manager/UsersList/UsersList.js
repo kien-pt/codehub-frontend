@@ -1,36 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  Card,
   Paper,
+  Button,
+  IconButton,
+  Card,
   CardHeader,
   CardContent,
   TableContainer,
   Table,
+  TableRow,
   TableHead,
   TableBody,
-  TableRow,
   TableCell,
   TablePagination,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  Snackbar,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
 import { Delete, Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
-
-import { getAllUsers } from '../../../reducer/users';
-
 import DeleteUserModal from '../DeleteUserModal';
+import { getAllUsers } from '../../../reducer/users';
 
 function UsersList(props) {
   const { getAllUsers } = props;
@@ -70,8 +60,8 @@ function UsersList(props) {
                   <TableCell align="right" width="20%"><b>Tác vụ</b></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
 
+              <TableBody>
                 {props.usersList.slice(rowsPerPage * page, rowsPerPage * (page + 1)).map((user) => (
                   <TableRow key={user.username}>
                     <TableCell align="left" width="10%">{user.id}</TableCell>
