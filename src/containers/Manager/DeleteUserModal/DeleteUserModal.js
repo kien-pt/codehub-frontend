@@ -1,18 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  Card,
-  Paper,
-  CardHeader,
-  CardContent,
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TablePagination,
-  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -22,11 +10,8 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
-import { Delete, Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
-import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 import { deleteUser } from '../../../reducer/users';
 
