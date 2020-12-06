@@ -7,6 +7,10 @@
   font-family: inherit;
 }
 
+.table-text-area {
+  border: none;
+}
+
 .text-area:focus {
   outline: none;
 }

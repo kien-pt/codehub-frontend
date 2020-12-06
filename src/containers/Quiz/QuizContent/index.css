@@ -1,3 +1,8 @@
+.problem-content p {
+  margin: 0;
+  margin-bottom: 6px;
+}
+
 .problem-sample .sample-type {
   background-color: #eee;
   font-weight: bold;

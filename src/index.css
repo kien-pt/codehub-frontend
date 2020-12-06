@@ -71,3 +71,7 @@ div.MuiDialogTitle-root {
 div.MuiDialog-paperWidthSm {
   min-width: 600px;
 }
+
+div.MuiDialogActions-root {
+  padding: 0 24px 12px 24px;
+}
