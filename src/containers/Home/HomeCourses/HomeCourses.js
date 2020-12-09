@@ -70,7 +70,6 @@ function HomeCourses(props) {
         />
         <CardContent>
           {props.courses.map((course) => {
-            console.log(props.quiz);
             const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
 
             var currentPoint = 0;
