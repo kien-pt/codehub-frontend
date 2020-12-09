@@ -28,6 +28,10 @@ const INSERT_TAG_LOADING = 'INSERT_TAG_LOADING';
 const INSERT_TAG_SUCCESS = 'INSERT_TAG_SUCCESS';
 const INSERT_TAG_FAILURE = 'INSERT_TAG_FAILURE';
 
+const UPDATE_TAG_LOADING = 'UPDATE_TAG_LOADING';
+const UPDATE_TAG_SUCCESS = 'UPDATE_TAG_SUCCESS';
+const UPDATE_TAG_FAILURE = 'UPDATE_TAG_FAILURE';
+
 const DELETE_TAG_LOADING = 'DELETE_TAG_LOADING';
 const DELETE_TAG_SUCCESS = 'DELETE_TAG_SUCCESS';
 const DELETE_TAG_FAILURE = 'DELETE_TAG_FAILURE';
@@ -165,6 +169,35 @@ export const insertTag = (payload) => async (dispatch) => {
   }
 };
 
+export const updateTag = (payload) => async (dispatch) => {
+  const api = QUIZ_API.updateTag();
+  dispatch({
+    type: UPDATE_TAG_LOADING,
+    meta: { prefix: [PREFIX.TAGS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: UPDATE_TAG_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
+    });
+    return ({
+      type: 'success',
+      message: 'Sửa danh mục thành công!',
+    });
+  } else {
+    dispatch({
+      type: UPDATE_TAG_FAILURE,
+      meta: { prefix: [PREFIX.TAGS, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'error',
+      message: 'Sửa danh mục thất bại!',
+    });
+  }
+};
+
 export const deleteTag = (id) => async (dispatch) => {
   const api = QUIZ_API.deleteTag(id);
   dispatch({
@@ -277,6 +310,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_COURSE_ID_LOADING:
     case GET_TAGS_LOADING:
     case INSERT_TAG_LOADING:
+    case UPDATE_TAG_LOADING:
     case DELETE_TAG_LOADING:
       return state.merge({
         isFetching: true,
@@ -287,6 +321,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_COURSE_ID_FAILURE:
     case GET_TAGS_FAILURE:
     case INSERT_TAG_FAILURE:
+    case UPDATE_TAG_FAILURE:
     case DELETE_TAG_FAILURE:
       return state.merge({
         isFetching: false,
@@ -353,15 +388,26 @@ export default function quizReducer(state = initialState, action) {
           isFetching: false,
         });
 
-        case DELETE_TAG_SUCCESS: {
-          const newList = state.get('tags');
-          const id = newList.findIndex((e) => e.id === action.id);
-          newList.splice(id, 1);
-          return state.merge({
-            tags: [...newList],
-            isFetching: false,
-          });
-        }
+      case UPDATE_TAG_SUCCESS: {
+        const newList = state.get('tags');
+        const id = newList.findIndex((e) => e.id === action.payload.id);
+        console.log(newList, id, action.payload);
+        newList.splice(id, 1, action.payload);
+        return state.merge({
+          tags: [...newList],
+          isFetching: false,
+        });
+      }
+
+      case DELETE_TAG_SUCCESS: {
+        const newList = state.get('tags');
+        const id = newList.findIndex((e) => e.id === action.id);
+        newList.splice(id, 1);
+        return state.merge({
+          tags: [...newList],
+          isFetching: false,
+        });
+      }
 
     default: return state;
   }

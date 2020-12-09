@@ -17,6 +17,11 @@ export const QUIZ_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  updateTag: () => ({
+    endPoint: 'api/v1/tags/update',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
   deleteTag: (id) => ({
     endPoint: `api/v1/tags/delete/id/?id=${id}`,
     method: 'DELETE',

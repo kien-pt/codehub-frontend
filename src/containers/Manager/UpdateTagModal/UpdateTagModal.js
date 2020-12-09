@@ -20,7 +20,7 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-import { insertUser } from '../../../reducer/users';
+import { updateTag } from '../../../reducer/quiz';
 
 function UpdateTagModal(props) {
   const { updatedTag, setUpdatedTag } = props;
@@ -33,14 +33,18 @@ function UpdateTagModal(props) {
   }, [updatedTag])
 
   const resetForm = () => {
+    setName('');
+    setUpdatedTag(null);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // props.insertUser({
-    // })
-    // .then(result => setNoti(result))
-    // .catch();
+    props.updateTag({
+      id: updatedTag.id,
+      name,
+    })
+    .then(result => setNoti(result))
+    .catch();
     resetForm();
   }
 
@@ -91,7 +95,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  insertUser: (payload) => dispatch(insertUser(payload)),
+  updateTag: (payload) => dispatch(updateTag(payload)),
 });
 
 export default connect(
