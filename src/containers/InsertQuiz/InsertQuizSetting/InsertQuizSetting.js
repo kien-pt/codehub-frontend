@@ -8,7 +8,7 @@ import {
   FormControl,
   InputLabel,
   Select,
-  TextareaAutosize,
+  OutlinedInput,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
 import { AddBox, Clear } from '@material-ui/icons';
@@ -52,6 +52,15 @@ function InsertQuizSetting(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
+        <FormControl variant="outlined" style={{ width: '100%', marginBottom: 12 }}>
+          <InputLabel style={{ backgroundColor: 'white', height: 9, padding: '0 4px' }}>Tên bài tập</InputLabel>
+          <OutlinedInput
+            required
+            // onChange={(e) => setPassword(e.target.value)}
+            inputProps={{ style: {fontSize: 18, marginLeft: 10 }}}
+            style={{ height: 56 }}
+          />
+        </FormControl>
         <FormControl variant="outlined" style={{ width: '100%' }}>
           <InputLabel style={{ backgroundColor: 'white', height: 9, padding: '0 4px' }}>Chọn khoá học</InputLabel>
           <Select native value={ selectedCourseId} onChange={handleSelect}>
