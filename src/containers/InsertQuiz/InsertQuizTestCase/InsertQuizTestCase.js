@@ -28,13 +28,23 @@ function InsertQuizTestCase(props) {
   const handleDeleteTestcase = () => {
     const temp = testcase;
     if (temp.length >= 1) temp.splice(temp.length - 1);
-    console.log(temp);
     setTestcase([...temp]);
   }
 
   const handleInsertTestcase = () => {
     const temp = [...testcase, {}];
-    console.log(temp);
+    setTestcase([...temp]);
+  }
+
+  const handleChangeInput = (index, value) => {
+    const temp = testcase;
+    temp[index] = {...temp[index], input: value};
+    setTestcase([...temp]);
+  }
+
+  const handleChangeOutput = (index, value) => {
+    const temp = testcase;
+    temp[index] = {...temp[index], output: value};
     setTestcase([...temp]);
   }
 
@@ -64,13 +74,12 @@ function InsertQuizTestCase(props) {
           <ul style={{ margin: 0, borderBottom: '1px solid #bbb' }}>
             {testcase.map((test, index) => (
               <>
-                {/* <strong style={{ paddingTop: 4 }}>{`Testcase #${index + 1}:`}</strong> */}
                 <li style={{ margin: 0 }}>
-                  <strong style={{ paddingTop: 4, textAlign: 'center' }}>{`Testcase #${index + 1}:`}</strong>
-                  <div className='sample-type'>input</div>
-                  <TextareaAutosize className="text-area table-text-area" rowsMin={1} />
+                  <strong style={{ display: 'block', color: 'white', backgroundColor: '#39424e', textAlign: 'center' }}>{`Testcase #${index + 1}:`}</strong>
+                  <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>input</div>
+                  <TextareaAutosize className="text-area table-text-area" onChange={(e) => handleChangeInput(index, e.target.value)} rowsMin={1} />
                   <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>output</div>
-                  <TextareaAutosize className="text-area table-text-area" rowsMin={1} />
+                  <TextareaAutosize className="text-area table-text-area" onChange={(e) => handleChangeOutput(index, e.target.value)} rowsMin={1} />
                 </li>
               </>
             ))}

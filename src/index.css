@@ -16,6 +16,11 @@ code {
     monospace;
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
 .cardButton {
   width: 80px;
   padding: 8px 0;
