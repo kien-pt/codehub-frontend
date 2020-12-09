@@ -16,10 +16,6 @@ const GET_QUIZ_BY_ID_LOADING = 'GET_QUIZ_BY_ID_LOADING';
 const GET_QUIZ_BY_ID_SUCCESS = 'GET_QUIZ_BY_ID_SUCCESS';
 const GET_QUIZ_BY_ID_FAILURE = 'GET_QUIZ_BY_ID_FAILURE';
 
-const GET_QUIZ_BY_TAG_ID_LOADING = 'GET_QUIZ_BY_TAG_ID_LOADING';
-const GET_QUIZ_BY_TAG_ID_SUCCESS = 'GET_QUIZ_BY_TAG_ID_SUCCESS';
-const GET_QUIZ_BY_TAG_ID_FAILURE = 'GET_QUIZ_BY_TAG_ID_FAILURE';
-
 const GET_QUIZ_BY_COURSE_ID_LOADING = 'GET_QUIZ_BY_COURSE_ID_LOADING';
 const GET_QUIZ_BY_COURSE_ID_SUCCESS = 'GET_QUIZ_BY_COURSE_ID_SUCCESS';
 const GET_QUIZ_BY_COURSE_ID_FAILURE = 'GET_QUIZ_BY_COURSE_ID_FAILURE';
@@ -94,27 +90,6 @@ export const getQuizById = (id) => async (dispatch) => {
   } else {
     dispatch({
       type: GET_QUIZ_BY_ID_FAILURE,
-      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
-    });
-  }
-};
-
-export const getQuizByTagId = (id) => async (dispatch) => {
-  const api = QUIZ_API.getQuizByTagId(id);
-  dispatch({
-    type: GET_QUIZ_BY_TAG_ID_LOADING,
-    meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
-  });
-  const { response, error } = await apiCall({ ...api });
-  if (!error && response.status === 200) {
-    dispatch({
-      type: GET_QUIZ_BY_TAG_ID_SUCCESS,
-      payload: response.data.quizzes,
-      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
-    });
-  } else {
-    dispatch({
-      type: GET_QUIZ_BY_TAG_ID_FAILURE,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
     });
   }
@@ -295,7 +270,6 @@ export default function quizReducer(state = initialState, action) {
     case GET_TAGS_LOADING:
     case INSERT_TAG_LOADING:
     case DELETE_TAG_LOADING:
-    case GET_QUIZ_BY_TAG_ID_LOADING:
       return state.merge({
         isFetching: true,
       });
@@ -306,7 +280,6 @@ export default function quizReducer(state = initialState, action) {
     case GET_TAGS_FAILURE:
     case INSERT_TAG_FAILURE:
     case DELETE_TAG_FAILURE:
-    case GET_QUIZ_BY_TAG_ID_FAILURE:
       return state.merge({
         isFetching: false,
       });
