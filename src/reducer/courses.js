@@ -69,7 +69,6 @@ export const insertCourse = (payload) => async (dispatch) => {
     meta: { prefix: [PREFIX.COURSES, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api, payload });
-  console.log(response);
   if (!error && response.status === 200) {
     dispatch({
       type: INSERT_COURSE_SUCCESS,
@@ -117,7 +116,7 @@ export const deleteCourse = (id) => async (dispatch) => {
     return ({
       type: 'error',
       message: 'Xoá khoá học thất bại!',
-    });
+    }); 
   }
 };
 

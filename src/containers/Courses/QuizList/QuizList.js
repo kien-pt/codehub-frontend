@@ -10,7 +10,7 @@ import {
   Fab,
   IconButton,
 } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
+import { Clear, Create } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -20,7 +20,10 @@ import { getCourseById } from '../../../reducer/courses';
 import { getTagsByCourseId, getQuizByCourseId } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
 
+import UpdateTagModal from '../../Manager/UpdateTagModal';
 import DeleteTagModal from '../../Manager/DeleteTagModal';
+
+import './QuizList.css';
 
 function HomeCourses(props) {
   const history = useHistory();
@@ -33,6 +36,7 @@ function HomeCourses(props) {
   } = props;
 
   const [deletedTag, setDeletedTag] = useState(null);
+  const [updatedTag, setUpdatedTag] = useState(null);
 
   useEffect(() => {
     getCourseById(courseId);
@@ -60,6 +64,13 @@ function HomeCourses(props) {
                     >
                       <Clear style={{ color: 'white' }} />
                     </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => setUpdatedTag(tag)}
+                      style={{ float: 'right', marginBottom: 2 }}
+                    >
+                      <Create style={{ color: 'white' }} />
+                    </IconButton>
                   </Grid>
                 </Grid>
               }
@@ -86,18 +97,8 @@ function HomeCourses(props) {
                     </CardActionArea>
                     <Fab
                       size="small"
-                      style={{
-                        display: isAdmin ? 'inline-flex' : 'none',
-                        backgroundColor: 'transparent',
-                        position: 'absolute',
-                        color: 'rgb(0 0 0 / 50%)',
-                        boxShadow: 'none',
-                        top: 0,
-                        right: 0,
-                        width: 24,
-                        height: 24,
-                        minHeight: 24,
-                      }}
+                      className="fab-quiz-element"
+                      style={{ display: isAdmin ? 'inline-flex' : 'none' }}
                     >
                       <Clear style={{ fontSize: 16 }} />
                     </Fab>
@@ -109,6 +110,7 @@ function HomeCourses(props) {
         )
       })}
     
+      <UpdateTagModal updatedTag={updatedTag} setUpdatedTag={setUpdatedTag} />
       <DeleteTagModal deletedTag={deletedTag} setDeletedTag={setDeletedTag} />
     </>
   );
