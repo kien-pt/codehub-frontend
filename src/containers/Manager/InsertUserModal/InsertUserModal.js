@@ -10,6 +10,8 @@ import {
   DialogActions,
   Button,
   Snackbar,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
 import { Person, Lock, Autorenew, AssignmentInd } from '@material-ui/icons';
@@ -26,20 +28,31 @@ function InsertUserModal(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullname, setFullname] = useState('');
+  const [isAdmin, setAdmin] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [focus, setFocus] = useState(false);
   const [noti, setNoti] = useState(null);
 
-  const handleSubmit = (e) => {
+  const resetForm = () => {
+    setUsername('');
+    setPassword('');
+    setFullname('');
+    setAdmin(false);
     setInserting(false);
+    setConfirmPassword('');
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     props.insertUser({
       username,
       password,
       fullname,
+      admin: isAdmin,
     })
     .then(result => setNoti(result))
     .catch();
+    resetForm();
   }
 
   return (
@@ -87,7 +100,7 @@ function InsertUserModal(props) {
               />
             </FormControl>
             <span style={{ display: (focus && password !== confirmPassword) ? 'inline' : 'none', color: 'red' }}>Mật khẩu không khớp!</span>
-            <FormControl style={{ width: '100%', padding: '6px 0 12px 0' }}>
+            <FormControl style={{ width: '100%', padding: '6px 0 1px 0' }}>
               <OutlinedInput
                 required
                 placeholder="Họ và tên"
@@ -96,6 +109,13 @@ function InsertUserModal(props) {
                 inputProps={{style: {fontSize: 18, paddingLeft: 10, marginLeft: 10 }}}
                 style={{ height: 40 }}
               />
+            </FormControl>
+            <FormControl  style={{ paddingBottom: 12 }}>
+              <FormControlLabel
+                onChange={() => setAdmin(!isAdmin)}
+                control={<Checkbox color="default" />}
+                label="Trao quyền quản trị viên"
+              />  
             </FormControl>
             <FormControl style={{ width: '100%' }}>
               <Button

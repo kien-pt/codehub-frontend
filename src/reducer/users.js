@@ -269,6 +269,7 @@ export default function usersReducer(state = initialState, action) {
 
     case INSERT_USER_SUCCESS:
       return state.merge({
+        usersList: [...state.get("usersList"), ...[action.payload]],
         isFetching: false,
       });
 
