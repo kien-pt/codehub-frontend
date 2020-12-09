@@ -68,11 +68,11 @@ function InsertTagModal(props) {
         </DialogActions>
       </Dialog>
 
-      {/* <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
+      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
         <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
           {noti?.message}
         </Alert>
-      </Snackbar> */}
+      </Snackbar>
     </>
 );
 }

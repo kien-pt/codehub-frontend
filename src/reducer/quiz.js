@@ -149,10 +149,18 @@ export const insertTag = (payload) => async (dispatch) => {
       payload: [response.data],
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
     });
+    return ({
+      type: 'success',
+      message: 'Thêm danh mục thành công!',
+    });
   } else {
     dispatch({
       type: INSERT_TAG_FAILURE,
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'error',
+      message: 'Thêm danh mục thất bại!',
     });
   }
 };

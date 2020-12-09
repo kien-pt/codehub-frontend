@@ -9,15 +9,7 @@ import {
   Grid,
   Fab,
   IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Snackbar,
-  Button,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
 import { Clear } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
@@ -25,8 +17,10 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getTagsByCourseId, getQuizByCourseId, deleteTag } from '../../../reducer/quiz';
+import { getTagsByCourseId, getQuizByCourseId } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
+
+import DeleteTagModal from '../../Manager/DeleteTagModal';
 
 function HomeCourses(props) {
   const history = useHistory();
@@ -39,14 +33,13 @@ function HomeCourses(props) {
   } = props;
 
   const [deletedTag, setDeletedTag] = useState(null);
-  const [noti, setNoti] = useState(null);
 
   useEffect(() => {
     getCourseById(courseId);
     getPointByCourseId(courseId);
     getTagsByCourseId(courseId);
     getQuizByCourseId(courseId);
-  }, [courseId, getQuizByCourseId, getCourseById, getPointByCourseId, , getTagsByCourseId]);
+  }, [courseId, getCourseById, getPointByCourseId, getQuizByCourseId, getTagsByCourseId]);
 
   const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
 
@@ -116,38 +109,7 @@ function HomeCourses(props) {
         )
       })}
     
-      <Dialog
-        open={deletedTag !== null}
-        keepMounted
-        onClose={() => setDeletedTag(null)}
-      >
-        <DialogTitle>Xác nhận xoá</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {`Bạn có thực sự muốn xoá danh mục "${deletedTag?.name}" khỏi hệ thống?`}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeletedTag(null)} color="secondary">Huỷ</Button>
-          <Button 
-            onClick={() => {
-              props.deleteTag(deletedTag.id)
-              .then(result => setNoti(result))
-              .catch();
-              setDeletedTag(null);
-            }}
-            color="primary"
-          >
-            Đồng ý
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
-        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
-          {noti?.message}
-        </Alert>
-      </Snackbar>
+      <DeleteTagModal deletedTag={deletedTag} setDeletedTag={setDeletedTag} />
     </>
   );
 }
@@ -165,7 +127,6 @@ const mapDispatchToProps = (dispatch) => ({
   getQuizByCourseId: (id) => dispatch(getQuizByCourseId(id)),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
   getPointByCourseId: (courseId) => dispatch(getPointByCourseId(courseId)),
-  deleteTag: (id) => dispatch(deleteTag(id)),
 });
 
 export default connect(
