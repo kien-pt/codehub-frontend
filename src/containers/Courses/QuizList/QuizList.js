@@ -25,7 +25,7 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getTagsByCourseId, deleteTag } from '../../../reducer/quiz';
+import { getTagsByCourseId, getQuizByCourseId, deleteTag } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
 
 function HomeCourses(props) {
@@ -34,6 +34,7 @@ function HomeCourses(props) {
     getCourseById,
     getPointByCourseId,
     getTagsByCourseId,
+    getQuizByCourseId,
     courseId,
   } = props;
 
@@ -44,7 +45,8 @@ function HomeCourses(props) {
     getCourseById(courseId);
     getPointByCourseId(courseId);
     getTagsByCourseId(courseId);
-  }, [courseId, getCourseById, getPointByCourseId, , getTagsByCourseId]);
+    getQuizByCourseId(courseId);
+  }, [courseId, getQuizByCourseId, getCourseById, getPointByCourseId, , getTagsByCourseId]);
 
   const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
 
@@ -160,6 +162,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getTagsByCourseId: (id) => dispatch(getTagsByCourseId(id)),
+  getQuizByCourseId: (id) => dispatch(getQuizByCourseId(id)),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
   getPointByCourseId: (courseId) => dispatch(getPointByCourseId(courseId)),
   deleteTag: (id) => dispatch(deleteTag(id)),

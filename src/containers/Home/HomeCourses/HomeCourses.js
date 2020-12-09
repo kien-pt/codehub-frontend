@@ -21,7 +21,7 @@ import {
 import { Alert } from '@material-ui/lab'; 
 import { AddBox, Clear } from '@material-ui/icons';
 
-import InsertCourseModal from '../../Courses/InsertCourseModal';
+import InsertCourseModal from '../../Manager/InsertCourseModal';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -70,6 +70,7 @@ function HomeCourses(props) {
         />
         <CardContent>
           {props.courses.map((course) => {
+            console.log(props.quiz);
             const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
 
             var currentPoint = 0;
