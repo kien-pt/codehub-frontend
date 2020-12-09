@@ -2,24 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  Button,
-  Grid,
-  LinearProgress,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  CardActionArea,
-  DialogContentText,
-  DialogActions,
-  Snackbar,
   Fab,
+  Grid,
+  IconButton,
+  Card,
+  CardHeader,
+  CardContent,
+  LinearProgress,
+  CardActionArea,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
-import { AddBoxSharp, Create, Clear } from '@material-ui/icons';
+import { AddBoxSharp, Clear } from '@material-ui/icons';
 
 import InsertCourseModal from '../../Manager/InsertCourseModal';
 import DeleteCourseModal from '../../Manager/DeleteCourseModal';
@@ -62,9 +54,6 @@ function HomeCourses(props) {
               <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
                 <IconButton size="small" onClick={() => handleClick(true)} style={{ float: 'right', marginBottom: 2 }}>
                   <AddBoxSharp style={{ color: 'white' }} />
-                </IconButton>
-                <IconButton size="small" onClick={() => handleClick(true)} style={{ float: 'right', marginBottom: 2 }}>
-                  <Create style={{ color: 'white' }} />
                 </IconButton>
               </Grid>
             </Grid>
