@@ -19,9 +19,10 @@ import {
   Fab,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
-import { AddBox, Clear } from '@material-ui/icons';
+import { AddBoxSharp, Create, Clear } from '@material-ui/icons';
 
 import InsertCourseModal from '../../Manager/InsertCourseModal';
+import DeleteCourseModal from '../../Manager/DeleteCourseModal';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -30,7 +31,6 @@ import { getCourses } from '../../../reducer/courses';
 import { getAllQuiz, getTags } from '../../../reducer/quiz';
 import { getAllPoint } from '../../../reducer/point';
 
-import { deleteCourse } from '../../../reducer/courses';
 
 function HomeCourses(props) {
   const history = useHistory();
@@ -61,7 +61,10 @@ function HomeCourses(props) {
               <Grid item xs={10}>Các lớp học phần</Grid>
               <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
                 <IconButton size="small" onClick={() => handleClick(true)} style={{ float: 'right', marginBottom: 2 }}>
-                  <AddBox style={{ color: 'white' }} />
+                  <AddBoxSharp style={{ color: 'white' }} />
+                </IconButton>
+                <IconButton size="small" onClick={() => handleClick(true)} style={{ float: 'right', marginBottom: 2 }}>
+                  <Create style={{ color: 'white' }} />
                 </IconButton>
               </Grid>
             </Grid>
@@ -116,39 +119,7 @@ function HomeCourses(props) {
       </Card>
 
       <InsertCourseModal isInserting={isInserting} handleClick={handleClick} />
-
-      <Dialog
-        open={deletedCourse !== null}
-        keepMounted
-        onClose={() => setDeletedCourse(null)}
-      >
-        <DialogTitle>Xác nhận xoá</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {`Bạn có thực sự muốn xoá khoá học "${deletedCourse?.name}" khỏi hệ thống?`}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeletedCourse(null)} color="secondary">Huỷ</Button>
-          <Button 
-            onClick={() => {
-              props.deleteCourse(deletedCourse.id)
-              .then(result => setNoti(result))
-              .catch();
-              setDeletedCourse(null);
-            }}
-            color="primary"
-          >
-            Đồng ý
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
-        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
-          {noti?.message}
-        </Alert>
-      </Snackbar>
+      <DeleteCourseModal deletedCourse={deletedCourse} setDeletedCourse={setDeletedCourse} />
     </>
   );
 }
@@ -166,7 +137,6 @@ const mapDispatchToProps = (dispatch) => ({
   getAllQuiz: () => dispatch(getAllQuiz()),
   getCourses: () => dispatch(getCourses()),
   getAllPoint: () => dispatch(getAllPoint()),
-  deleteCourse: (id) => dispatch(deleteCourse(id)),
 });
 
 export default connect(
