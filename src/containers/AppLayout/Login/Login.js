@@ -37,9 +37,13 @@ function Login(props) {
       setNoti(result === 'error' ? true : false);
       const userId = parseInt(localStorage.getItem("userId"));
       if (userId >= 0) history.push(ROUTER.HOME);
-    })
-    .catch();
+    }).catch();
   }
+
+  useEffect(() => {
+    const userId = parseInt(localStorage.getItem("userId"));
+    if (userId >= 0) history.push(ROUTER.HOME);
+  }, [history]);
 
   return (
     <Grid container style={{ display: 'flex', height: window.innerHeight }}>
