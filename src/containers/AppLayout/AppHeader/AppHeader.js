@@ -119,49 +119,9 @@ function AppHeader(props) {
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        style={{ backgroundColor: '#39424E', padding: '0 20px' }}
-      >
+      <AppBar position="fixed" style={{ backgroundColor: '#39424E', padding: '0 20px' }}>
         <Grid container justify="center" alignItems="center" style={{ height: 60 }}>
-          {/*  Mobile  */}
-          <Grid
-            item
-            xs={2}
-            component={Box}
-            display={{ xs: 'block', sm: 'none' }}
-          >
-            <IconButton style={{ color: 'white' }}>
-            </IconButton>
-          </Grid>
-          <Grid
-            item
-            xs={8}
-            component={Box}
-            display={{ xs: 'block', sm: 'none' }}
-          >
-            <Link href={ROUTER.HOME}>
-              <img src={code} alt="logo" height="36px" style={{ display: 'block', margin: '0 auto' }} />
-            </Link>
-          </Grid>
-          <Grid
-            item
-            xs={2}
-            component={Box}
-            display={{ xs: 'block', sm: 'none' }}
-          >
-            <IconButton onClick={handleClick} style={{ float: 'right', color: 'white' }}>
-            </IconButton>
-          </Grid>
-
-          {/*  Desktop  */}
-          <Grid
-            item
-            sm={6}
-            lg={5}
-            component={Box}
-            display={{ xs: 'none', sm: 'block' }}
-          >
+          <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Link href={ROUTER.HOME}>
                 <img src={code} alt="logo" height="36px" style={{ padding: '12px 0' }} />
@@ -188,13 +148,7 @@ function AppHeader(props) {
               }
             </div> 
           </Grid>
-          <Grid
-            item
-            sm={6}
-            lg={5}
-            component={Box}
-            display={{ xs: 'none', sm: 'block' }}
-          >
+          <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div
               onClick={handleClick}
               style={{
@@ -214,7 +168,6 @@ function AppHeader(props) {
           </Grid>
         </Grid>
       </AppBar>
-
 
       <StyledMenu
         id="customized-menu"
@@ -236,43 +189,6 @@ function AppHeader(props) {
           <Typography variant="inherit" noWrap>Đăng xuất</Typography>
         </MenuItem>
       </StyledMenu>
-
-
-      <Dialog
-        open={isLogout}
-        keepMounted
-        onClose={() => setLogout(false)}
-      >
-        <DialogTitle>Xác nhận đăng xuất</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Bạn có thực sự muốn đăng xuất khỏi hệ thống?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => setLogout(false)}
-            color="secondary"
-          >
-            Huỷ
-          </Button>
-          <Button
-            onClick={() => {
-              logout();
-              setLogout(false);
-            }}
-            color="primary"
-          >
-            Đồng ý
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-        <Snackbar open={noti} autoHideDuration={6000} onClose={() => setNoti(false)}>
-          <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
-            Đăng xuất thất bại hoặc mật khẩu!
-          </Alert>
-        </Snackbar>
     </>
   );
 }
