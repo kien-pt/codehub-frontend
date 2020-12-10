@@ -1,45 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
+  Grid,
+  Menu,
+  Button,
+  Divider,
+  MenuItem,
+  withStyles,
   Card,
   CardHeader,
   CardContent,
-  Grid,
-  Divider,
-  Button,
-  Menu,
-  MenuItem,
-  withStyles,
 } from '@material-ui/core';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
 import { getAllUsers } from '../../../reducer/users';
-// import { getStudents } from '../../../reducer/students';
 
 function HomeRank(props) {
   const { getAllUsers } = props;
   const [courseIndex, setCourseIndex] = useState(0);
 
+  // Get all students
   useEffect(() => {
     getAllUsers();
   }, [getAllUsers]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  // Select course
   const handleSelect = (index) => {
     setCourseIndex(index);
     handleClose();
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // Open menu
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // Close menu
+  const handleClose = () => setAnchorEl(null);
 
   const StyledMenu = withStyles({
     paper: {
@@ -63,28 +62,13 @@ function HomeRank(props) {
   ));
 
   return (
-    <Card style={{ padding: 0 }}>
-      <CardHeader
-        title="Bảng xếp hạng"
-        style={{ color: 'white', backgroundColor: '#39424E' }}
-      />
+    <Card>
+      <CardHeader title="Bảng xếp hạng" style={{ color: 'white', backgroundColor: '#39424E' }} />
       <CardContent>
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={props.disabled}
-          onClick={handleClick}
-          style={{ width: '100%' }}
-        >
+        <Button variant="contained" color="primary" disabled={props.disabled} onClick={handleClick} style={{ width: '100%' }}>
           {props.courses?.length > 0 ? props.courses[courseIndex].name : null}
         </Button>
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
+        <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
           {props.courses?.map((e, index) => (
             <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>
           ))}
@@ -109,9 +93,9 @@ function HomeRank(props) {
 }
 
 const mapStateToProps = (state) => ({
+  point: select(state, 'pointReducer', 'point'),
   courses: select(state, 'coursesReducer', 'courses'),
   usersList: select(state, 'usersReducer', 'usersList'),
-  point: select(state, 'pointReducer', 'point'),
   isFetching: select(state, 'studentsReducer', 'isFetching'),
 });
 
@@ -123,4 +107,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(toJs(HomeRank));
-
