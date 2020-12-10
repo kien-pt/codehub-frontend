@@ -57,6 +57,27 @@ export const getSubmissionsByQuizId = (id) => async (dispatch) => {
   }
 };
 
+export const getSubmissionsByCourseId = (id) => async (dispatch) => {
+  const api = SUBMISSIONS_API.getSubmissionsByCourseId(id);
+  dispatch({
+    type: GET_SUBMISSIONS_LOADING,
+    meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: GET_SUBMISSIONS_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: GET_SUBMISSIONS_FAILURE,
+      meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
 export const insertSubmission = (history, pointData, payload) => async (dispatch) => {
   const api = SUBMISSIONS_API.insertSubmission();
   dispatch({

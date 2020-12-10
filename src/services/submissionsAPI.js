@@ -11,6 +11,11 @@ export const SUBMISSIONS_API = {
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),
+  getSubmissionsByCourseId: (id) => ({
+    endPoint: `api/v1/submissions/courses/id/?id=${id}`,
+    method: 'GET',
+    headers: HEADERS.TOKEN_HEADER,
+  }),
   insertSubmission: () => ({
     endPoint: `api/v1/submissions`,
     method: 'POST',
