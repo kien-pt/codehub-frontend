@@ -88,7 +88,6 @@ export const getQuizById = (id) => async (dispatch) => {
     meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
-  console.log(response.data.comments);
   if (!error && response.status === 200) {
     dispatch({
       type: GET_QUIZ_BY_ID_SUCCESS,
@@ -420,7 +419,6 @@ export default function quizReducer(state = initialState, action) {
       case UPDATE_TAG_SUCCESS: {
         const newList = state.get('tags');
         const id = newList.findIndex((e) => e.id === action.payload.id);
-        console.log(newList, id, action.payload);
         newList.splice(id, 1, action.payload);
         return state.merge({
           tags: [...newList],

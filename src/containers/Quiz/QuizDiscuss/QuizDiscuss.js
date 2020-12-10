@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
@@ -14,14 +14,18 @@ import { Send, AccountCircle } from '@material-ui/icons';
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
-import { getCommentsByQuizId } from '../../../reducer/comments';
+import { insertComment } from '../../../reducer/comments';
 
 function QuizDiscuss(props) {
-  const { getCommentsByQuizId, quizId } = props;
+  const { quizId } = props;
+  const [comment, setComment] = useState('');
 
-  useEffect(() => {
-    getCommentsByQuizId(quizId);
-  }, [getCommentsByQuizId, quizId]);
+  const handleClick = () => {
+    props.insertComment({
+      quizId,
+      content: comment,
+    });
+  }
 
   const commentsList = props.comments.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
 
@@ -43,33 +47,33 @@ function QuizDiscuss(props) {
                   <Grid container>
                     <Grid item><AccountCircle style={{ fontSize: 32 }} /></Grid>
                     <Grid item direction="column" style={{ marginLeft: 12 }}>
-                      <Grid item style={{ fontWeight: 'bold' }}>{props.user?.name}</Grid>
+                      <Grid item style={{ fontWeight: 'bold' }}>{comment.user.fullname}</Grid>
                       <Grid item style={{ fontSize: 10, color: '#8c8c8c' }}>{`${day}-${month}-${year}`}</Grid>
-                      <Grid item style={{ marginTop: 8 }}>{comment.content}</Grid>
+                      <Grid item style={{ marginTop: 4 }}>{comment.content}</Grid>
                     </Grid>
                   </Grid>
-                  <Divider style={{ margin: '16px 0' }} />
+                  <Divider style={{ marginTop: 8, marginBottom: 16 }} />
                 </>
               );
             })
           }
       </CardContent>
       <CardActions style={{ paddingLeft: 16, paddingRight: 16 }}>
-        <TextField placeholder="Để lại lời thảo luận..." variant="outlined" style={{ width: 'calc(100% - 32px)' }} />
-        <Send style={{ cursor: 'pointer' }} />
+        <TextField value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Để lại lời thảo luận..." variant="outlined" style={{ width: 'calc(100% - 32px)' }} />
+        <Send onClick={handleClick} style={{ cursor: 'pointer' }} />
       </CardActions>
     </Card>
   );
 }
 
 const mapStateToProps = (state) => ({
-  user: select(state, 'usersReducer', 'user'),
+  usersList: select(state, 'usersReducer', 'usersList'),
   comments: select(state, 'quizReducer', 'comments'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCommentsByQuizId: (id) => dispatch(getCommentsByQuizId(id)),
+  insertComment: (payload) => dispatch(insertComment(payload)),
 });
 
 export default connect(

@@ -6,4 +6,9 @@ export const COMMENTS_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  insertComment: () => ({
+    endPoint: "api/v1/comments/new",
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 };

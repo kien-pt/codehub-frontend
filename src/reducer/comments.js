@@ -4,26 +4,29 @@ import { apiCall } from '../utils/api';
 import { PREFIX } from '../constant/enum';
 import { COMMENTS_API } from '../services/commentsAPI';
 
-const GET_COMMENTS_LOADING = 'GET_COMMENTS_LOADING';
-const GET_COMMENTS_SUCCESS = 'GET_COMMENTS_SUCCESS';
-const GET_COMMENTS_FAILURE = 'GET_COMMENTS_FAILURE';
+import { getQuizById } from './quiz';
 
-export const getCommentsByQuizId = (id) => async (dispatch) => {
-  const api = COMMENTS_API.getCommentsByQuizId(id);
+const INSERT_COMMENTS_LOADING = 'INSERT_COMMENTS_LOADING';
+const INSERT_COMMENTS_SUCCESS = 'INSERT_COMMENTS_SUCCESS';
+const INSERT_COMMENTS_FAILURE = 'INSERT_COMMENTS_FAILURE';
+
+export const insertComment = (payload) => async (dispatch) => {
+  const api = COMMENTS_API.insertComment();
   dispatch({
-    type: GET_COMMENTS_LOADING,
+    type: INSERT_COMMENTS_LOADING,
     meta: { prefix: [PREFIX.COMMENTS, PREFIX.API_CALLING] },
   });
-  const { response, error } = await apiCall({ ...api });
+  const { response, error } = await apiCall({ ...api, payload });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_COMMENTS_SUCCESS,
+      type: INSERT_COMMENTS_SUCCESS,
       payload: response.data,
       meta: { prefix: [PREFIX.COMMENTS, PREFIX.API_SUCCESS] },
     });
+    dispatch(getQuizById(payload.quizId));
   } else {
     dispatch({
-      type: GET_COMMENTS_FAILURE,
+      type: INSERT_COMMENTS_FAILURE,
       meta: { prefix: [PREFIX.COMMENTS, PREFIX.API_FAILURE] },
     });
   }
@@ -36,19 +39,18 @@ const initialState = fromJS({
 
 export default function COMMENTSReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_COMMENTS_LOADING:
+    case INSERT_COMMENTS_LOADING:
       return state.merge({
         isFetching: true,
       });
 
-    case GET_COMMENTS_FAILURE:
+    case INSERT_COMMENTS_FAILURE:
       return state.merge({
         isFetching: false,
       });
 
-    case GET_COMMENTS_SUCCESS:
+    case INSERT_COMMENTS_SUCCESS:
       return state.merge({
-        comments: [...action.payload],
         isFetching: false,
       });
 
