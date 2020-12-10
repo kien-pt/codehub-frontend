@@ -1,1 +1,1 @@
-export { default } from './InsertQuiz';
+export { default } from './UpdateQuiz';

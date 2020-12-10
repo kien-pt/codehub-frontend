@@ -8,6 +8,7 @@ import Home from '../Home';
 import Courses from '../Courses';
 import Quiz from '../Quiz';
 import InsertQuiz from '../InsertQuiz';
+import UpdateQuiz from '../UpdateQuiz';
 import Submission from '../Submission';
 import Manager from '../Manager';
 import User from '../User';
@@ -21,7 +22,7 @@ function AppLayout() {
           <Route exact path={ROUTER.HOME} component={Home} />
           <Route path={ROUTER.COURSES} component={Courses} />
           <Route exact path={ROUTER.NEW_QUIZ} component={InsertQuiz} />
-          <Route exact path={ROUTER.UPDATE_QUIZ} component={InsertQuiz} />
+          <Route path={ROUTER.UPDATE_QUIZ} component={UpdateQuiz} />
           <Route path={ROUTER.QUIZ} component={Quiz} />
           <Route path={ROUTER.SUBMISSION} component={Submission} />
           <Route path={ROUTER.MANAGER} component={Manager} />

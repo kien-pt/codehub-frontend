@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
 
-import InsertQuizForm from '../../containers/InsertQuiz/InsertQuizForm';
-import InsertQuizSetting from '../../containers/InsertQuiz/InsertQuizSetting';
-import InsertQuizTestCase from '../../containers/InsertQuiz/InsertQuizTestCase';
+// import UpdateQuizForm from '../../containers/UpdateQuiz/UpdateQuizForm';
+// import UpdateQuizSetting from '../../containers/UpdateQuiz/UpdateQuizSetting';
+// import UpdateQuizTestCase from '../../containers/UpdateQuiz/UpdateQuizTestCase';
 
-function InsertQuiz(props) {
+function UpdateQuiz(props) {
   const courseId = props.location?.state?.courseId;
 
   const [content, setContent] = useState('');
@@ -23,7 +23,7 @@ function InsertQuiz(props) {
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item lg={3} md={4} xs={12}>
-        <InsertQuizSetting
+        {/* <UpdateQuizSetting
           courseId={courseId}
           title={title}
           selectedCourseId={selectedCourseId}
@@ -32,13 +32,13 @@ function InsertQuiz(props) {
           setSelectedCourseId={setSelectedCourseId}
           setSelectedTagId={setSelectedTagId}
         />
-        <InsertQuizTestCase
+        <UpdateQuizTestCase
           testcase={testcase}
-          setTestcase={setTestcase}
-        />
+          setTestcase={setTestcase} 
+        />*/}
       </Grid>
       <Grid item lg={7} md={8} xs={12}>
-        <InsertQuizForm
+        {/* <UpdateQuizForm
           content={content}
           input={input}
           output={output}
@@ -53,10 +53,10 @@ function InsertQuiz(props) {
           selectedCourseId={selectedCourseId}
           selectedTagId={selectedTagId}
           testcase={testcase}
-        />
+        /> */}
       </Grid>
     </Grid>
   );
 }
 
-export default InsertQuiz;
+export default UpdateQuiz;
