@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  Grid,
   Button,
+  Divider,
   Card,
   CardHeader,
   CardContent,
-  Grid,
-  FormControl,
-  OutlinedInput,
-  Snackbar,
-  Divider,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
-import { AssignmentTurnedIn, AssignmentLate } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-import InsertTagModal from '../../Manager/InsertTagModal';
-
 import { insertCourse } from '../../../reducer/courses';
+
+import InsertTagModal from '../../Manager/InsertTagModal';
 
 function CourseStatistic(props) {
   const history = useHistory();
@@ -29,19 +24,15 @@ function CourseStatistic(props) {
   const { courseId } = props;
   const [isInserting, setInserting] = useState(false);
 
-  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+  const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
-  const handleClick = (inserting) => {
-    setInserting(inserting);
-  }
+  // Open/Close inserting modal
+  const handleClick = (inserting) => setInserting(inserting);
 
   return (
     <>
       <Card style={{ marginTop: 32 }}>
-        <CardHeader
-          title="Thống kê"
-          style={{ color: 'white', backgroundColor: '#39424E' }}
-        />
+        <CardHeader title="Thống kê" style={{ color: 'white', backgroundColor: '#39424E' }} />
         <CardContent>
           <Grid container>
             <Grid item xs={10}>Tổng số lượng bài tập:</Grid>
@@ -55,12 +46,7 @@ function CourseStatistic(props) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => history.push({
-                pathname: `${ROUTER.QUIZ}/new`,
-                state: {
-                  courseId,
-                }
-              })}
+              onClick={() => history.push({ pathname: ROUTER.NEW_QUIZ, state: { courseId }})}
               style={{ width: '100%', marginTop: 8 }}
             >
               Thêm bài tập
