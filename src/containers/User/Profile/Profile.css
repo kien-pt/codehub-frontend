@@ -1,0 +1,8 @@
+#profile-avatar {
+  display: block;
+  margin: 256px auto 0 auto;
+  width: 256px;
+  max-width: 256px;
+  border: solid 1px #0000001a;
+  border-radius: 50%;
+}
