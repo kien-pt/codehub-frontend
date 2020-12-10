@@ -5,24 +5,25 @@ import {
   Fab,
   Grid,
   IconButton,
+  LinearProgress,
   Card,
   CardHeader,
   CardContent,
-  LinearProgress,
   CardActionArea,
 } from '@material-ui/core';
 import { AddBoxSharp, Create, Clear } from '@material-ui/icons';
 
-import InsertCourseModal from '../../Manager/InsertCourseModal';
-import UpdateCourseModal from '../../Manager/UpdateCourseModal';
-import DeleteCourseModal from '../../Manager/DeleteCourseModal';
-
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
+
+import { getAllPoint } from '../../../reducer/point';
 import { getCourses } from '../../../reducer/courses';
 import { getAllQuiz, getTags } from '../../../reducer/quiz';
-import { getAllPoint } from '../../../reducer/point';
+
+import InsertCourseModal from '../../Manager/InsertCourseModal';
+import UpdateCourseModal from '../../Manager/UpdateCourseModal';
+import DeleteCourseModal from '../../Manager/DeleteCourseModal';
 
 
 function HomeCourses(props) {
@@ -32,13 +33,11 @@ function HomeCourses(props) {
   const [isInserting, setInserting] = useState(false);
   const [deletingCourse, setDeletingCourse] = useState(null);
   const [updatingCourse, setUpdatingCourse] = useState(null);
-  const [noti, setNoti] = useState(null);
 
   const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
 
-  const handleClick = (inserting) => {
-    setInserting(inserting);
-  }
+  // Handle insert course
+  const handleClick = (inserting) => setInserting(inserting);
 
   useEffect(() => {
     getCourses();
