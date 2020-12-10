@@ -54,8 +54,8 @@ function UsersList(props) {
               <TableHead>
                 <TableRow>
                   <TableCell align="left" width="10%"><b>STT</b></TableCell>
-                  <TableCell align="center"><b>Username</b></TableCell>
-                  <TableCell align="center"><b>Họ và tên</b></TableCell>
+                  <TableCell align="center" width="35%"><b>Username</b></TableCell>
+                  <TableCell align="center" width="35%"><b>Họ và tên</b></TableCell>
                   <TableCell align="right" width="20%"><b>Tác vụ</b></TableCell>
                 </TableRow>
               </TableHead>
@@ -64,8 +64,8 @@ function UsersList(props) {
                 {props.usersList.slice(rowsPerPage * page, rowsPerPage * (page + 1)).map((user) => (
                   <TableRow key={user.username}>
                     <TableCell align="left" width="10%">{user.id}</TableCell>
-                    <TableCell align="center">{user.username}</TableCell>
-                    <TableCell align="center">{user.fullname}</TableCell>
+                    <TableCell align="center" width="35%">{user.username}</TableCell>
+                    <TableCell align="center" width="35%">{user.fullname}</TableCell>
                     <TableCell align="right" width="20%">
                       <IconButton size="small" onClick={() => setDeletedUser(user)}><Delete fontSize="inherit" /></IconButton>
                     </TableCell>

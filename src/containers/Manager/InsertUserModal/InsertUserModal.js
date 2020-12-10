@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  FormControl,
-  OutlinedInput,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
-  DialogActions,
   Button,
-  Snackbar,
-  FormControlLabel,
   Checkbox,
+  Snackbar,
+  FormControl,
+  OutlinedInput,
+  FormControlLabel,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'; 
 import { Person, Lock, Autorenew, AssignmentInd } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
-import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 import { insertUser } from '../../../reducer/users';
 
@@ -57,17 +53,14 @@ function InsertUserModal(props) {
 
   return (
     <>
-      <Dialog
-        open={isInserting}
-        keepMounted
-        onClose={() => setInserting(false)}
-      >
+      <Dialog open={isInserting} keepMounted onClose={() => setInserting(false)}>
         <DialogTitle>Thêm tài khoản</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
             <FormControl style={{ width: '100%', paddingBottom: 6 }}>
               <OutlinedInput
                 required
+                value={username}
                 placeholder="Tên đăng nhập"
                 startAdornment={<Person position="start" />}
                 onChange={(e) => setUsername(e.target.value)}
@@ -79,6 +72,7 @@ function InsertUserModal(props) {
               <OutlinedInput
                 required
                 type="password"
+                value={password}
                 placeholder="Mật khẩu"
                 startAdornment={<Lock position="start" />}
                 onChange={(e) => setPassword(e.target.value)}
@@ -90,6 +84,7 @@ function InsertUserModal(props) {
               <OutlinedInput
                 required
                 type="password"
+                value={confirmPassword}
                 placeholder="Xác nhận mật khẩu"
                 startAdornment={<Autorenew position="start" />}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -103,6 +98,7 @@ function InsertUserModal(props) {
             <FormControl style={{ width: '100%', padding: '6px 0 1px 0' }}>
               <OutlinedInput
                 required
+                value={fullname}
                 placeholder="Họ và tên"
                 startAdornment={<AssignmentInd position="start" />}
                 onChange={(e) => setFullname(e.target.value)}
@@ -110,21 +106,11 @@ function InsertUserModal(props) {
                 style={{ height: 40 }}
               />
             </FormControl>
-            <FormControl  style={{ paddingBottom: 12 }}>
-              <FormControlLabel
-                onChange={() => setAdmin(!isAdmin)}
-                control={<Checkbox color="default" />}
-                label="Trao quyền quản trị viên"
-              />  
+            <FormControl style={{ paddingBottom: 12 }}>
+              <FormControlLabel label="Trao quyền quản trị viên" control={<Checkbox color="default" />} onChange={() => setAdmin(!isAdmin)} />  
             </FormControl>
             <FormControl style={{ width: '100%' }}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                Đăng ký
-              </Button>
+              <Button variant="contained" color="primary" type="submit">Đăng ký</Button>
             </FormControl>
           </form>
         </DialogContent>
@@ -139,8 +125,7 @@ function InsertUserModal(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   insertUser: (payload) => dispatch(insertUser(payload)),
