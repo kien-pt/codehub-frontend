@@ -8,36 +8,31 @@ import {
   AppBar,
   MenuItem,
   withStyles,
-  IconButton,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  Snackbar,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { Person, ExitToApp, Build, ExpandMore, AccountCircle } from '@material-ui/icons';
+import { Person, ExitToApp, Build, ExpandMore } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-import code from '../../../assets/code.png';
-
 import { logout, getUserById } from '../../../reducer/users';
+
+import './AppHeader.css';
+import logo from '../../../assets/logo.png';
+import avatar from '../../../assets/avatar.jpg';
 
 import LogoutModal from '../LogoutModal';
 
 function AppHeader(props) {
   const history = useHistory();
 
+  const { getUserById } = props;
+
+  const currentTime = Date.parse(new Date());
   const userId = parseInt(sessionStorage.getItem("userId"));
   const expiredTime = Date.parse(sessionStorage.getItem("expiredTime"));
-  const currentTime = Date.parse(new Date());
 
   const currentRoute = window.location.pathname;
 
@@ -63,32 +58,34 @@ function AppHeader(props) {
   if (currentRoute === ROUTER.HOME && selectedId !== 0) setSelectedId(0);
   if (currentRoute === ROUTER.MANAGER && selectedId !== 1) setSelectedId(1);
 
+  // Auto Logout
   useEffect(() => {
     if (expiredTime - currentTime <= 0) logout();
     if (!(userId >= 0) && currentRoute !== ROUTER.REGISTER) history.push(ROUTER.LOGIN);
-  }, [history, userId, currentTime]);
+  }, [history, userId, currentTime, expiredTime, currentRoute]);
 
+  // Get User Information
   useEffect(() => {
-    if (userId >= 0) props.getUserById(userId);
-  }, []);
+    if (userId >= 0) getUserById(userId);
+  }, [getUserById, userId]);
 
-  const handleSelect = () => {
+  // Handle select logout button
+  const handleLogout = () => {
     setLogout(true);
     handleClose();
   };
 
-  const linkToUser = () => {
+  // Handle select user button
+  const handleUser = () => {
     history.push(`${ROUTER.USER}/${userId}`);
     handleClose();
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // Handle open menu
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // Handle close menu
+  const handleClose = () => setAnchorEl(null);
 
   const StyledMenu = withStyles({
     paper: {
@@ -119,22 +116,19 @@ function AppHeader(props) {
           <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Link href={ROUTER.HOME}>
-                <img src={code} alt="logo" height="36px" style={{ padding: '12px 0' }} />
+                <img src={logo} alt="logo" height="36px" style={{ padding: '12px 0' }} />
               </Link>
               {
                 menuList.map((item, index) => (
                   <Link
+                    className="app-menu-item"
                     key={item.name}
                     href={item.link}
                     style={{
-                      height: 55,
                       color: 'white',
-                      textDecoration: 'none',
                       margin: '0 12px',
-                      padding: '0 8px',
-                      cursor: 'pointer',
-                      lineHeight: '60px',
-                      borderBottom: (selectedId === index) ? '5px solid #1BA94C' : 'none',
+                      textDecoration: 'none',
+                      borderBottom: (selectedId === index) ? '5px solid #1BA94C' : 'none'
                     }}
                   >
                     {item.name}
@@ -144,19 +138,8 @@ function AppHeader(props) {
             </div> 
           </Grid>
           <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
-            <div
-              onClick={handleClick}
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                float: 'right',
-                cursor: 'pointer'
-              }}
-            >
-              <img
-                src="https://i.pinimg.com/originals/63/db/21/63db2105d5418f5e5c7763d28d9ebb36.jpg"
-                alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }}
-              />
+            <div id="user-button" onClick={handleClick}>
+              <img src={avatar} alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }} />
               <div style={{ lineHeight: '60px' }}>{fullname}</div>
               <ExpandMore style={{ padding: '18px 0' }} />
             </div> 
@@ -170,7 +153,7 @@ function AppHeader(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={linkToUser}>
+        <MenuItem onClick={handleUser}>
           <Person fontSize="small" style={{ paddingRight: 16 }} />
           <Typography variant="inherit" noWrap>{username}</Typography>
         </MenuItem>
@@ -178,7 +161,7 @@ function AppHeader(props) {
           <Build fontSize="small" style={{ paddingRight: 16 }} />
           <Typography variant="inherit" noWrap>Đổi mật khẩu</Typography>
         </MenuItem>
-        <MenuItem onClick={handleSelect}>
+        <MenuItem onClick={handleLogout}>
           <ExitToApp fontSize="small" style={{ paddingRight: 16 }} />
           <Typography variant="inherit" noWrap>Đăng xuất</Typography>
         </MenuItem>

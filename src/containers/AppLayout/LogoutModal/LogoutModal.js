@@ -19,6 +19,7 @@ import { logout } from '../../../reducer/users';
 function LogoutModal(props) {
   const history = useHistory();
   const { isLogout, setLogout } = props;
+  
   const [noti, setNoti] = useState(false);
 
   const logout = () => {

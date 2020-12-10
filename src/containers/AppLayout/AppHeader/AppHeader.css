@@ -1,0 +1,13 @@
+.app-menu-item {
+  height: 55px;
+  line-height: 60px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+#user-button {
+  display: flex;
+  flex-direction: row;
+  float: right;
+  cursor: pointer;
+}
