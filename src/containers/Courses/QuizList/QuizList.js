@@ -2,48 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  Grid,
+  IconButton,
   Card,
   CardHeader,
   CardContent,
   CardActionArea,
-  Grid,
-  Fab,
-  IconButton,
 } from '@material-ui/core';
-import { Clear, Create } from '@material-ui/icons';
+import { DeleteForever, Create } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getTagsByCourseId, getQuizByCourseId } from '../../../reducer/quiz';
 import { getPointByCourseId } from '../../../reducer/point';
+import { getTagsByCourseId, getQuizByCourseId } from '../../../reducer/quiz';
 
+import './QuizList.css';
 import UpdateTagModal from '../../Manager/UpdateTagModal';
 import DeleteTagModal from '../../Manager/DeleteTagModal';
 
 function HomeCourses(props) {
   const history = useHistory();
   const {
+    courseId,
     getCourseById,
-    getPointByCourseId,
     getTagsByCourseId,
     getQuizByCourseId,
-    courseId,
+    getPointByCourseId,
   } = props;
 
   const [deletedTag, setDeletedTag] = useState(null);
   const [updatedTag, setUpdatedTag] = useState(null);
 
+  const isAdmin = localStorage.getItem("isAdmin") === 'true';
+
   useEffect(() => {
     getCourseById(courseId);
-    getPointByCourseId(courseId);
     getTagsByCourseId(courseId);
     getQuizByCourseId(courseId);
+    getPointByCourseId(courseId);
   }, [courseId, getCourseById, getPointByCourseId, getQuizByCourseId, getTagsByCourseId]);
-
-  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
 
   return (
     <>
@@ -55,19 +55,11 @@ function HomeCourses(props) {
                 <Grid container>
                   <Grid item xs={10}>{tag?.name}</Grid>
                   <Grid item xs={2} style={{ display: isAdmin ? 'block' : 'none' }}>
-                    <IconButton
-                      size="small"
-                      onClick={() => setDeletedTag(tag)}
-                      style={{ float: 'right', marginBottom: 2 }}
-                    >
-                      <Clear style={{ color: 'white' }} />
+                    <IconButton className="quiz-edit-button" size="small" onClick={() => setDeletedTag(tag)}>
+                      <DeleteForever className="quiz-edit-icon" />
                     </IconButton>
-                    <IconButton
-                      size="small"
-                      onClick={() => setUpdatedTag(tag)}
-                      style={{ float: 'right', marginBottom: 2 }}
-                    >
-                      <Create style={{ color: 'white' }} />
+                    <IconButton className="quiz-edit-button" size="small" onClick={() => setUpdatedTag(tag)}>
+                      <Create className="quiz-edit-icon" />
                     </IconButton>
                   </Grid>
                 </Grid>
@@ -82,24 +74,13 @@ function HomeCourses(props) {
                     <CardActionArea onClick={() => history.push(`${ROUTER.QUIZ}/${quiz.id}`)}>
                       <CardContent>
                         <Grid container>
-                          <Grid item xs={8}>
-                            <div style={{ fontSize: 24, padding: 8 }}>
-                              {quiz?.title}
-                            </div>
-                          </Grid>
+                          <Grid item xs={8}><div style={{ fontSize: 24, padding: 8 }}>{quiz?.title}</div></Grid>
                           <Grid item xs={4} style={{ margin: 'auto 0', paddingRight: 8 }}>
                             <div className="cardButton" style={{ float: 'right' }}>{`${point}/100`}</div>
                           </Grid>
                         </Grid>
                       </CardContent>
                     </CardActionArea>
-                    <Fab
-                      size="small"
-                      className="fab-quiz-element"
-                      style={{ display: isAdmin ? 'inline-flex' : 'none' }}
-                    >
-                      <Clear style={{ fontSize: 16 }} />
-                    </Fab>
                   </Card>
                 );
               })}

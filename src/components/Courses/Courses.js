@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
-import QuizList from '../../containers/Courses/QuizList';
 import HomeRank from '../../containers/Home/HomeRank';
-import CourseInfor from '../../containers/Courses/CourseInfor';
+import QuizList from '../../containers/Courses/QuizList';
+import CourseStatistic from '../../containers/Courses/CourseStatistic';
 
 function Courses() {
   const temp = window.location.href.split('/');
@@ -16,7 +16,7 @@ function Courses() {
       </Grid>
       <Grid item lg={3} md={4} xs={12}>
         <HomeRank courseId={courseId} disabled={true} />
-        <CourseInfor courseId={courseId} />
+        <CourseStatistic courseId={courseId} />
       </Grid>
     </Grid>
   );

@@ -23,7 +23,7 @@ import InsertTagModal from '../../Manager/InsertTagModal';
 
 import { insertCourse } from '../../../reducer/courses';
 
-function CourseInfor(props) {
+function CourseStatistic(props) {
   const history = useHistory();
 
   const { courseId } = props;
@@ -85,5 +85,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(toJs(CourseInfor));
+)(toJs(CourseStatistic));
 

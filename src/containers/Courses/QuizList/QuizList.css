@@ -1,0 +1,16 @@
+.quiz-edit-button {
+  float: right;
+  margin-bottom: 2px;
+}
+
+.quiz-edit-icon {
+  color: white;
+}
+
+.cardButton {
+  width: 80px;
+  padding: 8px 0;
+  text-align: center;
+  color: #1BA94C;
+  border: solid 1px #1BA94C;
+}
