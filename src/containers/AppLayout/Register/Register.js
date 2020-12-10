@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  CardHeader,
-  CardContent,
   Grid,
-  Card,
   Button,
   FormControl,
   OutlinedInput,
+  Card,
+  CardHeader,
+  CardContent,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
 } from '@material-ui/core';
-import { Person, Lock, Autorenew, AssignmentInd } from '@material-ui/icons';
+import {
+  Lock,
+  Person,
+  Autorenew,
+  AssignmentInd
+} from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
@@ -30,7 +35,7 @@ function Register(props) {
   const [fullname, setFullname] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [focus, setFocus] = useState(false);
-  const [noti, setNoti] = useState(false);
+  const [noti, setNoti] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +46,12 @@ function Register(props) {
     })
     .then(result => setNoti(result))
     .catch();
+  }
+
+  // Handle close noti modal
+  const handleClose = () => {
+    if (noti.type === 'success') history.push(ROUTER.LOGIN);
+    setNoti(false);
   }
   
   return (
@@ -100,13 +111,7 @@ function Register(props) {
                   />
                 </FormControl>
                 <FormControl style={{ width: '100%' }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                  >
-                    Đăng ký
-                  </Button>
+                  <Button disabled={password === '' || password !== confirmPassword} variant="contained" color="primary" type="submit">Đăng ký</Button>
                 </FormControl>
               </form>
             </CardContent>
@@ -114,21 +119,12 @@ function Register(props) {
         </Grid>
       </Grid>
 
-      <Dialog
-        open={noti}
-        keepMounted
-        onClose={() => {
-          if (noti.type === 'success') history.push(ROUTER.LOGIN);
-          setNoti(false);
-        }}
-      >
-        <DialogTitle>
-          {`Đăng ký ${noti.type === 'success' ? 'thành công' : 'thất bại'}`}
-        </DialogTitle>
+      <Dialog open={noti !== null} keepMounted onClose={handleClose}>
+        <DialogTitle>{`Đăng ký ${noti?.type === 'success' ? 'thành công' : 'thất bại'}`}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {
-              noti.type === 'success'
+              noti?.type === 'success'
               ? 'Bạn đã đăng ký thành công tài khoản. Xin mời đăng nhập!'
 
               : 'Đăng ký tài khoản không thành công. Tài khoản đã tồn tại!'
@@ -136,23 +132,14 @@ function Register(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={() => {
-              if (noti.type === 'success') history.push(ROUTER.LOGIN);
-              setNoti(false);
-            }}
-            color="primary"
-          >
-            Tiếp tục
-          </Button>
+          <Button onClick={handleClose} color="primary">Tiếp tục</Button>
         </DialogActions>
       </Dialog>
     </>
   );
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   insertUser: (payload) => dispatch(insertUser(payload)),
