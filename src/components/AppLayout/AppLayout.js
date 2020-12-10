@@ -20,7 +20,8 @@ function AppLayout() {
         <Switch>
           <Route exact path={ROUTER.HOME} component={Home} />
           <Route path={ROUTER.COURSES} component={Courses} />
-          <Route exact path={`${ROUTER.QUIZ}/new`} component={InsertQuiz} />
+          <Route exact path={ROUTER.NEW_QUIZ} component={InsertQuiz} />
+          <Route exact path={ROUTER.UPDATE_QUIZ} component={InsertQuiz} />
           <Route path={ROUTER.QUIZ} component={Quiz} />
           <Route path={ROUTER.SUBMISSION} component={Submission} />
           <Route path={ROUTER.MANAGER} component={Manager} />

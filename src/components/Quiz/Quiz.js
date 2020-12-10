@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import QuizContent from '../../containers/Quiz/QuizContent';
 import QuizSubmitField from '../../containers/Quiz/QuizSubmitField';
 import QuizSubmissions from '../../containers/Quiz/QuizSubmissions';
+import QuizStatistic from '../../containers/Quiz/QuizStatistic';
 import QuizDiscuss from '../../containers/Quiz/QuizDiscuss';
 
 function Quiz() {
@@ -18,6 +19,7 @@ function Quiz() {
       </Grid>
       <Grid item lg={3} md={4} xs={12}>
         <QuizSubmissions quizId={quizId} />
+        <QuizStatistic quizId={quizId} />
         <QuizDiscuss quizId={quizId} />
       </Grid>
     </Grid>
