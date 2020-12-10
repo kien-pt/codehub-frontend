@@ -7,21 +7,23 @@ import {
   Card,
   CardHeader,
   CardContent,
-  TableContainer,
   Table,
   TableRow,
   TableHead,
   TableBody,
   TableCell,
+  TableContainer,
   TablePagination,
 } from '@material-ui/core';
 import { Delete, Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+
+import { getAllUsers } from '../../../reducer/users';
+
 import InsertUserModal from '../InsertUserModal';
 import DeleteUserModal from '../DeleteUserModal';
-import { getAllUsers } from '../../../reducer/users';
 
 function UsersList(props) {
   const { getAllUsers } = props;
@@ -35,9 +37,7 @@ function UsersList(props) {
     getAllUsers();
   }, [getAllUsers]);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
@@ -47,10 +47,7 @@ function UsersList(props) {
   return (
     <>
       <Card style={{ color: 'white', padding: 0 }}>
-        <CardHeader
-          title="Danh sách người dùng"
-          style={{ backgroundColor: '#39424E', height: 32 }}
-        />
+        <CardHeader title="Danh sách người dùng" style={{ backgroundColor: '#39424E' }} />
         <CardContent>
           <TableContainer component={Paper} style={{ marginTop: 12 }}>
             <Table>
@@ -70,9 +67,7 @@ function UsersList(props) {
                     <TableCell align="center">{user.username}</TableCell>
                     <TableCell align="center">{user.fullname}</TableCell>
                     <TableCell align="right" width="20%">
-                      <IconButton size="small" onClick={() => setDeletedUser(user)}>
-                        <Delete fontSize="inherit" />
-                      </IconButton>
+                      <IconButton size="small" onClick={() => setDeletedUser(user)}><Delete fontSize="inherit" /></IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -86,10 +81,10 @@ function UsersList(props) {
                     Thêm mới
                   </Button>
                   <TablePagination
+                    page={page}
                     rowsPerPageOptions={[5]}
                     rowsPerPage={rowsPerPage}
                     count={props.usersList.length}
-                    page={page}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                   />  
