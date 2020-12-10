@@ -11,9 +11,10 @@ import {
   LinearProgress,
   CardActionArea,
 } from '@material-ui/core';
-import { AddBoxSharp, Clear } from '@material-ui/icons';
+import { AddBoxSharp, Create, Clear } from '@material-ui/icons';
 
 import InsertCourseModal from '../../Manager/InsertCourseModal';
+import UpdateCourseModal from '../../Manager/UpdateCourseModal';
 import DeleteCourseModal from '../../Manager/DeleteCourseModal';
 
 import toJs from '../../../hoc/ToJS';
@@ -29,7 +30,8 @@ function HomeCourses(props) {
   const { getAllQuiz, getCourses, getAllPoint } = props;
 
   const [isInserting, setInserting] = useState(false);
-  const [deletedCourse, setDeletedCourse] = useState(null);
+  const [deletingCourse, setDeletingCourse] = useState(null);
+  const [updatingCourse, setUpdatingCourse] = useState(null);
   const [noti, setNoti] = useState(null);
 
   const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
@@ -88,18 +90,19 @@ function HomeCourses(props) {
 
                 <Fab
                   size="small"
-                  onClick={() => setDeletedCourse(course)}
-                  style={{
-                    display: isAdmin ? 'inline-flex' : 'none',
-                    backgroundColor: 'transparent',
-                    position: 'absolute',
-                    color: 'rgb(0 0 0 / 50%)',
-                    boxShadow: 'none',
-                    top: 0,
-                    right: 0,
-                  }}
+                  className="fab-quiz-element"
+                  onClick={() => setDeletingCourse(course)}
+                  style={{ display: isAdmin ? 'inline-flex' : 'none' }}
                 >
                   <Clear />
+                </Fab>
+                <Fab
+                  size="small"
+                  className="fab-quiz-element"
+                  onClick={() => setUpdatingCourse(course)}
+                  style={{ display: isAdmin ? 'inline-flex' : 'none', right: 24 }}
+                >
+                  <Create style={{ fontSize: 18 }} />
                 </Fab>
               </Card>
             )
@@ -108,7 +111,8 @@ function HomeCourses(props) {
       </Card>
 
       <InsertCourseModal isInserting={isInserting} handleClick={handleClick} />
-      <DeleteCourseModal deletedCourse={deletedCourse} setDeletedCourse={setDeletedCourse} />
+      <UpdateCourseModal updatingCourse={updatingCourse} setUpdatingCourse={setUpdatingCourse} />
+      <DeleteCourseModal deletingCourse={deletingCourse} setDeletingCourse={setDeletingCourse} />
     </>
   );
 }

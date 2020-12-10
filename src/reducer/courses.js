@@ -12,6 +12,10 @@ const INSERT_COURSE_LOADING = 'INSERT_COURSE_LOADING';
 const INSERT_COURSE_SUCCESS = 'INSERT_COURSE_SUCCESS';
 const INSERT_COURSE_FAILURE = 'INSERT_COURSE_FAILURE';
 
+const UPDATE_COURSE_LOADING = 'UPDATE_COURSE_LOADING';
+const UPDATE_COURSE_SUCCESS = 'UPDATE_COURSE_SUCCESS';
+const UPDATE_COURSE_FAILURE = 'UPDATE_COURSE_FAILURE';
+
 const DELETE_COURSE_LOADING = 'DELETE_COURSE_LOADING';
 const DELETE_COURSE_SUCCESS = 'DELETE_COURSE_SUCCESS';
 const DELETE_COURSE_FAILURE = 'DELETE_COURSE_FAILURE';
@@ -91,6 +95,35 @@ export const insertCourse = (payload) => async (dispatch) => {
   }
 };
 
+export const updateCourse = (payload) => async (dispatch) => {
+  const api = COURSES_API.updateCourse();
+  dispatch({
+    type: UPDATE_COURSE_LOADING,
+    meta: { prefix: [PREFIX.COURSES, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: UPDATE_COURSE_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.COURSES, PREFIX.API_SUCCESS] },
+    });
+    return ({
+      type: 'success',
+      message: 'Cập nhật khoá học thành công!',
+    });
+  } else {
+    dispatch({
+      type: UPDATE_COURSE_FAILURE,
+      meta: { prefix: [PREFIX.COURSES, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'error',
+      message: 'Cập nhật khoá học thất bại!',
+    });
+  }
+};
+
 export const deleteCourse = (id) => async (dispatch) => {
   const api = COURSES_API.deleteCourse(id);
   dispatch({
@@ -130,6 +163,7 @@ export default function coursesReducer(state = initialState, action) {
     case GET_ALL_COURSES_LOADING:
     case GET_COURSE_BY_ID_LOADING:
     case INSERT_COURSE_LOADING:
+    case UPDATE_COURSE_LOADING:
     case DELETE_COURSE_LOADING:
       return state.merge({
         isFetching: true,
@@ -138,6 +172,7 @@ export default function coursesReducer(state = initialState, action) {
     case GET_ALL_COURSES_FAILURE:
     case GET_COURSE_BY_ID_FAILURE:
     case INSERT_COURSE_FAILURE:
+    case UPDATE_COURSE_FAILURE:
     case DELETE_COURSE_FAILURE:
       return state.merge({
         isFetching: false,
@@ -160,6 +195,16 @@ export default function coursesReducer(state = initialState, action) {
         courses: [...state.get('courses'), ...action.payload],
         isFetching: false,
       });
+
+      case UPDATE_COURSE_SUCCESS: {
+        const newList = state.get('courses');
+        const id = newList.findIndex((e) => e.id === action.payload.id);
+        newList.splice(id, 1, action.payload);
+        return state.merge({
+          courses: [...newList],
+          isFetching: false,
+        });
+      }
 
     case DELETE_COURSE_SUCCESS: {
       const newList = state.get('courses');

@@ -23,8 +23,6 @@ import { getPointByCourseId } from '../../../reducer/point';
 import UpdateTagModal from '../../Manager/UpdateTagModal';
 import DeleteTagModal from '../../Manager/DeleteTagModal';
 
-import './QuizList.css';
-
 function HomeCourses(props) {
   const history = useHistory();
   const {

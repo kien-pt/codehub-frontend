@@ -16,31 +16,31 @@ import toJs from '../../../hoc/ToJS';
 import { deleteCourse } from '../../../reducer/courses';
 
 function DeleteCourseModal(props) {
-  const { deletedCourse, setDeletedCourse } = props;
+  const { deletingCourse, setDeletingCourse } = props;
   const [noti, setNoti] = useState(null);
 
   const handleDelete = () => {
-    props.deleteCourse(deletedCourse.id)
+    props.deleteCourse(deletingCourse.id)
     .then(result => setNoti(result))
     .catch();
-    setDeletedCourse(null);
+    setDeletingCourse(null);
   }
 
   return (
     <>
       <Dialog
-        open={deletedCourse !== null}
+        open={deletingCourse !== null}
         keepMounted
-        onClose={() => setDeletedCourse(null)}
+        onClose={() => setDeletingCourse(null)}
       >
         <DialogTitle>Xác nhận xoá</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {`Bạn có thực sự muốn xoá khoá học "${deletedCourse?.name}" khỏi hệ thống?`}
+            {`Bạn có thực sự muốn xoá khoá học "${deletingCourse?.name}" khỏi hệ thống?`}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeletedCourse(null)} color="secondary">Huỷ</Button>
+          <Button onClick={() => setDeletingCourse(null)} color="secondary">Huỷ</Button>
           <Button 
             onClick={handleDelete}
             color="primary"

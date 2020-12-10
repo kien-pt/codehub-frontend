@@ -16,6 +16,11 @@ export const COURSES_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  updateCourse: () => ({
+    endPoint: 'api/v1/courses/update',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
   deleteCourse: (id) => ({
     endPoint: `api/v1/courses/delete/id/?id=${id}`,
     method: 'DELETE',
