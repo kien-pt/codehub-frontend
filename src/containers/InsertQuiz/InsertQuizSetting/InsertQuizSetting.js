@@ -38,7 +38,7 @@ function InsertQuizSetting(props) {
   }, [selectedCourseId, getTagsByCourseId]);
 
   useEffect(() => {
-    setSelectedTagId("");
+    setSelectedTagId(tags[0]?.id);
   }, [setSelectedTagId, tags]);
 
   const handleSelect = (e) => {

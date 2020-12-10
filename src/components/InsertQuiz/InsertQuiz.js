@@ -51,7 +51,7 @@ function InsertQuiz(props) {
           setSampleOutput={setSampleOutput}
           title={title}
           selectedCourseId={selectedCourseId}
-          setSelectedTagId={selectedTagId}
+          selectedTagId={selectedTagId}
           testcase={testcase}
         />
       </Grid>

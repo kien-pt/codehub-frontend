@@ -44,6 +44,11 @@ export const QUIZ_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  insertQuiz: () => ({
+    endPoint: 'api/v1/quizzes/new',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 
   /** RUN CODE */
   runCode: () => ({

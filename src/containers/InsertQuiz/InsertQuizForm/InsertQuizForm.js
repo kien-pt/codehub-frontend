@@ -10,10 +10,11 @@ import {
   TextareaAutosize,
 } from '@material-ui/core';
 
-import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
-
 import toJs from '../../../hoc/ToJS';
 
+import { insertQuiz } from '../../../reducer/quiz';
+
+import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
 import './index.css';
 
 function InsertQuizForm(props) {
@@ -22,9 +23,66 @@ function InsertQuizForm(props) {
   const { output, setOutput } = props;
   const { sampleInput, setSampleInput } = props;
   const { sampleOutput, setSampleOutput } = props;
-  const { title, selectedCourseId, setSelectedTagId, testcase } = props;
+  const { title, selectedCourseId, selectedTagId, testcase } = props;
+
+  var contentPart = '';
+  content.split('\n').forEach((row) => {
+    contentPart += `<p style="textAlign:justify">${row}</p>`; 
+  });
+
+  var inputPart = '<strong>Input:</strong>';
+  input.split('\n').forEach((row) => {
+    inputPart += `<p style="textAlign:justify">${row}</p>`; 
+  });
+
+  var outputPart = '<strong>Output:</strong>';
+  output.split('\n').forEach((row) => {
+    outputPart += `<p style="textAlign:justify">${row}</p>`; 
+  });
+
+  const combine = `
+    <div class='problem-content'>
+      ${contentPart}
+      <p style="textAlign:justify">
+        ${inputPart}
+        ${outputPart}
+      </p>
+      <div class='problem-sample'>
+        <strong>Ví dụ:</strong>
+        <ul style="margin: 0">
+          <li>            
+            <div class='sample-type'>input</div>            
+            <div class='sample-value'>${sampleInput}</div>            
+            <div class='sample-type'>output</div>            
+            <div class='sample-value'>${sampleOutput}</div>        
+          </li>
+        </ul> 
+      </div>
+    </div>
+  `;
+
+  console.log(selectedCourseId, selectedTagId);
 
   const [isPreviewing, setPreviewing] = useState(false);
+
+  const insertQuiz = () => {
+    console.log({
+      quiz: {
+        title,
+        content: combine,
+        tagId: selectedTagId,
+      },
+      testCases: testcase,
+    });
+    props.insertQuiz({
+      quiz: {
+        title,
+        content: "ok",
+        tagId: selectedTagId,
+      },
+      testCases: testcase,
+    });
+  } 
 
   return (
     <>
@@ -55,17 +113,13 @@ function InsertQuizForm(props) {
         <CardActions style={{ padding: '0 16px 8px' }}>
           <Grid style={{ width: '100%' }}>
             <Button variant="outlined" onClick={() => setPreviewing(true)}>Xem trước</Button>
-            <Button variant="contained" color="primary" style={{ float: 'right' }}>Lưu</Button>
+            <Button variant="contained" onClick={insertQuiz} color="primary" style={{ float: 'right' }}>Lưu</Button>
           </Grid>
         </CardActions>
       </Card>
 
       <InsertQuizPreviewModal
-        input={input}
-        output={output}
-        sampleInput={sampleInput}
-        sampleOutput={sampleOutput}
-        content={content}
+        combine={combine}
         isPreviewing={isPreviewing}
         setPreviewing={setPreviewing}
       />
@@ -76,7 +130,8 @@ function InsertQuizForm(props) {
 const mapStateToProps = () => ({
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  insertQuiz: (payload) => dispatch(insertQuiz(payload)),
 });
 
 export default connect(
