@@ -53,7 +53,6 @@ export const login = (history, payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.USER, PREFIX.API_SUCCESS] },
     });
-    history.push(ROUTER.HOME);
     return 'success';
   } else {
     dispatch({
@@ -244,18 +243,18 @@ export default function usersReducer(state = initialState, action) {
     case LOGIN_SUCCESS: {
       const expiredTime = new Date();
       expiredTime.setHours(expiredTime.getHours() + 1);
-      sessionStorage.setItem("expiredTime", expiredTime);
-      sessionStorage.setItem("userId", action.payload.id);
-      sessionStorage.setItem("isAdmin", action.payload.admin);
+      localStorage.setItem("expiredTime", expiredTime);
+      localStorage.setItem("userId", action.payload.id);
+      localStorage.setItem("isAdmin", action.payload.admin);
       return state.merge({
         isFetching: false,
       });
     }
 
-    case LOGIN_SUCCESS: {
-      sessionStorage.removeItem("userId");
-      sessionStorage.removeItem("expiredTime");
-      sessionStorage.removeItem("isAdmin");
+    case LOGOUT_SUCCESS: {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("expiredTime");
+      localStorage.removeItem("isAdmin");
       return state.merge({
         isFetching: false,
       });

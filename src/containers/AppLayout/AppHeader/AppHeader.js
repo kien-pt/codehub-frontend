@@ -31,8 +31,8 @@ function AppHeader(props) {
   const { getUserById } = props;
 
   const currentTime = Date.parse(new Date());
-  const userId = parseInt(sessionStorage.getItem("userId"));
-  const expiredTime = Date.parse(sessionStorage.getItem("expiredTime"));
+  const userId = parseInt(localStorage.getItem("userId"));
+  const expiredTime = Date.parse(localStorage.getItem("expiredTime"));
 
   const currentRoute = window.location.pathname;
 

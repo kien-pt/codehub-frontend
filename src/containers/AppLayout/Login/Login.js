@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   CardHeader,
@@ -33,7 +33,11 @@ function Login(props) {
         username,
         password,
       }
-    ).then(result => setNoti(result === 'error' ? true : false))
+    ).then(result => {
+      setNoti(result === 'error' ? true : false);
+      const userId = parseInt(localStorage.getItem("userId"));
+      if (userId >= 0) history.push(ROUTER.HOME);
+    })
     .catch();
   }
 
