@@ -42,9 +42,7 @@ function LogoutModal(props) {
       </Dialog>
 
       <Snackbar open={noti} autoHideDuration={5000} onClose={() => setNoti(false)}>
-        <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
-          Đăng xuất không thành công!
-        </Alert>
+        <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>Đăng xuất không thành công!</Alert>
       </Snackbar>
     </>
   );

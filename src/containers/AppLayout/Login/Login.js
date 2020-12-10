@@ -96,9 +96,7 @@ function Login(props) {
         </Card>
 
         <Snackbar open={noti} autoHideDuration={6000} onClose={() => setNoti(false)}>
-          <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
-            Sai tên đăng nhập hoặc mật khẩu!
-          </Alert>
+          <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>Sai tên đăng nhập hoặc mật khẩu!</Alert>
         </Snackbar>
       </Grid>
     </Grid>
