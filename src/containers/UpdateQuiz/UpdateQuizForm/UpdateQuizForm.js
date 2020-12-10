@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
@@ -11,19 +11,33 @@ import {
 } from '@material-ui/core';
 
 import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
 
-import { insertQuiz } from '../../../reducer/quiz';
+import { getQuizById } from '../../../reducer/quiz';
 
 import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
 import './index.css';
 
-function InsertQuizForm(props) {
+function UpdateQuizForm(props) {
   const { content, setContent } = props;
   const { input, setInput } = props;
   const { output, setOutput } = props;
   const { sampleInput, setSampleInput } = props;
   const { sampleOutput, setSampleOutput } = props;
+  const { quizId, getQuizById } = props;
   const { title, selectedCourseId, selectedTagId, testcase } = props;
+
+  useEffect(() => {
+    getQuizById(quizId);
+  }, [getQuizById, quizId]);
+
+  const quiz = props.quizList.find((quiz) => quiz.id === quizId);
+
+  useEffect(() => {
+    // getQuizById(quizId);
+    contentPart = quiz?.content?.split('<strong>Input:</strong>')[0];
+    console.log(quiz?.content);
+  }, [quiz]);
 
   var contentPart = '';
   content.split('\n').forEach((row) => {
@@ -61,19 +75,9 @@ function InsertQuizForm(props) {
     </div>
   `;
 
-  console.log(selectedCourseId, selectedTagId);
-
   const [isPreviewing, setPreviewing] = useState(false);
 
   const insertQuiz = () => {
-    console.log({
-      quiz: {
-        title,
-        content: combine,
-        tagId: selectedTagId,
-      },
-      testCases: testcase,
-    });
     props.insertQuiz({
       quiz: {
         title,
@@ -88,7 +92,7 @@ function InsertQuizForm(props) {
     <>
       <Card>
         <CardHeader
-          title="Thêm bài tập"
+          title="Thêm bài tậpxx"
           style={{ color: 'white', backgroundColor: '#39424E' }}
         />
         <CardContent>
@@ -127,15 +131,16 @@ function InsertQuizForm(props) {
   );
 }
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  quizList: select(state, 'quizReducer', 'quiz'),
+  isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  insertQuiz: (payload) => dispatch(insertQuiz(payload)),
+  getQuizById: (id) => dispatch(getQuizById(id)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(toJs(InsertQuizForm));
-
+)(toJs(UpdateQuizForm));

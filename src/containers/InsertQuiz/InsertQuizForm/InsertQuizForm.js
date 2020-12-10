@@ -66,18 +66,11 @@ function InsertQuizForm(props) {
   const [isPreviewing, setPreviewing] = useState(false);
 
   const insertQuiz = () => {
-    console.log({
-      quiz: {
-        title,
-        content: combine,
-        tagId: selectedTagId,
-      },
-      testCases: testcase,
-    });
+    console.log(combine);
     props.insertQuiz({
       quiz: {
         title,
-        content: "ok",
+        content: combine.toString(),
         tagId: selectedTagId,
       },
       testCases: testcase,
