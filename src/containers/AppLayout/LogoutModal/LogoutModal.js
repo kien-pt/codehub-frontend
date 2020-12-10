@@ -10,76 +10,49 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { Person, Lock } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
-import ROUTER from '../../../constant/router';
 
-import { login } from '../../../reducer/users';
+import { logout } from '../../../reducer/users';
 
 function LogoutModal(props) {
   const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { isLogout, setLogout } = props;
   const [noti, setNoti] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    props.login(
-      history,
-      {
-        username,
-        password,
-      }
-    ).then(result => setNoti(result === 'error' ? true : false))
+  const logout = () => {
+    props.logout(history)
+    .then(result => setNoti(result === 'error' ? true : false))
     .catch();
   }
 
   return (
-    <Dialog
-      open={isLogout}
-      keepMounted
-      onClose={() => setLogout(false)}
-    >
-      <DialogTitle>Xác nhận đăng xuất</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Bạn có thực sự muốn đăng xuất khỏi hệ thống?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={() => setLogout(false)}
-          color="secondary"
-        >
-          Huỷ
-        </Button>
-        <Button
-          onClick={() => {
-            logout();
-            setLogout(false);
-          }}
-          color="primary"
-        >
-          Đồng ý
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <>
+      <Dialog open={isLogout} keepMounted onClose={() => setLogout(false)}>
+        <DialogTitle>Xác nhận đăng xuất</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Bạn có thực sự muốn đăng xuất khỏi hệ thống?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" color="secondary" onClick={() => setLogout(false)}>Huỷ</Button>
+          <Button variant="contained" color="primary" onClick={() => { logout(); setLogout(false); }}>Đồng ý</Button>
+        </DialogActions>
+      </Dialog>
 
-    <Snackbar open={noti} autoHideDuration={6000} onClose={() => setNoti(false)}>
-      <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
-        Đăng xuất thất bại hoặc mật khẩu!
-      </Alert>
-    </Snackbar>
+      <Snackbar open={noti} autoHideDuration={5000} onClose={() => setNoti(false)}>
+        <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>
+          Đăng xuất không thành công!
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (history, payload) => dispatch(login(history, payload)),
+  logout: (history) => dispatch(logout(history)),
 });
 
 export default connect(

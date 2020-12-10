@@ -81,6 +81,15 @@ div.MuiDialogActions-root {
   padding: 0 24px 12px 24px;
 }
 
+div.MuiDialogContent-root {
+  padding-left: 16px;
+}
+
+p.MuiDialogContentText-root {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
 button.fab-quiz-element {
   background-color: transparent;
   position: absolute;

@@ -30,6 +30,8 @@ import code from '../../../assets/code.png';
 
 import { logout, getUserById } from '../../../reducer/users';
 
+import LogoutModal from '../LogoutModal';
+
 function AppHeader(props) {
   const history = useHistory();
 
@@ -46,7 +48,6 @@ function AppHeader(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setLogout] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
-  const [noti, setNoti] = useState(false);
 
   const menuList = [
     {
@@ -70,12 +71,6 @@ function AppHeader(props) {
   useEffect(() => {
     if (userId >= 0) props.getUserById(userId);
   }, []);
-
-  const logout = () => {
-    props.logout(history)
-    .then(result => setNoti(result === 'error' ? true : false))
-    .catch();
-  }
 
   const handleSelect = () => {
     setLogout(true);
@@ -170,7 +165,6 @@ function AppHeader(props) {
       </AppBar>
 
       <StyledMenu
-        id="customized-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -189,6 +183,8 @@ function AppHeader(props) {
           <Typography variant="inherit" noWrap>Đăng xuất</Typography>
         </MenuItem>
       </StyledMenu>
+
+      <LogoutModal isLogout={isLogout} setLogout={setLogout} />
     </>
   );
 }
@@ -199,7 +195,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getUserById: (id) => dispatch(getUserById(id)),
-  logout: (history) => dispatch(logout(history)),
 });
 
 export default connect(
