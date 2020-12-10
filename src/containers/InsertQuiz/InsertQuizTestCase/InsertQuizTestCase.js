@@ -23,7 +23,7 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 function InsertQuizTestCase(props) {
-  const [testcase, setTestcase] = useState([{}]);
+  const { testcase, setTestcase } = props;
 
   const handleDeleteTestcase = () => {
     const temp = testcase;
@@ -48,8 +48,6 @@ function InsertQuizTestCase(props) {
     setTestcase([...temp]);
   }
 
-  console.log(testcase);
-
   return (
     <Card style={{ marginTop: 32 }}>
       <CardHeader
@@ -73,15 +71,13 @@ function InsertQuizTestCase(props) {
         <div className='problem-sample'>
           <ul style={{ margin: 0, borderBottom: '1px solid #bbb' }}>
             {testcase.map((test, index) => (
-              <>
-                <li style={{ margin: 0 }}>
-                  <strong style={{ display: 'block', color: 'white', backgroundColor: '#39424e', textAlign: 'center' }}>{`Testcase #${index + 1}:`}</strong>
-                  <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>input</div>
-                  <TextareaAutosize className="text-area table-text-area" onChange={(e) => handleChangeInput(index, e.target.value)} rowsMin={1} />
-                  <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>output</div>
-                  <TextareaAutosize className="text-area table-text-area" onChange={(e) => handleChangeOutput(index, e.target.value)} rowsMin={1} />
-                </li>
-              </>
+              <li key={`testcase #${index}`} style={{ margin: 0 }}>
+                <strong style={{ display: 'block', color: 'white', backgroundColor: '#39424e', textAlign: 'center' }}>{`Testcase #${index + 1}:`}</strong>
+                <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>input</div>
+                <TextareaAutosize className="text-area table-text-area" onChange={(e) => handleChangeInput(index, e.target.value)} rowsMin={1} />
+                <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>output</div>
+                <TextareaAutosize className="text-area table-text-area" onChange={(e) => handleChangeOutput(index, e.target.value)} rowsMin={1} />
+              </li>
             ))}
           </ul>
         </div>

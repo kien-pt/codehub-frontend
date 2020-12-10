@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -8,39 +7,24 @@ import {
   CardActions,
   Button,
   Grid,
-  LinearProgress,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  CardActionArea,
-  DialogContentText,
-  DialogActions,
-  Snackbar,
-  Fab,
-  Typography,
   TextareaAutosize,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
-import { AddBox, Clear } from '@material-ui/icons';
 
 import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
 
 import toJs from '../../../hoc/ToJS';
-import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 import './index.css';
 
 function InsertQuizForm(props) {
-  const [isPreviewing, setPreviewing] = useState(false);
-  const [content, setContent] = useState('');
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
-  const [sampleInput, setSampleInput] = useState('');
-  const [sampleOutput, setSampleOutput] = useState('');
+  const { content, setContent } = props;
+  const { input, setInput } = props;
+  const { output, setOutput } = props;
+  const { sampleInput, setSampleInput } = props;
+  const { sampleOutput, setSampleOutput } = props;
+  const { title, selectedCourseId, setSelectedTagId, testcase } = props;
 
-  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+  const [isPreviewing, setPreviewing] = useState(false);
 
   return (
     <>
@@ -89,10 +73,10 @@ function InsertQuizForm(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = () => ({
 });
 
 export default connect(

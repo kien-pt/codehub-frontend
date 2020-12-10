@@ -25,8 +25,9 @@ function InsertQuizSetting(props) {
   const { courses, getCourses } = props;
   const { tags, getTagsByCourseId } = props;
 
-  const [selectedCourseId, setSelectedCourseId] = useState(courseId ? courseId : "");
-  const [selectedTagId, setSelectedTagId] = useState("");
+  const { selectedCourseId, setSelectedCourseId } = props;
+  const { selectedTagId, setSelectedTagId } = props;
+  const { title, setTitle } = props;
 
   useEffect(() => {
     getCourses();
@@ -41,6 +42,7 @@ function InsertQuizSetting(props) {
   }, [setSelectedTagId, tags]);
 
   const handleSelect = (e) => {
+    console.log("ok");
     setSelectedCourseId(e.target.value);
     getTagsByCourseId(selectedCourseId);
   }
@@ -56,14 +58,15 @@ function InsertQuizSetting(props) {
           <InputLabel style={{ backgroundColor: 'white', height: 9, padding: '0 4px' }}>Tên bài tập</InputLabel>
           <OutlinedInput
             required
-            // onChange={(e) => setPassword(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             inputProps={{ style: {fontSize: 18, marginLeft: 10 }}}
             style={{ height: 56 }}
           />
         </FormControl>
         <FormControl variant="outlined" style={{ width: '100%' }}>
           <InputLabel style={{ backgroundColor: 'white', height: 9, padding: '0 4px' }}>Chọn khoá học</InputLabel>
-          <Select native value={ selectedCourseId} onChange={handleSelect}>
+          <Select native value={selectedCourseId} onChange={handleSelect}>
             {courses.map((course) => (
               <option key={course.id} value={course.id}>{`${course.code} - ${course.name}`}</option>
             ))}
