@@ -7,7 +7,7 @@ export const SUBMISSIONS_API = {
     headers: HEADERS.TOKEN_HEADER,
   }),
   getSubmissionsByQuizId: (id) => ({
-    endPoint: `api/v1/submissions/quizzes/id/?id=${id}`,
+    endPoint: `api/v1/submissions/quizzes/all/id/?id=${id}`,
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),

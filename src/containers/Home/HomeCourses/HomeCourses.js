@@ -34,7 +34,7 @@ function HomeCourses(props) {
   const [deletingCourse, setDeletingCourse] = useState(null);
   const [updatingCourse, setUpdatingCourse] = useState(null);
 
-  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+  const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
   // Handle insert course
   const handleClick = (inserting) => setInserting(inserting);
