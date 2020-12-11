@@ -59,8 +59,10 @@ function QuizDiscuss(props) {
           }
       </CardContent>
       <CardActions style={{ paddingLeft: 16, paddingRight: 16 }}>
-        <TextField value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Để lại lời thảo luận..." variant="outlined" style={{ width: 'calc(100% - 32px)' }} />
-        <Send onClick={handleClick} style={{ cursor: 'pointer' }} />
+        <form>
+          <TextField value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Để lại lời thảo luận..." variant="outlined" style={{ width: 'calc(100% - 32px)' }} />
+          <Send onClick={handleClick} style={{ cursor: 'pointer' }} />
+        </form>
       </CardActions>
     </Card>
   );

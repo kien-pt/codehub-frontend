@@ -28,7 +28,7 @@ import LogoutModal from '../LogoutModal';
 function AppHeader(props) {
   const history = useHistory();
 
-  const { getUserById } = props;
+  const { logout, getUserById } = props;
 
   const currentTime = Date.parse(new Date());
   const userId = parseInt(localStorage.getItem("userId"));
@@ -60,7 +60,9 @@ function AppHeader(props) {
 
   // Auto Logout
   useEffect(() => {
-    if (expiredTime - currentTime <= 0) logout();
+    if (expiredTime - currentTime <= 0) {
+      logout(history);
+    }
     if (!(userId >= 0) && currentRoute !== ROUTER.REGISTER) history.push(ROUTER.LOGIN);
   }, [history, userId, currentTime, expiredTime, currentRoute]);
 
@@ -177,6 +179,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  logout: (history) => dispatch(logout(history)),
   getUserById: (id) => dispatch(getUserById(id)),
 });
 
