@@ -186,7 +186,7 @@ export default function coursesReducer(state = initialState, action) {
 
     case  GET_COURSE_BY_ID_SUCCESS:
       return state.merge({
-        courses: [...state.get('courses'), action.payload],
+        courses: [...[action.payload]],
         isFetching: false,
       });
     
