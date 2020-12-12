@@ -34,7 +34,9 @@ function SubmissionDetail(props) {
   const submissionId = parseInt(temp[temp.length - 1]);
 
   const submission = props.submissions?.find((e) => e.id === submissionId);
-  const quiz = props.quizList.find((e) => e.id === submission?.quizId);
+
+  const quiz = submission?.quiz;
+  // const quiz = props.quizList.find((e) => e.id === submission?.quizId);
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -66,7 +68,7 @@ function SubmissionDetail(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {submission?.quiz.testCases.map((row, index) => (
+              {submission?.quiz?.testCases.map((row, index) => (
                 <TableRow
                   key={`row${index}`}
                   style={{
@@ -76,9 +78,9 @@ function SubmissionDetail(props) {
                 >
                   <TableCell align="center">{index + 1}</TableCell>
                   <TableCell align="center">{row.get === row.want ? <CheckRounded /> : <CloseRounded />}</TableCell>
-                  <TableCell align="center">{index === 0 ? quiz?.testCase[index].input : 'Đã bị ẩn'}</TableCell>
+                  <TableCell align="center">{index === 0 ? quiz?.testCases[index].input : 'Đã bị ẩn'}</TableCell>
                   <TableCell align="center">{index === 0 ? row.get : 'Đã bị ẩn'}</TableCell>
-                  <TableCell align="center">{index === 0 ? row.want : 'Đã bị ẩn'}</TableCell>
+                  <TableCell align="center">{index === 0 ? quiz?.testCases[index].output  : 'Đã bị ẩn'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

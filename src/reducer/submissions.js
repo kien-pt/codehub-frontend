@@ -11,6 +11,10 @@ const GET_SUBMISSIONS_LOADING = 'GET_SUBMISSIONS_LOADING';
 const GET_SUBMISSIONS_SUCCESS = 'GET_SUBMISSIONS_SUCCESS';
 const GET_SUBMISSIONS_FAILURE = 'GET_SUBMISSIONS_FAILURE';
 
+const GET_SUBMISSION_BY_ID_LOADING = 'GET_SUBMISSION_BY_ID_LOADING';
+const GET_SUBMISSION_BY_ID_SUCCESS = 'GET_SUBMISSION_BY_ID_SUCCESS';
+const GET_SUBMISSION_BY_ID_FAILURE = 'GET_SUBMISSION_BY_ID_FAILURE';
+
 const INSERT_SUBMISSIONS_LOADING = 'INSERT_SUBMISSIONS_LOADING';
 const INSERT_SUBMISSIONS_SUCCESS = 'INSERT_SUBMISSIONS_SUCCESS';
 const INSERT_SUBMISSIONS_FAILURE = 'INSERT_SUBMISSIONS_FAILURE';
@@ -18,19 +22,19 @@ const INSERT_SUBMISSIONS_FAILURE = 'INSERT_SUBMISSIONS_FAILURE';
 export const getSubmissionsById = (id) => async (dispatch) => {
   const api = SUBMISSIONS_API.getSubmissionsById(id);
   dispatch({
-    type: GET_SUBMISSIONS_LOADING,
+    type: GET_SUBMISSION_BY_ID_LOADING,
     meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_SUBMISSIONS_SUCCESS,
+      type: GET_SUBMISSION_BY_ID_SUCCESS,
       payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
-      type: GET_SUBMISSIONS_FAILURE,
+      type: GET_SUBMISSION_BY_ID_FAILURE,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_FAILURE] },
     });
   }
@@ -136,16 +140,24 @@ const initialState = fromJS({
 export default function submissionsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_SUBMISSIONS_LOADING:
+    case GET_SUBMISSION_BY_ID_LOADING:
       return state.merge({
         isFetching: true,
       });
 
     case GET_SUBMISSIONS_FAILURE:
+    case GET_SUBMISSION_BY_ID_FAILURE:
       return state.merge({
         isFetching: false,
       });
 
     case GET_SUBMISSIONS_SUCCESS:
+      return state.merge({
+        submissions: [...action.payload.sort((a, b) => a.id - b.id)],
+        isFetching: false,
+      });
+
+    case GET_SUBMISSION_BY_ID_SUCCESS:
       return state.merge({
         submissions: [...[action.payload].sort((a, b) => a.id - b.id)],
         isFetching: false,
