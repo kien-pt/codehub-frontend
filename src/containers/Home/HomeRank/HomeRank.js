@@ -25,6 +25,13 @@ function HomeRank(props) {
 
   const selectedCourse = courses?.length > 0 ? courses[courseIndex] : null;
 
+  const rankUser = props.usersList.filter((user) => !user.admin).map((user) => ({...user, point: 0}));
+  props.point.forEach((e) => {
+    const index = rankUser.findIndex((user) => user.id === e.userID);
+    rankUser.splice(index, 1, {...rankUser[index], point: e.total_point});
+  });
+  // console.log(rankUser);
+
   // Get all students
   useEffect(() => {
     getAllUsers();
@@ -77,16 +84,16 @@ function HomeRank(props) {
         <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
           {courses?.map((e, index) => <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>)}
         </StyledMenu>
-        {props.usersList?.filter((user) => !user.admin).slice(0, 10).map((student, index) => {
+        {rankUser?.sort((a, b) => (b.point - a.point)).slice(0, 10).map((student, index) => {
           var totalPoint = 0;
-          props.point.forEach((e) => totalPoint += (e.courseIndex === courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
+          // props.point.forEach((e) => totalPoint += (e.courseIndex === courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
           return (
             <div key={student.username}>
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
               <Grid container>
                 <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
                 <Grid item xs={8} style={{ textAlign: 'center'}}>{student.fullname}</Grid>
-                <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{totalPoint}</Grid>
+                <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{student.point}</Grid>
               </Grid>
             </div>
           );
@@ -105,7 +112,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllUsers: () => dispatch(getAllUsers()),
-  getPointByCourseId: () => dispatch(getPointByCourseId()),
+  getPointByCourseId: (id) => dispatch(getPointByCourseId(id)),
 });
 
 export default connect(

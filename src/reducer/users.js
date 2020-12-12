@@ -274,7 +274,7 @@ export default function usersReducer(state = initialState, action) {
 
     case GET_ALL_USERS_SUCCESS:
       return state.merge({
-        usersList: [...action.payload],
+        usersList: [...action.payload.sort((a, b) => a.fullname.localeCompare(b.fullname))],
         isFetching: false,
       });
 
