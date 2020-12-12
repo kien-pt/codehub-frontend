@@ -78,45 +78,47 @@ export const getSubmissionsByCourseId = (id) => async (dispatch) => {
   }
 };
 
-export const insertSubmission = (history, pointData, payload) => async (dispatch) => {
+export const insertSubmission = (history, payload) => async (dispatch) => {
   const api = SUBMISSIONS_API.insertSubmission();
   dispatch({
     type: INSERT_SUBMISSIONS_LOADING,
     meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api, payload });
-  if (!error && response.status === 201) {
+  console.log(response, error);
+
+  if (!error && response.status === 200) {
     dispatch({
       type: INSERT_SUBMISSIONS_SUCCESS,
-      payload: response.data,
+      // payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
-    var point = 0;
-    response.data.testCase.forEach((e) => point += (e.get === e.want) ? 1 : 0);
-    point = parseFloat(((point / response.data.testCase.length) * 100).toFixed(0));
+    // var point = 0;
+    // response.data.testCase.forEach((e) => point += (e.get === e.want) ? 1 : 0);
+    // point = parseFloat(((point / response.data.testCase.length) * 100).toFixed(0));
 
-    if (pointData.id === undefined) {
-      dispatch(insertPoint({
-        userId: parseInt(sessionStorage.getItem("userId")),
-        quizId: pointData.quizId,
-        courseId: pointData.courseId,
-        point,
-      }));
-    } else {
-      if (point > pointData.point) {
-        dispatch(updatePoint(
-          pointData.id,
-          {
-            userId: parseInt(sessionStorage.getItem("userId")),
-            quizId: pointData.quizId,
-            courseId: pointData.courseId,
-            point,
-          }
-        ));  
-      }
-    }
+    // if (pointData.id === undefined) {
+    //   dispatch(insertPoint({
+    //     userId: parseInt(sessionStorage.getItem("userId")),
+    //     quizId: pointData.quizId,
+    //     courseId: pointData.courseId,
+    //     point,
+    //   }));
+    // } else {
+    //   if (point > pointData.point) {
+    //     dispatch(updatePoint(
+    //       pointData.id,
+    //       {
+    //         userId: parseInt(sessionStorage.getItem("userId")),
+    //         quizId: pointData.quizId,
+    //         courseId: pointData.courseId,
+    //         point,
+    //       }
+    //     ));  
+    //   }
+    // }
 
-    history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
+    // history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
   } else {
     dispatch({
       type: INSERT_SUBMISSIONS_FAILURE,
@@ -145,7 +147,7 @@ export default function submissionsReducer(state = initialState, action) {
 
     case GET_SUBMISSIONS_SUCCESS:
       return state.merge({
-        submissions: [...action.payload.sort((a, b) => a.id - b.id)],
+        submissions: [...[action.payload].sort((a, b) => a.id - b.id)],
         isFetching: false,
       });
 

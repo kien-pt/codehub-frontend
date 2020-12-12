@@ -42,28 +42,31 @@ function QuizSubmitField(props) {
   const [sourceCode, setSourceCode] = useState(code);
   const [isSubmitting, setSubmitting] = useState(false);
   
-  const { getPointByQuizId, quizId } = props;
+  const { resetTestCaseCount, quizId } = props;
 
-  useEffect(() => {
-    getPointByQuizId(quizId);
-  }, [getPointByQuizId, quizId]);
-
+  // useEffect(() => {
+  //   getPointByQuizId(quizId);
+  // }, [getPointByQuizId, quizId]);
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
+
+  // useEffect(() => {
+  // }, [resetTestCaseCount, quiz]);
+
 
   const handleSubmit = () => {
     setSubmitting(true);
-    props.resetTestCaseCount(quiz?.testCase?.length);
-    quiz?.testCase?.forEach((e) => props.submitCode(
-      history,
-      quizId,
-      {
-        ...props.point[0],
-        quizId,
-        courseId: quiz.courseId,
-      },
-      sourceCode,
-      e.input,
-      e.output));
+    resetTestCaseCount(quiz?.testCases?.length);
+    quiz?.testCases?.forEach((e) => {
+      props.submitCode(
+        history,
+        {
+          quizId,
+          sourceCode,
+          input: e.input,
+          output: e.output,
+        }
+      );
+    });
   }
 
   return (
@@ -125,7 +128,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: (history, quizId, point, sourceCode, input, output) => dispatch(submitCode(history, quizId, point, sourceCode, input, output)),
+  submitCode: (history, payload) => dispatch(submitCode(history, payload)),
   resetTestCaseCount: (size) => dispatch(resetTestCaseCount(size)),
 
   getPointByQuizId: (id) => dispatch(getPointByQuizId(id)),

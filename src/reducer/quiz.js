@@ -317,41 +317,47 @@ export const resetTestCaseCount = (size) => async (dispatch) => {
   });
 }
 
-export const submitCode = (history, quizId, point, sourceCode, input, output) => async (dispatch) => {
-  const payload = {
-    client_secret: process.env.REACT_APP_HACKEREARTH_CLIENT_SECRET,
-    source: sourceCode,
+export const submitCode = (history, payload) => async (dispatch) => {
+  const oPayload = {
+    source: payload.sourceCode,
     lang: 'CPP',
-    input: input,
+    input: payload.input,
   };
   const api = QUIZ_API.runCode();
   dispatch({
     type: SUBMIT_CODE_LOADING,
     meta: { prefix: [PREFIX.TAGS, PREFIX.API_CALLING] },
   });
-  const { response, error } = await apiCall({ ...api, payload });
+  const { response, error } = await apiCall({ ...api, payload: oPayload });
   if (!error && response.status === 200) {
-    var get = String(response.data);
-    while (get.slice(-1) === '\n') get = get.slice(0, -1);
+    var got = String(response.data);
+    while (got.slice(-1) === '\n') got = got.slice(0, -1);
     dispatch({
       type: SUBMIT_CODE_SUCCESS,
       payload: {
-        get,
-        want: output,
+        got,
+        expected: payload.output,
       },
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
     });
 
+    console.log(testCaseCount);
+
     if (testCaseCount === 0) {
       dispatch(insertSubmission(
         history,
-        point,
         {
-          userId: parseInt(sessionStorage.getItem("userId")),
-          quizId,
-          testCase,
-          sourceCode,
+          point: 69,
+          quizId: payload.quizId,
+          sourceCode: payload.sourceCode,
         }
+        // point,
+        // {
+        //   userId: parseInt(sessionStorage.getItem("userId")),
+        //   quizId,
+        //   testCase,
+        //   sourceCode,
+        // }
       ));
     }
   } else {
@@ -395,6 +401,7 @@ export default function quizReducer(state = initialState, action) {
       return state.merge({
         comments: [...action.payload.comments],
         quiz: [...[action.payload]],
+        testCase: [...action.payload.testCases],
         isFetching: false,
       });
 
@@ -407,7 +414,6 @@ export default function quizReducer(state = initialState, action) {
       case RESET_TEST_CASE_COUNT:
         return state.merge({
           testCaseCount: action.payload,
-          testCase: [],
         });
 
       case SUBMIT_CODE_LOADING:
