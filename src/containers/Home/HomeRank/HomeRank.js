@@ -16,15 +16,23 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
 import { getAllUsers } from '../../../reducer/users';
+import { getPointByCourseId } from '../../../reducer/point';
 
 function HomeRank(props) {
-  const { getAllUsers } = props;
+  const { courses } = props;
+  const { getAllUsers, getPointByCourseId } = props;
   const [courseIndex, setCourseIndex] = useState(0);
+
+  const selectedCourse = courses?.length > 0 ? courses[courseIndex] : null;
 
   // Get all students
   useEffect(() => {
     getAllUsers();
   }, [getAllUsers]);
+
+  useEffect(() => {
+    if (selectedCourse) getPointByCourseId(selectedCourse.id);
+  }, [courseIndex, getPointByCourseId, courses, selectedCourse]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -65,17 +73,13 @@ function HomeRank(props) {
     <Card>
       <CardHeader title="Bảng xếp hạng" style={{ color: 'white', backgroundColor: '#39424E' }} />
       <CardContent>
-        <Button variant="contained" color="primary" disabled={props.disabled} onClick={handleClick} style={{ width: '100%' }}>
-          {props.courses?.length > 0 ? props.courses[courseIndex].name : null}
-        </Button>
+        <Button variant="contained" color="primary" disabled={props.disabled} onClick={handleClick} style={{ width: '100%' }}>{selectedCourse?.name}</Button>
         <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-          {props.courses?.map((e, index) => (
-            <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>
-          ))}
+          {courses?.map((e, index) => <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>)}
         </StyledMenu>
         {props.usersList?.filter((user) => !user.admin).slice(0, 10).map((student, index) => {
           var totalPoint = 0;
-          props.point.forEach((e) => totalPoint += (e.courseIndex === props.courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
+          props.point.forEach((e) => totalPoint += (e.courseIndex === courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
           return (
             <div key={student.username}>
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
@@ -101,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllUsers: () => dispatch(getAllUsers()),
+  getPointByCourseId: () => dispatch(getPointByCourseId()),
 });
 
 export default connect(

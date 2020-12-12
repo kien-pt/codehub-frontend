@@ -12,7 +12,7 @@ export const POINT_API = {
     headers: HEADERS.TOKEN_HEADER,
   }),
   getPointByCourseId: (id) => ({
-    endPoint: `api/v1/point/?courseId=${id}`,
+    endPoint: `api/v1/courses/points/all/?id=${id}`,
     method: 'GET',
     headers: HEADERS.TOKEN_HEADER,
   }),

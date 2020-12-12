@@ -17,7 +17,6 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
-import { getAllPoint } from '../../../reducer/point';
 import { getCourses } from '../../../reducer/courses';
 import { getAllQuiz, getTags } from '../../../reducer/quiz';
 
@@ -41,7 +40,6 @@ function HomeCourses(props) {
 
   useEffect(() => {
     getCourses();
-    getAllPoint();
     getAllQuiz();
   }, [getAllQuiz, getCourses, getAllPoint]);
 
@@ -128,7 +126,6 @@ const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getAllQuiz: () => dispatch(getAllQuiz()),
   getCourses: () => dispatch(getCourses()),
-  getAllPoint: () => dispatch(getAllPoint()),
 });
 
 export default connect(
