@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 
 import { apiCall } from '../utils/api';
+import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { QUIZ_API } from '../services/quizAPI';
 
@@ -127,7 +128,7 @@ export const getQuizByCourseId = (id) => async (dispatch) => {
   }
 };
 
-export const insertQuiz = (payload) => async (dispatch) => {
+export const insertQuiz = (history, payload) => async (dispatch) => {
   const api = QUIZ_API.insertQuiz();
   dispatch({
     type: INSERT_QUIZ_LOADING,
@@ -140,6 +141,7 @@ export const insertQuiz = (payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
+    history.push(`${ROUTER.QUIZ}/${response.data.id}`);
   } else {
     dispatch({
       type: INSERT_QUIZ_FAILURE,
@@ -475,7 +477,7 @@ export default function quizReducer(state = initialState, action) {
         const id = newList.findIndex((e) => e.id === action.id);
         newList.splice(id, 1);
         return state.merge({
-          tags: [...newList],
+          quiz: [...newList],
           isFetching: false,
         });
       }

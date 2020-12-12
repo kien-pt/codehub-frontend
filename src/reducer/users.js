@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 
 import { apiCall } from '../utils/api';
-import { PREFIX } from '../constant/enum';
 import ROUTER from '../constant/router';
+import { PREFIX } from '../constant/enum';
 import { USERS_API } from '../services/usersAPI';
 
 const LOGIN_LOADING = 'LOGIN_LOADING';

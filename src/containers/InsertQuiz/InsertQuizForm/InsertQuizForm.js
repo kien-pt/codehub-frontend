@@ -9,6 +9,7 @@ import {
   Grid,
   TextareaAutosize,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
 
@@ -18,6 +19,7 @@ import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
 import './index.css';
 
 function InsertQuizForm(props) {
+  const history = useHistory();
   const { content, setContent } = props;
   const { input, setInput } = props;
   const { output, setOutput } = props;
@@ -40,8 +42,7 @@ function InsertQuizForm(props) {
     outputPart += `<p style="textAlign:justify">${row}</p>`; 
   });
 
-  const combine = `
-    <div class='problem-content'>
+  const combine = `<div class='problem-content'>
       ${contentPart}
       <p style="textAlign:justify">
         ${inputPart}
@@ -50,13 +51,13 @@ function InsertQuizForm(props) {
       <div class='problem-sample'>
         <strong>Ví dụ:</strong>
         <ul style="margin: 0">
-          <li>            
-            <div class='sample-type'>input</div>            
-            <div class='sample-value'>${sampleInput}</div>            
-            <div class='sample-type'>output</div>            
-            <div class='sample-value'>${sampleOutput}</div>        
+          <li>
+            <div class='sample-type'>input</div>
+            <div class='sample-value'>${sampleInput}</div>    
+            <div class='sample-type'>output</div>
+            <div class='sample-value'>${sampleOutput}</div>
           </li>
-        </ul> 
+        </ul>
       </div>
     </div>
   `;
@@ -64,14 +65,17 @@ function InsertQuizForm(props) {
   const [isPreviewing, setPreviewing] = useState(false);
 
   const insertQuiz = () => {
-    props.insertQuiz({
-      quiz: {
-        title,
-        content: combine.toString(),
-        tagId: selectedTagId,
-      },
-      testCases: testcase,
-    });
+    props.insertQuiz(
+      history,
+      {
+        quiz: {
+          title,
+          content: combine.toString(),
+          tagId: selectedTagId,
+        },
+        testCases: testcase,
+      }
+    );
   } 
 
   return (
@@ -121,7 +125,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  insertQuiz: (payload) => dispatch(insertQuiz(payload)),
+  insertQuiz: (history, payload) => dispatch(insertQuiz(history, payload)),
 });
 
 export default connect(

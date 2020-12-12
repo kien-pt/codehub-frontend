@@ -20,7 +20,6 @@ function AppLayout() {
       <AppHeader />
       <div style={{ padding: '96px 24px 0' }}>
         <Switch>
-          <Route path={ROUTER.QUIZ} component={Quiz} />
           <Route path={ROUTER.USER} component={User} />
           <Route exact path={ROUTER.HOME} component={Home} />
           <Route path={ROUTER.COURSES} component={Courses} />
@@ -28,6 +27,7 @@ function AppLayout() {
           <Route path={ROUTER.SUBMISSION} component={Submission} />
           <Route path={ROUTER.UPDATE_QUIZ} component={UpdateQuiz} />
           <Route exact path={ROUTER.NEW_QUIZ} component={InsertQuiz} />
+          <Route path={ROUTER.QUIZ} component={Quiz} />
         </Switch>
       </div>
     </>
