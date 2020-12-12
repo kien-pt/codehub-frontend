@@ -160,10 +160,18 @@ export const deleteQuiz = (id) => async (dispatch) => {
       type: DELETE_QUIZ_SUCCESS,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
+    return ({
+      type: 'success',
+      message: 'Xoá bài tập thành công!',
+    });
   } else {
     dispatch({
       type: DELETE_QUIZ_FAILURE,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
+    });
+    return ({
+      type: 'error',
+      message: 'Xoá bài tập thất bại!',
     });
   }
 };
@@ -373,7 +381,6 @@ export default function quizReducer(state = initialState, action) {
     case INSERT_QUIZ_FAILURE:
     case INSERT_QUIZ_SUCCESS:
     case DELETE_QUIZ_FAILURE:
-    case DELETE_QUIZ_SUCCESS:
     case GET_TAGS_FAILURE:
     case INSERT_TAG_FAILURE:
     case UPDATE_TAG_FAILURE:
@@ -462,6 +469,17 @@ export default function quizReducer(state = initialState, action) {
           isFetching: false,
         });
       }
+
+      case DELETE_QUIZ_SUCCESS: {
+        const newList = state.get('quiz');
+        const id = newList.findIndex((e) => e.id === action.id);
+        newList.splice(id, 1);
+        return state.merge({
+          tags: [...newList],
+          isFetching: false,
+        });
+      }
+
 
     default: return state;
   }

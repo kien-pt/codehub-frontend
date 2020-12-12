@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  Fab,
   Grid,
   IconButton,
   Card,
@@ -9,7 +10,7 @@ import {
   CardContent,
   CardActionArea,
 } from '@material-ui/core';
-import { DeleteForever, Create } from '@material-ui/icons';
+import { DeleteForever, Create, Clear } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -22,6 +23,7 @@ import { getTagsByCourseId, getQuizByCourseId } from '../../../reducer/quiz';
 import './QuizList.css';
 import UpdateTagModal from '../../Manager/UpdateTagModal';
 import DeleteTagModal from '../../Manager/DeleteTagModal';
+import DeleteQuizModal from '../../Manager/DeleteQuizModal';
 
 function HomeCourses(props) {
   const history = useHistory();
@@ -35,6 +37,7 @@ function HomeCourses(props) {
 
   const [deletedTag, setDeletedTag] = useState(null);
   const [updatedTag, setUpdatedTag] = useState(null);
+  const [deletingQuiz, setDeletingQuiz] = useState(null);
 
   const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
@@ -81,6 +84,14 @@ function HomeCourses(props) {
                         </Grid>
                       </CardContent>
                     </CardActionArea>
+                    <Fab
+                      size="small"
+                      className="fab-quiz-element"
+                      onClick={() => setDeletingQuiz(quiz)}
+                      style={{ display: isAdmin ? 'inline-flex' : 'none' }}
+                    >
+                      <Clear style={{ fontSize: 16 }} />
+                    </Fab>
                   </Card>
                 );
               })}
@@ -91,6 +102,7 @@ function HomeCourses(props) {
     
       <UpdateTagModal updatedTag={updatedTag} setUpdatedTag={setUpdatedTag} />
       <DeleteTagModal deletedTag={deletedTag} setDeletedTag={setDeletedTag} />
+      <DeleteQuizModal deletingQuiz={deletingQuiz} setDeletingQuiz={setDeletingQuiz} />
     </>
   );
 }
