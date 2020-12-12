@@ -24,6 +24,10 @@ const INSERT_QUIZ_LOADING = 'INSERT_QUIZ_LOADING';
 const INSERT_QUIZ_SUCCESS = 'INSERT_QUIZ_SUCCESS';
 const INSERT_QUIZ_FAILURE = 'INSERT_QUIZ_FAILURE';
 
+const DELETE_QUIZ_LOADING = 'DELETE_QUIZ_LOADING';
+const DELETE_QUIZ_SUCCESS = 'DELETE_QUIZ_SUCCESS';
+const DELETE_QUIZ_FAILURE = 'DELETE_QUIZ_FAILURE';
+
 const GET_TAGS_LOADING = 'GET_TAGS_LOADING';
 const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
 const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
@@ -139,6 +143,26 @@ export const insertQuiz = (payload) => async (dispatch) => {
   } else {
     dispatch({
       type: INSERT_QUIZ_FAILURE,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+export const deleteQuiz = (id) => async (dispatch) => {
+  const api = QUIZ_API.deleteQuiz(id);
+  dispatch({
+    type: DELETE_QUIZ_LOADING,
+    meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: DELETE_QUIZ_SUCCESS,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: DELETE_QUIZ_FAILURE,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
     });
   }
@@ -334,6 +358,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_ID_LOADING:
     case GET_QUIZ_BY_COURSE_ID_LOADING:
     case INSERT_QUIZ_LOADING:
+    case DELETE_QUIZ_LOADING:
     case GET_TAGS_LOADING:
     case INSERT_TAG_LOADING:
     case UPDATE_TAG_LOADING:
@@ -347,6 +372,8 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_COURSE_ID_FAILURE:
     case INSERT_QUIZ_FAILURE:
     case INSERT_QUIZ_SUCCESS:
+    case DELETE_QUIZ_FAILURE:
+    case DELETE_QUIZ_SUCCESS:
     case GET_TAGS_FAILURE:
     case INSERT_TAG_FAILURE:
     case UPDATE_TAG_FAILURE:

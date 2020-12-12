@@ -24,7 +24,7 @@ function QuizStatistic(props) {
 
   const { quizId } = props;
 
-  const isAdmin = sessionStorage.getItem("isAdmin") === 'true';
+  const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -40,17 +40,17 @@ function QuizStatistic(props) {
           {/* <Grid item xs={2} style={{ textAlign: 'end' }}></Grid> */}
         </Grid>
         <div style={{ display: isAdmin ? 'block' : 'none' }}>
-            <Divider style={{ margin: '8px 0' }} />
-            <Button variant="outlined" style={{ width: '100%' }}>Xoá bài tập</Button>
-            <Button
-              variant="contained"
-              color="primary"
-              href={`${ROUTER.UPDATE_QUIZ}/${quizId}`}
-              style={{ width: '100%', marginTop: 8 }}
-            >
-              Sửa bài tập
-            </Button>
-          </div>
+          <Divider style={{ margin: '8px 0' }} />
+          <Button variant="outlined" style={{ width: '100%' }}>Xoá bài tập</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            href={`${ROUTER.UPDATE_QUIZ}/${quizId}`}
+            style={{ width: '100%', marginTop: 8 }}
+          >
+            Sửa bài tập
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

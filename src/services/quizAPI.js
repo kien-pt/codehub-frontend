@@ -49,6 +49,11 @@ export const QUIZ_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  deleteQuiz: (id) => ({
+    endPoint: `api/v1/quizzes/delete/id/?id=${id}`,
+    method: 'DELETE',
+    headers: HEADERS.DEFAULT_HEADER,
+  }), 
 
   /** RUN CODE */
   runCode: () => ({
