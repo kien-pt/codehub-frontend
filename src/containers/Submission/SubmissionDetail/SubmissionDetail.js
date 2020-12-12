@@ -66,7 +66,7 @@ function SubmissionDetail(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {submission?.testCase.map((row, index) => (
+              {submission?.quiz.testCases.map((row, index) => (
                 <TableRow
                   key={`row${index}`}
                   style={{

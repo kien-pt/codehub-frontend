@@ -23,15 +23,9 @@ function QuizContent(props) {
 
   const submission = props.submissions.find((e) => e.id === submissionId);
 
-  useEffect(() => {
-    getQuizById(submission?.quizId);
-  }, [getQuizById, submission]);
+  const quiz = submission?.quiz;
 
-  const quiz = props.quizList.find((e) => e.id === submission?.quizId);
-
-  var point = 0;
-  if (submission) submission.testCase.map((e) => point += (e.get === e.want) ? 1 : 0);
-  point = parseInt(((point / submission?.testCase.length) * 100).toFixed(0));
+  const point = submission?.point;
   var status = 'finish';
   if (point === 0) status = 'fail';
   if (point === 100) status = 'success';
@@ -39,7 +33,7 @@ function QuizContent(props) {
   return (
     <Card>
       <CardHeader
-        title={quiz?.name}
+        title={quiz?.title}
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
@@ -53,7 +47,7 @@ function QuizContent(props) {
         <span style={{ color: '#808080', fontSize: 24, fontWeight: 'bold' }}>
           {` - Đạt điểm ${point}/100`}
         </span>
-        <Divider />
+        <Divider style={{ marginBottom: 8 }} />
         <Interweave content={quiz?.content} />
       </CardContent>
     </Card>
