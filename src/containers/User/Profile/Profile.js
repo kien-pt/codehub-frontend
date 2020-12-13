@@ -29,7 +29,7 @@ function Profile(props) {
   const [isEditting, setEditting] = useState(false);
   const [noti, setNoti] = useState(null);
 
-  const { profileId, getProfile } = props;
+  const { profile, profileId, getProfile } = props;
   const userId = parseInt(localStorage.getItem("userId"));
 
   useEffect(() => {
@@ -55,8 +55,6 @@ function Profile(props) {
     .catch();
     setEditting(false);
   }
-
-  const profile = props.usersList.find((user) => user.id === profileId);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
@@ -110,7 +108,7 @@ function Profile(props) {
 
 const mapStateToProps = (state) => ({
   user: select(state, 'usersReducer', 'user'),
-  usersList: select(state, 'usersReducer', 'usersList'),
+  profile: select(state, 'usersReducer', 'profile'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

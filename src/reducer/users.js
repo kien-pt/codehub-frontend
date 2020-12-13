@@ -39,6 +39,7 @@ const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 const initialState = fromJS({
   user: null,
+  profile: null,
   usersList: [],
   notification: null,
   isFetching: false,
@@ -301,7 +302,7 @@ export default function usersReducer(state = initialState, action) {
 
       case GET_PROFILE_SUCCESS:
         return state.merge({
-          usersList: [...[action.payload]],
+          profile: action.payload,
           isFetching: false,
         });
   
