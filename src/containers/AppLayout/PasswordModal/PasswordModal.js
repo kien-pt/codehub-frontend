@@ -11,7 +11,6 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { useHistory } from 'react-router-dom';
 import { Lock, Autorenew } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
@@ -19,7 +18,6 @@ import toJs from '../../../hoc/ToJS';
 import { updateUser } from '../../../reducer/users';
 
 function PasswordModal(props) {
-  const history = useHistory();
   const { isPasswordModal, setPasswordModal } = props;
   
   const [noti, setNoti] = useState(null);

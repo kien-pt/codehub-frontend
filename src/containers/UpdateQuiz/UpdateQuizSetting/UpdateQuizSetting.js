@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Card,
-  CardContent,
   CardHeader,
-  FormControl,
-  InputLabel,
+  CardContent,
   Select,
+  InputLabel,
+  FormControl,
   OutlinedInput,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
-import { AddBox, Clear } from '@material-ui/icons';
 
 import { getCourses } from '../../../reducer/courses';
 import { getTagById, getTagsByCourseId } from '../../../reducer/tags';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 function UpdateQuizSetting(props) {
   const { quizId } = props;
@@ -58,10 +54,7 @@ function UpdateQuizSetting(props) {
 
   return (
     <Card>
-      <CardHeader
-        title="Cài đặt chung"
-        style={{ color: 'white', backgroundColor: '#39424E' }}
-      />
+      <CardHeader title="Cài đặt chung" style={{ color: 'white', backgroundColor: '#39424E' }}/>
       <CardContent>
         <FormControl variant="outlined" style={{ width: '100%', marginBottom: 12 }}>
           <InputLabel style={{ backgroundColor: 'white', height: 9, padding: '0 4px' }}>Tên bài tập</InputLabel>

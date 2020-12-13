@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Card,
   CardContent,
   CardHeader,
-  FormControl,
-  InputLabel,
-  Select,
   Grid,
   IconButton,
   TextareaAutosize,
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'; 
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { getCourses } from '../../../reducer/courses';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
-import ROUTER from '../../../constant/router';
 
 function UpdateQuizTestCase(props) {
   const { quizId } = props;
