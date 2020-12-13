@@ -77,6 +77,10 @@ div.MuiDialogContent-root {
   padding-left: 16px;
 }
 
+a.MuiTypography-colorPrimary {
+  color: black;
+}
+
 p.MuiDialogContentText-root {
   margin-top: 12px;
   margin-bottom: 0;

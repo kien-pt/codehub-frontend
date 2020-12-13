@@ -34,6 +34,7 @@ function HomeCourses(props) {
     getTags,
     getAllQuiz,
     getCourses,
+    resetUserPoint,
     getUserPointByCourseId,
   } = props;
 
@@ -54,9 +55,9 @@ function HomeCourses(props) {
   }, [getAllQuiz, getCourses, getTags]);
 
   useEffect(() => {
-    props.resetUserPoint();
+    resetUserPoint();
     courses.forEach((course) => getUserPointByCourseId(course.id));
-  }, [courses, getUserPointByCourseId]);
+  }, [courses, getUserPointByCourseId, resetUserPoint]);
 
   return (
     <>
@@ -82,8 +83,8 @@ function HomeCourses(props) {
             });
             totalPoint = totalPoint * 100;
 
-            const currentPoint = props.server_point.find((e) => e.userID === userId)?.total_point || 0;
-
+            const currentPoint = props.user_point?.find((e) => e.courseId === course.id)?.points.find((e) => e.userID === userId)?.total_point || 0;
+            
             return (
               <Card key={course.id} style={{ marginBottom: 16, position: 'relative' }}>
                 <CardActionArea onClick={() => {
@@ -135,6 +136,7 @@ function HomeCourses(props) {
 const mapStateToProps = (state) => ({
   tags: select(state, 'tagsReducer', 'tags'),
   quizList: select(state, 'quizReducer', 'quiz'),
+  user_point: select(state, 'pointReducer', 'user_point'),
   server_point: select(state, 'pointReducer', 'server_point'),
   courses: select(state, 'coursesReducer', 'courses'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),

@@ -72,7 +72,7 @@ export const getAllPointByCourseId = (id) => async (dispatch) => {
 };
 
 export const getUserPointByCourseId = (id) => async (dispatch) => {
-  const api = POINT_API.getUserPointByCourseId(id);
+  const api = POINT_API.getAllPointByCourseId(id);
   dispatch({
     type: GET_USER_POINT_LOADING,
     meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
@@ -189,7 +189,7 @@ export default function pointReducer(state = initialState, action) {
 
     case GET_USER_POINT_SUCCESS:
       return state.merge({
-        user_point: [...state.get('user_point'), [{...action.payload, courseId: action.id}]],
+        user_point: [...state.get('user_point'), {points: action.payload, courseId: action.id}],
         isFetching: false,
       });
 
