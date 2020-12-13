@@ -46,7 +46,6 @@ function QuizStatistic(props) {
         </Grid>
         <div style={{ display: isAdmin ? 'block' : 'none' }}>
           <Divider style={{ margin: '8px 0' }} />
-          <Button variant="outlined" style={{ width: '100%' }}>Xoá bài tập</Button>
           <Button
             variant="contained"
             color="primary"
