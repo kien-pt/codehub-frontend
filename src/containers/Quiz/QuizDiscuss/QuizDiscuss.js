@@ -34,10 +34,7 @@ function QuizDiscuss(props) {
 
   return (
     <Card style={{ marginTop: 32 }}>
-      <CardHeader
-        title="Thảo luận"
-        style={{ color: 'white', backgroundColor: '#39424E' }}
-      />
+      <CardHeader title="Thảo luận" style={{ color: 'white', backgroundColor: '#39424E' }} />
       <CardContent style={{ paddingBottom: 0, minHeight: 370, maxHeight: 370, overflow: 'auto' }}>
         {
           commentsList.map((comment, index) => {
@@ -46,7 +43,7 @@ function QuizDiscuss(props) {
             const day = date.getDate();
             const year = date.getFullYear();
             return (
-              <>
+              <div key={comment.createdAt}>
                 <Grid container>
                   <Grid item><Avatar style={{ marginTop: 6 }}>{comment.user.username[0].toUpperCase()}</Avatar></Grid>
                   <Grid item style={{ marginLeft: 12 }}>
@@ -56,7 +53,7 @@ function QuizDiscuss(props) {
                   </Grid>
                 </Grid>
                 <Divider style={{ marginTop: 8, marginBottom: (index !== commentsList.length - 1) ? 12 : 0 }} />
-              </>
+              </div>
             );
           })
         }
@@ -72,8 +69,8 @@ function QuizDiscuss(props) {
 }
 
 const mapStateToProps = (state) => ({
-  usersList: select(state, 'usersReducer', 'usersList'),
   comments: select(state, 'quizReducer', 'comments'),
+  usersList: select(state, 'usersReducer', 'usersList'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 

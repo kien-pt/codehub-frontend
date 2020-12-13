@@ -22,7 +22,6 @@ import { logout, getUserById } from '../../../reducer/users';
 
 import './AppHeader.css';
 import logo from '../../../assets/logo.png';
-import avatar from '../../../assets/avatar.jpg';
 
 import LogoutModal from '../LogoutModal';
 import PasswordModal from '../PasswordModal';

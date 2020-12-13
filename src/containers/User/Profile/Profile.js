@@ -21,7 +21,6 @@ import select from '../../../utils/select';
 import { getProfile, updateUser } from '../../../reducer/users';
 
 import './Profile.css';
-import avatar from '../../../assets/avatar.jpg';
 
 function Profile(props) {
   const [username, setUsername] = useState('');
