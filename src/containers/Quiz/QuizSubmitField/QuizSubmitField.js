@@ -108,7 +108,7 @@ function QuizSubmitField(props) {
         </CardContent>
       </Card>
       
-      <Backdrop open={false} style={{ zIndex: 10 }}>
+      <Backdrop open={isSubmitting} style={{ zIndex: 10 }}>
         <CircularProgress /> 
       </Backdrop>
     </>

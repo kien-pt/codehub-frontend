@@ -21,7 +21,7 @@ function QuizContent(props) {
     getSubmissionsById(submissionId);
   }, [getSubmissionsById, submissionId]);
 
-  const submission = props.submissions.find((e) => e.id === submissionId);
+  const submission = props.submission.find((e) => e.id === submissionId);
 
   const quiz = submission?.quiz;
 
@@ -56,7 +56,7 @@ function QuizContent(props) {
 
 const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
-  submissions: select(state, 'submissionsReducer', 'submissions'),
+  submission: select(state, 'submissionsReducer', 'submission'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 

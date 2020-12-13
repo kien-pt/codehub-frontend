@@ -33,10 +33,9 @@ function SubmissionDetail(props) {
   const temp = window.location.href.split('/');
   const submissionId = parseInt(temp[temp.length - 1]);
 
-  const submission = props.submissions?.find((e) => e.id === submissionId);
+  const submission = props.submission?.find((e) => e.id === submissionId);
 
   const quiz = submission?.quiz;
-  // const quiz = props.quizList.find((e) => e.id === submission?.quizId);
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -53,39 +52,6 @@ function SubmissionDetail(props) {
             lineNumbers: true
           }}
         />
-
-        <Divider style={{ marginTop: 16}}/>
-
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Test Case</TableCell>
-                <TableCell align="center">Tình trạng</TableCell>
-                <TableCell align="center">Input</TableCell>
-                <TableCell align="center">Output của bạn</TableCell>
-                <TableCell align="center">Output đúng</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {submission?.quiz?.testCases.map((row, index) => (
-                <TableRow
-                  key={`row${index}`}
-                  style={{
-                    color: 'rgb(51 51 51 / 50%)',
-                    backgroundColor: row.get === row.want ? 'rgb(170 255 170 / 50%)' : 'rgb(250 170 170 / 50%)'
-                  }}
-                >
-                  <TableCell align="center">{index + 1}</TableCell>
-                  <TableCell align="center">{row.get === row.want ? <CheckRounded /> : <CloseRounded />}</TableCell>
-                  <TableCell align="center">{index === 0 ? quiz?.testCases[index].input : 'Đã bị ẩn'}</TableCell>
-                  <TableCell align="center">{index === 0 ? row.get : 'Đã bị ẩn'}</TableCell>
-                  <TableCell align="center">{index === 0 ? quiz?.testCases[index].output  : 'Đã bị ẩn'}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
         <Grid container justify="center">
           <Grid item>
             <Button
@@ -109,7 +75,7 @@ function SubmissionDetail(props) {
 
 const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
-  submissions: select(state, 'submissionsReducer', 'submissions'),
+  submission: select(state, 'submissionsReducer', 'submission'),
   isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 

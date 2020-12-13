@@ -125,6 +125,7 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
 };
 
 const initialState = fromJS({
+  submission: [],
   submissions: [],
   submissionsLength: 0,
   isFetching: false,
@@ -153,7 +154,7 @@ export default function submissionsReducer(state = initialState, action) {
 
     case GET_SUBMISSION_BY_ID_SUCCESS:
       return state.merge({
-        submissions: [...[action.payload].sort((a, b) => a.id - b.id)],
+        submission: [...[action.payload].sort((a, b) => a.id - b.id)],
         isFetching: false,
       });
 
