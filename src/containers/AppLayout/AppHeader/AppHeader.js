@@ -6,6 +6,7 @@ import {
   Grid,
   Menu,
   AppBar,
+  Avatar,
   MenuItem,
   withStyles,
   Typography,
@@ -64,7 +65,7 @@ function AppHeader(props) {
       logout(history);
     }
     if (!(userId >= 0) && currentRoute !== ROUTER.REGISTER) history.push(ROUTER.LOGIN);
-  }, [history, userId, currentTime, expiredTime, currentRoute]);
+  }, [history, userId, currentTime, expiredTime, currentRoute, logout]);
 
   // Get User Information
   useEffect(() => {
@@ -141,7 +142,8 @@ function AppHeader(props) {
           </Grid>
           <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div id="user-button" onClick={handleClick}>
-              <img src={avatar} alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }} />
+              <Avatar style={{ width: 30, height: 30, fontSize: 15, margin: 'auto 4px' }}>{username ? username[0].toUpperCase() : ''}</Avatar>
+              {/* <img src={avatar} alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }} /> */}
               <div style={{ lineHeight: '60px' }}>{fullname}</div>
               <ExpandMore style={{ padding: '18px 0' }} />
             </div> 

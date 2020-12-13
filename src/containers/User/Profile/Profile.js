@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
+  Avatar,
   Button,
   Divider,
   Snackbar,
@@ -59,7 +60,7 @@ function Profile(props) {
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
-      <CardHeader title={<img src={avatar} alt="avatar" id="profile-avatar" />} style={{ backgroundColor: '#39424E', height: 32 }} />
+      <CardHeader title={<Avatar id="profile-avatar">{profile?.username[0].toUpperCase()}</Avatar>} style={{ backgroundColor: '#39424E', height: 32 }} />
       <CardContent style={{ height: 220 }} />
       <CardContent style={{ color: 'black' }}>
         <Typography variant="h5">{profile?.fullname}</Typography>
