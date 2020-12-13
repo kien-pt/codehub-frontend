@@ -56,7 +56,7 @@ function HomeCourses(props) {
   useEffect(() => {
     props.resetUserPoint();
     courses.forEach((course) => getUserPointByCourseId(course.id));
-  }, [getUserPointByCourseId, props]);
+  }, [courses, getUserPointByCourseId]);
 
   return (
     <>
@@ -76,7 +76,6 @@ function HomeCourses(props) {
         />
         <CardContent>
           {courses.map((course) => {
-            // const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
             var totalPoint = 0;
             props.tags.filter((tag) => tag.courseId === course.id).forEach((tag) => {
               totalPoint += props.quizList.filter((quiz) => quiz.tagId === tag.id).length;
@@ -84,8 +83,6 @@ function HomeCourses(props) {
             totalPoint = totalPoint * 100;
 
             const currentPoint = props.server_point.find((e) => e.userID === userId)?.total_point || 0;
-            console.log(currentPoint);
-            // props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
 
             return (
               <Card key={course.id} style={{ marginBottom: 16, position: 'relative' }}>

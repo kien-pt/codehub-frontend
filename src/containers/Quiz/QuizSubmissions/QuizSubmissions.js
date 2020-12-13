@@ -19,6 +19,8 @@ import { getSubmissionsByQuizId } from '../../../reducer/submissions';
 function QuizSubmissions(props) {
   const { getSubmissionsByQuizId } = props;
 
+  const userId = parseInt(localStorage.getItem("userId"));
+
   useEffect(() => {
     getSubmissionsByQuizId(props.quizId);
   }, [getSubmissionsByQuizId, props.quizId]);
@@ -30,10 +32,8 @@ function QuizSubmissions(props) {
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
       <CardContent>
-        {props.submissions.map((submission, index) => {
+        {props.submissions.filter((submission) => submission.userId === userId).map((submission, index) => {
           const point = submission?.point;
-          // submission.testCase.map((e) => point += (e.get === e.want) ? 1 : 0);
-          // point = parseFloat(((point / submission.testCase.length) * 100).toFixed(0));
           var status = 'finish';
           if (point === 0) status = 'fail';
           if (point === 100) status = 'success';

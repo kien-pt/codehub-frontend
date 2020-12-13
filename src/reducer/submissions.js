@@ -40,6 +40,27 @@ export const getSubmissionsById = (id) => async (dispatch) => {
   }
 };
 
+export const getSubmissionsByUserId = (id) => async (dispatch) => {
+  const api = SUBMISSIONS_API.getSubmissionsByUserId(id);
+  dispatch({
+    type: GET_SUBMISSIONS_LOADING,
+    meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: GET_SUBMISSIONS_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: GET_SUBMISSIONS_FAILURE,
+      meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
 export const getSubmissionsByQuizId = (id) => async (dispatch) => {
   const api = SUBMISSIONS_API.getSubmissionsByQuizId(id);
   dispatch({
