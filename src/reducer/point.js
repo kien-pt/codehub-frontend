@@ -104,19 +104,19 @@ export const getPointByQuizId = (id) => async (dispatch) => {
 export const getPointByUserId = (id) => async (dispatch) => {
   const api = POINT_API.getPointByUserId(id);
   dispatch({
-    type: GET_POINT_BY_QUIZ_ID_LOADING,
+    type: GET_POINT_BY_USER_ID_LOADING,
     meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_POINT_BY_QUIZ_ID_SUCCESS,
+      type: GET_POINT_BY_USER_ID_SUCCESS,
       payload: response.data,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
-      type: GET_POINT_BY_QUIZ_ID_FAILURE,
+      type: GET_POINT_BY_USER_ID_FAILURE,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
     });
   }
