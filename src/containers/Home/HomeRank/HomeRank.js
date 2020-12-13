@@ -80,7 +80,7 @@ function HomeRank(props) {
   return (
     <Card>
       <CardHeader title="Bảng xếp hạng" style={{ color: 'white', backgroundColor: '#39424E' }} />
-      <CardContent>
+      <CardContent style={{ minHeight: 415 }}>
         <Button variant="contained" color="primary" disabled={props.disabled} onClick={handleClick} style={{ width: '100%' }}>{selectedCourse?.name}</Button>
         <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
           {courses?.map((e, index) => <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>)}
