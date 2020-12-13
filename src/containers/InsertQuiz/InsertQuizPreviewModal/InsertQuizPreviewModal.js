@@ -16,14 +16,13 @@ import select from '../../../utils/select';
 
 function InsertQuizPreviewModal(props) {
   const { combine, isPreviewing, setPreviewing } = props;
+  console.log(combine);
 
   return (
     <Dialog open={isPreviewing} onClose={() => setPreviewing(false)}>
       <DialogTitle>Xem trước</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <Interweave content={combine} />
-        </DialogContentText>
+        <Interweave content={combine} />
       </DialogContent>
       <DialogActions>
         <Button variant="contained" color="primary" onClick={() => setPreviewing(false)}>Đóng</Button>

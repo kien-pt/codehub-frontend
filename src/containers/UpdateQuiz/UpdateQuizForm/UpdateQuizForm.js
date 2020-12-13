@@ -15,7 +15,7 @@ import select from '../../../utils/select';
 
 import { getQuizById } from '../../../reducer/quiz';
 
-import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
+import UpdateQuizPreviewModal from '../UpdateQuizPreviewModal';
 import './index.css';
 
 function UpdateQuizForm(props) {
@@ -92,7 +92,7 @@ function UpdateQuizForm(props) {
     <>
       <Card>
         <CardHeader
-          title="Thêm bài tậpxx"
+          title="Sửa bài tập"
           style={{ color: 'white', backgroundColor: '#39424E' }}
         />
         <CardContent>
@@ -122,7 +122,7 @@ function UpdateQuizForm(props) {
         </CardActions>
       </Card>
 
-      <InsertQuizPreviewModal
+      <UpdateQuizPreviewModal
         combine={combine}
         isPreviewing={isPreviewing}
         setPreviewing={setPreviewing}
