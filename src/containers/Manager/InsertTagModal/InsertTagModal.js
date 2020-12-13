@@ -15,7 +15,7 @@ import { AssignmentLate } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 
-import { insertTag } from '../../../reducer/quiz';
+import { insertTag } from '../../../reducer/tags';
 
 function InsertTagModal(props) {
   const { isInserting, courseId, handleClick } = props;

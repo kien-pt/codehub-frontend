@@ -30,7 +30,6 @@ function HomeRank(props) {
     const index = rankUser.findIndex((user) => user.id === e.userID);
     rankUser.splice(index, 1, {...rankUser[index], point: e.total_point});
   });
-  // console.log(rankUser);
 
   // Get all students
   useEffect(() => {
@@ -104,6 +103,7 @@ function HomeRank(props) {
 }
 
 const mapStateToProps = (state) => ({
+  tags: select(state, 'tagsReducer', 'tags'),
   point: select(state, 'pointReducer', 'point'),
   courses: select(state, 'coursesReducer', 'courses'),
   usersList: select(state, 'usersReducer', 'usersList'),

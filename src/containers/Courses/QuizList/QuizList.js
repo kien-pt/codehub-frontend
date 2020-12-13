@@ -18,7 +18,8 @@ import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
 import { getPointByCourseId } from '../../../reducer/point';
-import { getTagsByCourseId, getQuizByCourseId } from '../../../reducer/quiz';
+import { getQuizByCourseId } from '../../../reducer/quiz';
+import { getTagsByCourseId } from '../../../reducer/tags';
 
 import './QuizList.css';
 import UpdateTagModal from '../../Manager/UpdateTagModal';
@@ -109,7 +110,7 @@ function HomeCourses(props) {
 
 const mapStateToProps = (state) => ({
   quiz: select(state, 'quizReducer', 'quiz'),
-  tags: select(state, 'quizReducer', 'tags'),
+  tags: select(state, 'tagsReducer', 'tags'),
   point: select(state, 'pointReducer', 'point'),
   courses: select(state, 'coursesReducer', 'courses'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),

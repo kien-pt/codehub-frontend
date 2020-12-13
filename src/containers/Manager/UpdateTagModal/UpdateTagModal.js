@@ -15,7 +15,7 @@ import { AssignmentLate } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 
-import { updateTag } from '../../../reducer/quiz';
+import { updateTag } from '../../../reducer/tags';
 
 function UpdateTagModal(props) {
   const { updatedTag, setUpdatedTag } = props;

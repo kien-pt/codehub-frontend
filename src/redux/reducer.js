@@ -7,6 +7,7 @@ import submissionsReducer from '../reducer/submissions';
 import pointReducer from '../reducer/point';
 import usersReducer from '../reducer/users';
 import commentsReducer from '../reducer/comments';
+import tagsReducer from '../reducer/tags';
 
 export default combineReducers({
   quizReducer,
@@ -16,4 +17,5 @@ export default combineReducers({
   pointReducer,
   usersReducer,
   commentsReducer,
+  tagsReducer,
 });

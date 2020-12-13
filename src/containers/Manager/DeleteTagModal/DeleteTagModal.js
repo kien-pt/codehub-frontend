@@ -13,7 +13,7 @@ import { Alert } from '@material-ui/lab';
 
 import toJs from '../../../hoc/ToJS';
 
-import { deleteTag } from '../../../reducer/quiz';
+import { deleteTag } from '../../../reducer/tags';
 
 function DeleteTagModal(props) {
   const { deletedTag, setDeletedTag } = props;

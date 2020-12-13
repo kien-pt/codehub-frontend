@@ -18,7 +18,8 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourses } from '../../../reducer/courses';
-import { getAllQuiz, getTags } from '../../../reducer/quiz';
+import { getAllQuiz } from '../../../reducer/quiz';
+import { getTags } from '../../../reducer/tags';
 
 import InsertCourseModal from '../../Manager/InsertCourseModal';
 import UpdateCourseModal from '../../Manager/UpdateCourseModal';
@@ -115,7 +116,7 @@ function HomeCourses(props) {
 }
 
 const mapStateToProps = (state) => ({
-  tags: select(state, 'quizReducer', 'tags'),
+  tags: select(state, 'tagsReducer', 'tags'),
   quiz: select(state, 'quizReducer', 'quiz'),
   point: select(state, 'pointReducer', 'point'),
   courses: select(state, 'coursesReducer', 'courses'),

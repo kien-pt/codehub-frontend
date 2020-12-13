@@ -16,7 +16,6 @@ import { Alert } from '@material-ui/lab';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { getCourses } from '../../../reducer/courses';
-import { getTagsByCourseId } from '../../../reducer/quiz';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -87,13 +86,12 @@ function InsertQuizTestCase(props) {
 }
 
 const mapStateToProps = (state) => ({
-  tags: select(state, 'quizReducer', 'tags'),
+  tags: select(state, 'tagsReducer', 'tags'),
   courses: select(state, 'coursesReducer', 'courses'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCourses: () => dispatch(getCourses()),
-  getTagsByCourseId: (id) => dispatch(getTagsByCourseId(id)),
 });
 
 export default connect(
