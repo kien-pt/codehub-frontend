@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
-  Card,
-  CardContent,
-  CardHeader,
   Divider,
+  Card,
+  CardHeader,
+  CardContent,
 } from '@material-ui/core';
 import Interweave from 'interweave';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
-import { getSubmissionsById } from '../../../reducer/submissions';
 import { getQuizById } from '../../../reducer/quiz';
+import { getSubmissionsById } from '../../../reducer/submissions';
 
 function QuizContent(props) {
-  const { getQuizById, getSubmissionsById, submissionId } = props;
+  const { getSubmissionsById, submissionId } = props;
 
   useEffect(() => {
     getSubmissionsById(submissionId);
@@ -32,21 +32,12 @@ function QuizContent(props) {
 
   return (
     <Card>
-      <CardHeader
-        title={quiz?.title}
-        style={{ color: 'white', backgroundColor: '#39424E' }}
-      />
+      <CardHeader title={quiz?.title} style={{ color: 'white', backgroundColor: '#39424E' }} />
       <CardContent>
         <span style={{ color: (status === 'finish') ? '#F8941D' : (status === 'fail') ? '#B94A48' : '#82B74B', fontSize: 24, fontWeight: 'bold' }}>
-          {
-            (status === 'finish')
-            ? 'Đúng một phần'
-            : (status === 'fail') ? 'Sai' : 'Đúng'
-          }
+          {(status === 'finish') ? 'Đúng một phần' : (status === 'fail') ? 'Sai' : 'Đúng'}
         </span>
-        <span style={{ color: '#808080', fontSize: 24, fontWeight: 'bold' }}>
-          {` - Đạt điểm ${point}/100`}
-        </span>
+        <span style={{ color: '#808080', fontSize: 24, fontWeight: 'bold' }}>{` - Đạt điểm ${point}/100`}</span>
         <Divider style={{ marginBottom: 8 }} />
         <Interweave content={quiz?.content} />
       </CardContent>
@@ -61,12 +52,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSubmissionsById: (id) => dispatch(getSubmissionsById(id)),
   getQuizById: (id) => dispatch(getQuizById(id)),
+  getSubmissionsById: (id) => dispatch(getSubmissionsById(id)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(toJs(QuizContent));
-

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
+import QuizSide from '../../containers/Submission/QuizSide';
 import SubmissionQuiz from '../../containers/Submission/SubmissionQuiz';
 import SubmissionDetail from '../../containers/Submission/SubmissionDetail';
-
-import QuizSide from '../../containers/Submission/QuizSide';
 
 function Quiz(props) {
   const temp = window.location.href.split('/');
