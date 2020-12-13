@@ -26,7 +26,7 @@ function UpdateQuiz(props) {
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item lg={3} md={4} xs={12}>
-        ok
+        okcc
         {/* <UpdateQuizSetting
           courseId={courseId}
           title={title}

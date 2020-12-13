@@ -15,8 +15,8 @@ import select from '../../../utils/select';
 
 import { getQuizById } from '../../../reducer/quiz';
 
-import UpdateQuizPreviewModal from '../UpdateQuizPreviewModal';
 import './index.css';
+import InsertQuizPreviewModal from '../../InsertQuiz/InsertQuizPreviewModal';
 
 function UpdateQuizForm(props) {
   const { content, setContent } = props;
@@ -122,7 +122,7 @@ function UpdateQuizForm(props) {
         </CardActions>
       </Card>
 
-      <UpdateQuizPreviewModal
+      <InsertQuizPreviewModal
         combine={combine}
         isPreviewing={isPreviewing}
         setPreviewing={setPreviewing}

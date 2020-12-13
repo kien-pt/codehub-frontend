@@ -16,11 +16,11 @@ import select from '../../../utils/select';
 function UpdateQuizPreviewModal(props) {
   const { combine, isPreviewing, setPreviewing } = props;
 
-  console.log(combine);
+  console.log('ok', combine);
 
   return (
     <Dialog open={isPreviewing} onClose={() => setPreviewing(false)}>
-      <DialogTitle>Xem trước</DialogTitle>
+      <DialogTitle>Xxemx trước</DialogTitle>
       <DialogContent>
         <Interweave content={combine} />
       </DialogContent>
