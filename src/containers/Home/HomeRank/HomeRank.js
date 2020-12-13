@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
+  Link,
   Grid,
   Menu,
   Button,
@@ -14,6 +15,7 @@ import {
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 import { getAllUsers } from '../../../reducer/users';
 import { getAllPointByCourseId } from '../../../reducer/point';
@@ -84,14 +86,12 @@ function HomeRank(props) {
           {courses?.map((e, index) => <MenuItem key={e.code} onClick={() => handleSelect(index)}>{e.name}</MenuItem>)}
         </StyledMenu>
         {rankUser?.sort((a, b) => (b.point - a.point)).slice(0, 10).map((student, index) => {
-          var totalPoint = 0;
-          // props.point.forEach((e) => totalPoint += (e.courseIndex === courses.find((course) => course.id === courseIndex)?.id && e.userId === student.id) ? e.point : 0);
           return (
             <div key={student.username}>
               <Divider light style={{ margin: '8px 0', height: '0.5px' }} />
               <Grid container>
                 <Grid item xs={2} style={{ fontWeight: 'bold' }}>{index + 1}</Grid>
-                <Grid item xs={8} style={{ textAlign: 'center'}}>{student.fullname}</Grid>
+                <Grid item xs={8} style={{ textAlign: 'center'}}><Link href={`${ROUTER.USER}/${student.id}`}>{student.fullname}</Link></Grid>
                 <Grid item xs={2} style={{ color: '#1BA94C', fontWeight: 'bold', textAlign: 'end' }}>{student.point}</Grid>
               </Grid>
             </div>

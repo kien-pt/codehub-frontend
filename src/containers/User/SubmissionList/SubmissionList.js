@@ -23,8 +23,8 @@ import { getAllQuiz } from '../../../reducer/quiz';
 import { getSubmissionsByUserId } from '../../../reducer/submissions';
 
 function SubmissionList(props) {
-  const { getAllQuiz, getSubmissionsByUserId } = props;
-  const userId = parseInt(localStorage.getItem("userId"));
+  const { profileId, getAllQuiz, getSubmissionsByUserId } = props;
+  // const userId = parseInt(localStorage.getItem("userId"));
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -39,8 +39,8 @@ function SubmissionList(props) {
 
   useEffect(() => {
     getAllQuiz();
-    getSubmissionsByUserId(userId);
-  }, [getAllQuiz, getSubmissionsByUserId, userId]);
+    getSubmissionsByUserId(profileId);
+  }, [getAllQuiz, getSubmissionsByUserId, profileId]);
 
   return (
     <Card style={{ color: 'white', padding: 0 }}>
