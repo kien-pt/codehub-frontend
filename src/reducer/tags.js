@@ -1,11 +1,8 @@
 import { fromJS } from 'immutable';
 
 import { apiCall } from '../utils/api';
-import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { TAGS_API } from '../services/tagsAPI';
-
-import { insertSubmission } from '../reducer/submissions';
 
 const GET_TAGS_LOADING = 'GET_TAGS_LOADING';
 const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';

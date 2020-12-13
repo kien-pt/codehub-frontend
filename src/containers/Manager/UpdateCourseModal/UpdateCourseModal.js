@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Button,
   Snackbar,
@@ -44,12 +43,7 @@ function UpdateCourseModal(props) {
 
   return (
     <>
-      <Dialog
-        open={updatingCourse !== null}
-        keepMounted
-        onClose={() => setUpdatingCourse(null)}
-        style={{ minWidth: 640 }}
-      >
+      <Dialog open={updatingCourse !== null} keepMounted  onClose={() => setUpdatingCourse(null)} style={{ minWidth: 640 }}>
         <DialogTitle>Thêm khoá học</DialogTitle>
         <DialogContent style={{ marginTop: 12 }}>
           <form onSubmit={handleSubmit}>
@@ -78,26 +72,19 @@ function UpdateCourseModal(props) {
           </form>
         </DialogContent>
         <DialogActions style={{ padding: '0 24px 12px 24px' }}>
-          <Button variant="outlined" onClick={() => setUpdatingCourse(null)} color="secondary">
-            Huỷ
-          </Button>
-          <Button variant="contained" onClick={handleSubmit} color="primary">
-            Đồng ý
-          </Button>
+          <Button variant="outlined" onClick={() => setUpdatingCourse(null)} color="secondary">Huỷ</Button>
+          <Button variant="contained" onClick={handleSubmit} color="primary">Đồng ý</Button>
         </DialogActions>
       </Dialog>
 
       <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
-        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
-          {noti?.message}
-        </Alert>
+        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>{noti?.message}</Alert>
       </Snackbar>
     </>
   );
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   updateCourse: (id) => dispatch(updateCourse(id)),

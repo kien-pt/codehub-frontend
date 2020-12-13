@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-expressions */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
-  CardContent,
   CardHeader,
+  CardContent,
   Button,
   Grid,
   Backdrop,
   CircularProgress,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 import toJs from '../../../hoc/ToJS';
@@ -20,9 +19,9 @@ import select from '../../../utils/select';
 import { submitCode, resetTestCaseCount } from '../../../reducer/quiz';
 import { insertPoint, updatePoint, getPointByQuizId } from '../../../reducer/point';
 
+require('codemirror/theme/neat.css');
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
-require('codemirror/theme/neat.css');
 require('codemirror/mode/clike/clike.js');
 
 const code = `#include <iostream>
@@ -44,14 +43,7 @@ function QuizSubmitField(props) {
   
   const { resetTestCaseCount, quizId } = props;
 
-  // useEffect(() => {
-  //   getPointByQuizId(quizId);
-  // }, [getPointByQuizId, quizId]);
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
-
-  // useEffect(() => {
-  // }, [resetTestCaseCount, quiz]);
-
 
   const handleSubmit = () => {
     setSubmitting(true);
@@ -72,22 +64,17 @@ function QuizSubmitField(props) {
   return (
     <>
       <Card style={{ marginTop: 32 }}>
-        <CardHeader
-          title="Bài nộp"
-          style={{ color: 'white', backgroundColor: '#39424E' }}
-        />
+        <CardHeader title="Bài nộp" style={{ color: 'white', backgroundColor: '#39424E' }} />
         <CardContent>
           <CodeMirror
             value={code}
             options={{
-              mode: 'text/x-c++src',
-              theme: 'material',
-              lineNumbers: true,
               indentUnit: 4,
+              lineNumbers: true,
+              theme: 'material',
+              mode: 'text/x-c++src',
             }}
-            onChange={(editor, data, value) => {
-              setSourceCode(value);
-            }}
+            onChange={(editor, data, value) => setSourceCode(value)}
           />
           <Grid container justify="center">
             <Grid item>
@@ -108,28 +95,25 @@ function QuizSubmitField(props) {
         </CardContent>
       </Card>
       
-      <Backdrop open={isSubmitting} style={{ zIndex: 10 }}>
-        <CircularProgress /> 
-      </Backdrop>
+      <Backdrop open={isSubmitting} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
+  point: select(state, 'pointReducer', 'point'),
   quizList: select(state, 'quizReducer', 'quiz'),
-  isFetching: select(state, 'quizReducer', 'isFetching'),
   testCase: select(state, 'quizReducer', 'testCase'),
+  isFetching: select(state, 'quizReducer', 'isFetching'),
   testCaseCount: select(state, 'quizReducer', 'testCaseCount'),
 
-  submissions: select(state, 'submissionsReducer', 'submissions'),
   isSolving: select(state, 'submissionsReducer', 'isSolving'),
-
-  point: select(state, 'pointReducer', 'point'),
+  submissions: select(state, 'submissionsReducer', 'submissions'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: (history, payload) => dispatch(submitCode(history, payload)),
   resetTestCaseCount: (size) => dispatch(resetTestCaseCount(size)),
+  submitCode: (history, payload) => dispatch(submitCode(history, payload)),
 
   getPointByQuizId: (id) => dispatch(getPointByQuizId(id)),
   insertPoint: (payload) => dispatch(insertPoint(payload)),

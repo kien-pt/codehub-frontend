@@ -28,7 +28,7 @@ function UpdateQuizForm(props) {
   const { sampleInput, setSampleInput } = props;
   const { sampleOutput, setSampleOutput } = props;
   const { quizId, getQuizById } = props;
-  const { title, selectedCourseId, selectedTagId, testcase } = props;
+  const { title, selectedTagId, testcase } = props;
 
   useEffect(() => {
     getQuizById(quizId);
