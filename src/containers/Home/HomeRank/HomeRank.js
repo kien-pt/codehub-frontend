@@ -25,7 +25,7 @@ function HomeRank(props) {
 
   const selectedCourse = courses?.length > 0 ? courses[courseIndex] : null;
 
-  const rankUser = props.usersList.filter((user) => !user.admin).map((user) => ({...user, point: 0}));
+  const rankUser = props.usersList.map((user) => ({...user, point: 0}));
   props.point.forEach((e) => {
     const index = rankUser.findIndex((user) => user.id === e.userID);
     rankUser.splice(index, 1, {...rankUser[index], point: e.total_point});
