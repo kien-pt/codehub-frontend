@@ -22,8 +22,10 @@ function DeleteQuizModal(props) {
 
   const handleDelete = () => {
     props.deleteQuiz(deletingQuiz.id)
-    .then(result => setNoti(result))
-    .catch();
+    .then(result => {
+      setNoti(result);
+      window.location.reload();
+    }).catch();
     setDeletingQuiz(null);
   }
 
