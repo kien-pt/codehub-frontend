@@ -341,23 +341,20 @@ export const submitCode = (history, payload) => async (dispatch) => {
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
     });
 
-    console.log(testCaseCount);
-
     if (testCaseCount === 0) {
+      var point = 0;
+      testCase.forEach((e) => console.log(e.got === e.expected));
+      testCase.forEach((e) => point += (e.got === e.expected) ? 1 : 0);
+      console.log(point);
+      point = parseFloat(((point / testCase.length) * 100).toFixed(0));
+
       dispatch(insertSubmission(
         history,
         {
-          point: 69,
+          point,
           quizId: payload.quizId,
           sourceCode: payload.sourceCode,
         }
-        // point,
-        // {
-        //   userId: parseInt(sessionStorage.getItem("userId")),
-        //   quizId,
-        //   testCase,
-        //   sourceCode,
-        // }
       ));
     }
   } else {
@@ -413,6 +410,7 @@ export default function quizReducer(state = initialState, action) {
       
       case RESET_TEST_CASE_COUNT:
         return state.merge({
+          testCase: [],
           testCaseCount: action.payload,
         });
 

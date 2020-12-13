@@ -94,7 +94,7 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
   if (!error && response.status === 200) {
     dispatch({
       type: INSERT_SUBMISSIONS_SUCCESS,
-      // payload: response.data,
+      payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
     // var point = 0;
@@ -122,7 +122,7 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
     //   }
     // }
 
-    // history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
+    history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
   } else {
     dispatch({
       type: INSERT_SUBMISSIONS_FAILURE,
@@ -175,7 +175,7 @@ export default function submissionsReducer(state = initialState, action) {
 
     case INSERT_SUBMISSIONS_SUCCESS: {
       return state.merge({
-        submissions: [action.payload],
+        submissions: [...[action.payload]],
         isSolving: false,
       });
     }
