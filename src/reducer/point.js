@@ -4,6 +4,8 @@ import { apiCall } from '../utils/api';
 import { PREFIX } from '../constant/enum';
 import { POINT_API } from '../services/pointAPI';
 
+const RESET_USER_POINT = 'RESET_USER_POINT';
+
 const GET_ALL_POINT_LOADING = 'GET_ALL_POINT_LOADING';
 const GET_ALL_POINT_SUCCESS = 'GET_ALL_POINT_SUCCESS';
 const GET_ALL_POINT_FAILURE = 'GET_ALL_POINT_FAILURE';
@@ -41,6 +43,13 @@ const UPDATE_POINT_FAILURE = 'UPDATE_POINT_FAILURE';
 //   }
 // };
 
+export const resetUserPoint = (size) => async (dispatch) => {
+  dispatch({
+    type: RESET_USER_POINT,
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
+  });
+}
+
 export const getAllPointByCourseId = (id) => async (dispatch) => {
   const api = POINT_API.getAllPointByCourseId(id);
   dispatch({
@@ -57,6 +66,28 @@ export const getAllPointByCourseId = (id) => async (dispatch) => {
   } else {
     dispatch({
       type: GET_ALL_POINT_FAILURE,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+export const getUserPointByCourseId = (id) => async (dispatch) => {
+  const api = POINT_API.getUserPointByCourseId(id);
+  dispatch({
+    type: GET_USER_POINT_LOADING,
+    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: GET_USER_POINT_SUCCESS,
+      id,
+      payload: response.data,
+      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: GET_USER_POINT_FAILURE,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
     });
   }
@@ -145,6 +176,11 @@ export default function pointReducer(state = initialState, action) {
         isFetching: false,
       });
 
+    case RESET_USER_POINT:
+      return state.merge({
+        user_point: [],
+      });
+
     case GET_ALL_POINT_SUCCESS:
       return state.merge({
         server_point: [...action.payload],
@@ -153,7 +189,7 @@ export default function pointReducer(state = initialState, action) {
 
     case GET_USER_POINT_SUCCESS:
       return state.merge({
-        user_point: [...action.payload],
+        user_point: [...state.get('user_point'), [{...action.payload, courseId: action.id}]],
         isFetching: false,
       });
 

@@ -20,6 +20,7 @@ import ROUTER from '../../../constant/router';
 import { getCourses } from '../../../reducer/courses';
 import { getAllQuiz } from '../../../reducer/quiz';
 import { getTags } from '../../../reducer/tags';
+import { resetUserPoint, getUserPointByCourseId } from '../../../reducer/point';
 
 import InsertCourseModal from '../../Manager/InsertCourseModal';
 import UpdateCourseModal from '../../Manager/UpdateCourseModal';
@@ -29,9 +30,11 @@ import DeleteCourseModal from '../../Manager/DeleteCourseModal';
 function HomeCourses(props) {
   const history = useHistory();
   const {
+    courses,
     getTags,
     getAllQuiz,
     getCourses,
+    getUserPointByCourseId,
   } = props;
 
   const [isInserting, setInserting] = useState(false);
@@ -50,6 +53,11 @@ function HomeCourses(props) {
     getTags();
   }, [getAllQuiz, getCourses, getTags]);
 
+  useEffect(() => {
+    props.resetUserPoint();
+    courses.forEach((course) => getUserPointByCourseId(course.id));
+  }, [getUserPointByCourseId, props]);
+
   return (
     <>
       <Card style={{ color: 'white', padding: 0 }}>
@@ -67,7 +75,7 @@ function HomeCourses(props) {
           style={{ backgroundColor: '#39424E' }}
         />
         <CardContent>
-          {props.courses.map((course) => {
+          {courses.map((course) => {
             // const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
             var totalPoint = 0;
             props.tags.filter((tag) => tag.courseId === course.id).forEach((tag) => {
@@ -139,6 +147,8 @@ const mapDispatchToProps = (dispatch) => ({
   getTags: () => dispatch(getTags()),
   getAllQuiz: () => dispatch(getAllQuiz()),
   getCourses: () => dispatch(getCourses()),
+  resetUserPoint: () => dispatch(resetUserPoint()),
+  getUserPointByCourseId: (id) => dispatch(getUserPointByCourseId(id)),
 });
 
 export default connect(
