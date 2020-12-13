@@ -6,13 +6,13 @@ import ROUTER from '../../constant/router';
 import Home from '../Home';
 import Quiz from '../Quiz';
 import User from '../User';
+import Page from '../404Page';
 import Manager from '../Manager';
 import Courses from '../Courses';
 import InsertQuiz from '../InsertQuiz';
 import UpdateQuiz from '../UpdateQuiz';
 import Submission from '../Submission';
 import AppHeader from '../../containers/AppLayout/AppHeader';
-
 
 function AppLayout() {
   return (
@@ -28,6 +28,7 @@ function AppLayout() {
           <Route path={ROUTER.UPDATE_QUIZ} component={UpdateQuiz} />
           <Route exact path={ROUTER.NEW_QUIZ} component={InsertQuiz} />
           <Route path={ROUTER.QUIZ} component={Quiz} />
+          <Route path={ROUTER.ERROR} component={Page} />
         </Switch>
       </div>
     </>
