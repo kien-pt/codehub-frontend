@@ -25,6 +25,10 @@ const INSERT_QUIZ_LOADING = 'INSERT_QUIZ_LOADING';
 const INSERT_QUIZ_SUCCESS = 'INSERT_QUIZ_SUCCESS';
 const INSERT_QUIZ_FAILURE = 'INSERT_QUIZ_FAILURE';
 
+const UPDATE_QUIZ_LOADING = 'UPDATE_QUIZ_LOADING';
+const UPDATE_QUIZ_SUCCESS = 'UPDATE_QUIZ_SUCCESS';
+const UPDATE_QUIZ_FAILURE = 'UPDATE_QUIZ_FAILURE';
+
 const DELETE_QUIZ_LOADING = 'DELETE_QUIZ_LOADING';
 const DELETE_QUIZ_SUCCESS = 'DELETE_QUIZ_SUCCESS';
 const DELETE_QUIZ_FAILURE = 'DELETE_QUIZ_FAILURE';
@@ -133,6 +137,29 @@ export const insertQuiz = (history, payload) => async (dispatch) => {
   }
 };
 
+export const updateQuiz = (history, payload) => async (dispatch) => {
+  const api = QUIZ_API.updateQuiz();
+  dispatch({
+    type: UPDATE_QUIZ_LOADING,
+    meta: { prefix: [PREFIX.QUIZ, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api, payload });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: UPDATE_QUIZ_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
+    });
+    history.push(`${ROUTER.QUIZ}/${response.data.id}`);
+  } else {
+    dispatch({
+      type: UPDATE_QUIZ_FAILURE,
+      meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+
 export const deleteQuiz = (id) => async (dispatch) => {
   const api = QUIZ_API.deleteQuiz(id);
   dispatch({
@@ -223,6 +250,7 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_ID_LOADING:
     case GET_QUIZ_BY_COURSE_ID_LOADING:
     case INSERT_QUIZ_LOADING:
+    case UPDATE_QUIZ_LOADING:
     case DELETE_QUIZ_LOADING:
     case SUBMIT_CODE_LOADING:
       return state.merge({
@@ -234,6 +262,8 @@ export default function quizReducer(state = initialState, action) {
     case GET_QUIZ_BY_COURSE_ID_FAILURE:
     case INSERT_QUIZ_FAILURE:
     case INSERT_QUIZ_SUCCESS:
+    case UPDATE_QUIZ_FAILURE:
+    case UPDATE_QUIZ_SUCCESS:
     case DELETE_QUIZ_FAILURE:
     case SUBMIT_CODE_FAILURE:
       return state.merge({

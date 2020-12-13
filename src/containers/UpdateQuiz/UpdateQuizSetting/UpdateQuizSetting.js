@@ -45,7 +45,7 @@ function UpdateQuizSetting(props) {
 
   useEffect(() => {
     if (tag) {
-      setSelectedTagId(tag);
+      setSelectedTagId(tag.id);
       getTagsByCourseId(tag.courseId);
       setSelectedCourseId(tag.courseId);
     }

@@ -9,16 +9,19 @@ import {
   Grid,
   TextareaAutosize,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
-import { getQuizById } from '../../../reducer/quiz';
+import { getQuizById, updateQuiz } from '../../../reducer/quiz';
 
 import './index.css';
 import InsertQuizPreviewModal from '../../InsertQuiz/InsertQuizPreviewModal';
 
 function UpdateQuizForm(props) {
+  const history = useHistory();
+
   const { content, setContent } = props;
   const { input, setInput } = props;
   const { output, setOutput } = props;
@@ -58,7 +61,6 @@ function UpdateQuizForm(props) {
     outputPart.forEach((e, index) => tempOutput += (e === "") ? '\n' : `${e}${index === outputPart.length - 1 ? '' :'\n'}`);
     setOutput(tempOutput);
 
-    var tempSampleIput = "";
     var samplePart = combine?.split('\n')[6].substring(2).replaceAll("    <div class='sample-type'>input      <div class='sample-value'>", "");
     samplePart = samplePart?.replaceAll("      <div class='sample-type'>output      <div class='sample-value'>", ",");
     samplePart = samplePart?.replaceAll("    </li>", "");
@@ -68,51 +70,53 @@ function UpdateQuizForm(props) {
 
   var contentPart = '';
   content.split('\n').forEach((row) => {
-    contentPart += `<p style="textAlign:justify">${row}</p>`; 
+    contentPart += `<p style='textAlign:justify'>${row}</p>`; 
   });
 
-  var inputPart = '<strong>Input:</strong>';
+  var inputPart = "<p style='textAlign:justify'><strong>Input:</strong></p>";
   input.split('\n').forEach((row) => {
-    inputPart += `<p style="textAlign:justify">${row}</p>`; 
+    inputPart += `<p style='textAlign:justify'>${row}</p>`; 
   });
 
-  var outputPart = '<strong>Output:</strong>';
+  var outputPart = "<p style='textAlign:justify'><strong>Output:</strong></p>";
   output.split('\n').forEach((row) => {
-    outputPart += `<p style="textAlign:justify">${row}</p>`; 
+    outputPart += `<p style='textAlign:justify'>${row}</p>`; 
   });
 
-  const previewCombine = `
-    <div class='problem-content'>
-      ${contentPart}
-      <p style="textAlign:justify">
-        ${inputPart}
-        ${outputPart}
-      </p>
-      <div class='problem-sample'>
-        <strong>Ví dụ:</strong>
-        <ul style="margin: 0">
-          <li>            
-            <div class='sample-type'>input</div>            
-            <div class='sample-value'>${sampleInput}</div>            
-            <div class='sample-type'>output</div>            
-            <div class='sample-value'>${sampleOutput}</div>        
-          </li>
-        </ul> 
-      </div>
-    </div>
-  `;
+
+  const previewCombine = 
+`<div class='problem-content'>
+  ${contentPart}
+  ${inputPart}
+  ${outputPart}
+</div>
+<div class='problem-sample'>
+  <strong>Ví dụ:</strong>
+  <ul style="margin: 0">
+    <li>
+      <div class='sample-type'>input</div>
+      <div class='sample-value'>${sampleInput}</div>
+      <div class='sample-type'>output</div>
+      <div class='sample-value'>${sampleOutput}</div>
+    </li>
+  </ul>
+</div>`;
+
+  console.log(previewCombine);
 
   const [isPreviewing, setPreviewing] = useState(false);
 
-  const insertQuiz = () => {
-    props.insertQuiz({
-      quiz: {
+  const updateQuiz = () => {
+    props.updateQuiz(
+      history,
+      {
+        id: quizId,
         title,
-        content: "ok",
+        content: previewCombine,
         tagId: selectedTagId,
-      },
-      testCases: testcase,
-    });
+        testCases: testcase,
+      }
+    );
   } 
 
   return (
@@ -144,7 +148,7 @@ function UpdateQuizForm(props) {
         <CardActions style={{ padding: '0 16px 8px' }}>
           <Grid style={{ width: '100%' }}>
             <Button variant="outlined" onClick={() => setPreviewing(true)}>Xem trước</Button>
-            <Button variant="contained" onClick={insertQuiz} color="primary" style={{ float: 'right' }}>Lưu</Button>
+            <Button variant="contained" onClick={updateQuiz} color="primary" style={{ float: 'right' }}>Lưu</Button>
           </Grid>
         </CardActions>
       </Card>
@@ -165,6 +169,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getQuizById: (id) => dispatch(getQuizById(id)),
+  updateQuiz: (history, payload) => dispatch(updateQuiz(history, payload)),
 });
 
 export default connect(

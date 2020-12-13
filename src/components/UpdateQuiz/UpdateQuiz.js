@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 
 import UpdateQuizForm from '../../containers/UpdateQuiz/UpdateQuizForm';
 import UpdateQuizSetting from '../../containers/UpdateQuiz/UpdateQuizSetting';
-// import UpdateQuizTestCase from '../../containers/UpdateQuiz/UpdateQuizTestCase';
+import UpdateQuizTestCase from '../../containers/UpdateQuiz/UpdateQuizTestCase';
 
 function UpdateQuiz(props) {
   const courseId = props.location?.state?.courseId;
@@ -36,10 +36,11 @@ function UpdateQuiz(props) {
           setSelectedCourseId={setSelectedCourseId}
           setSelectedTagId={setSelectedTagId}
         />
-        {/* <UpdateQuizTestCase
+        <UpdateQuizTestCase
+          quizId={quizId}
           testcase={testcase}
           setTestcase={setTestcase} 
-        /> */}
+        />
       </Grid>
       <Grid item lg={7} md={8} xs={12}>
         <UpdateQuizForm
