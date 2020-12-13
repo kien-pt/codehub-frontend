@@ -16,17 +16,17 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
 import { getAllUsers } from '../../../reducer/users';
-import { getPointByCourseId } from '../../../reducer/point';
+import { getAllPointByCourseId } from '../../../reducer/point';
 
 function HomeRank(props) {
   const { courses } = props;
-  const { getAllUsers, getPointByCourseId } = props;
+  const { getAllUsers, getAllPointByCourseId } = props;
   const [courseIndex, setCourseIndex] = useState(0);
 
   const selectedCourse = courses?.length > 0 ? courses[courseIndex] : null;
 
   const rankUser = props.usersList.map((user) => ({...user, point: 0}));
-  props.point.forEach((e) => {
+  props.server_point.forEach((e) => {
     const index = rankUser.findIndex((user) => user.id === e.userID);
     rankUser.splice(index, 1, {...rankUser[index], point: e.total_point});
   });
@@ -37,8 +37,8 @@ function HomeRank(props) {
   }, [getAllUsers]);
 
   useEffect(() => {
-    if (selectedCourse) getPointByCourseId(selectedCourse.id);
-  }, [courseIndex, getPointByCourseId, courses, selectedCourse]);
+    if (selectedCourse) getAllPointByCourseId(selectedCourse.id);
+  }, [courseIndex, getAllPointByCourseId, courses, selectedCourse]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -104,7 +104,7 @@ function HomeRank(props) {
 
 const mapStateToProps = (state) => ({
   tags: select(state, 'tagsReducer', 'tags'),
-  point: select(state, 'pointReducer', 'point'),
+  server_point: select(state, 'pointReducer', 'server_point'),
   courses: select(state, 'coursesReducer', 'courses'),
   usersList: select(state, 'usersReducer', 'usersList'),
   isFetching: select(state, 'studentsReducer', 'isFetching'),
@@ -112,7 +112,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllUsers: () => dispatch(getAllUsers()),
-  getPointByCourseId: (id) => dispatch(getPointByCourseId(id)),
+  getAllPointByCourseId: (id) => dispatch(getAllPointByCourseId(id)),
 });
 
 export default connect(

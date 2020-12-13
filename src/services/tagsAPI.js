@@ -2,7 +2,7 @@ import HEADERS from '../constant/headers';
 
 export const TAGS_API = {
   getTags: () => ({
-    endPoint: '/api/v1/tags/all',
+    endPoint: 'api/v1/tags/all',
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),

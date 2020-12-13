@@ -17,7 +17,7 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getPointByCourseId } from '../../../reducer/point';
+import { getAllPointByCourseId } from '../../../reducer/point';
 import { getQuizByCourseId } from '../../../reducer/quiz';
 import { getTagsByCourseId } from '../../../reducer/tags';
 
@@ -33,7 +33,7 @@ function HomeCourses(props) {
     getCourseById,
     getTagsByCourseId,
     getQuizByCourseId,
-    getPointByCourseId,
+    getAllPointByCourseId,
   } = props;
 
   const [deletedTag, setDeletedTag] = useState(null);
@@ -46,8 +46,8 @@ function HomeCourses(props) {
     getCourseById(courseId);
     getTagsByCourseId(courseId);
     getQuizByCourseId(courseId);
-    getPointByCourseId(courseId);
-  }, [courseId, getCourseById, getPointByCourseId, getQuizByCourseId, getTagsByCourseId]);
+    getAllPointByCourseId(courseId);
+  }, [courseId, getCourseById, getAllPointByCourseId, getQuizByCourseId, getTagsByCourseId]);
 
   return (
     <>
@@ -72,7 +72,7 @@ function HomeCourses(props) {
             />
             <CardContent>
               {props.quiz?.filter((e) => e.tagId === tag?.id).map((quiz, index) => {
-                const point = props.point.find((e) => e.quizId === quiz.id)?.point || 0;
+                const point = props.user_point.find((e) => e.quizId === quiz.id)?.point || 0;
                 return (
                   <Card key={`quiz-${quiz.id}`} style={{ position: 'relative', marginTop: index === 0 ? 0 : 12 }}>
                     <CardActionArea onClick={() => history.push(`${ROUTER.QUIZ}/${quiz.id}`)}>
@@ -111,7 +111,7 @@ function HomeCourses(props) {
 const mapStateToProps = (state) => ({
   quiz: select(state, 'quizReducer', 'quiz'),
   tags: select(state, 'tagsReducer', 'tags'),
-  point: select(state, 'pointReducer', 'point'),
+  user_point: select(state, 'pointReducer', 'user_point'),
   courses: select(state, 'coursesReducer', 'courses'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),
 });
@@ -120,7 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTagsByCourseId: (id) => dispatch(getTagsByCourseId(id)),
   getQuizByCourseId: (id) => dispatch(getQuizByCourseId(id)),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
-  getPointByCourseId: (courseId) => dispatch(getPointByCourseId(courseId)),
+  getAllPointByCourseId: (courseId) => dispatch(getAllPointByCourseId(courseId)),
 });
 
 export default connect(

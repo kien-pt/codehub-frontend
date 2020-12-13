@@ -28,12 +28,17 @@ import DeleteCourseModal from '../../Manager/DeleteCourseModal';
 
 function HomeCourses(props) {
   const history = useHistory();
-  const { getAllQuiz, getCourses, getAllPoint } = props;
+  const {
+    getTags,
+    getAllQuiz,
+    getCourses,
+  } = props;
 
   const [isInserting, setInserting] = useState(false);
   const [deletingCourse, setDeletingCourse] = useState(null);
   const [updatingCourse, setUpdatingCourse] = useState(null);
 
+  const userId = parseInt(localStorage.getItem("userId"));
   const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
   // Handle insert course
@@ -42,7 +47,8 @@ function HomeCourses(props) {
   useEffect(() => {
     getCourses();
     getAllQuiz();
-  }, [getAllQuiz, getCourses, getAllPoint]);
+    getTags();
+  }, [getAllQuiz, getCourses, getTags]);
 
   return (
     <>
@@ -62,10 +68,16 @@ function HomeCourses(props) {
         />
         <CardContent>
           {props.courses.map((course) => {
-            const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
+            // const totalPoint = props.quiz?.filter((e) => e.courseId === course.id)?.length * 100;
+            var totalPoint = 0;
+            props.tags.filter((tag) => tag.courseId === course.id).forEach((tag) => {
+              totalPoint += props.quizList.filter((quiz) => quiz.tagId === tag.id).length;
+            });
+            totalPoint = totalPoint * 100;
 
-            var currentPoint = 0;
-            props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
+            const currentPoint = props.server_point.find((e) => e.userID === userId)?.total_point || 0;
+            console.log(currentPoint);
+            // props.point.forEach((e) => currentPoint += (e.courseId === course.id) ? e.point : 0);
 
             return (
               <Card key={course.id} style={{ marginBottom: 16, position: 'relative' }}>
@@ -117,8 +129,8 @@ function HomeCourses(props) {
 
 const mapStateToProps = (state) => ({
   tags: select(state, 'tagsReducer', 'tags'),
-  quiz: select(state, 'quizReducer', 'quiz'),
-  point: select(state, 'pointReducer', 'point'),
+  quizList: select(state, 'quizReducer', 'quiz'),
+  server_point: select(state, 'pointReducer', 'server_point'),
   courses: select(state, 'coursesReducer', 'courses'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),
 });

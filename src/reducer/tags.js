@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import { apiCall } from '../utils/api';
 import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
-import { TAGS_API } from '../services/tagAPI';
+import { TAGS_API } from '../services/tagsAPI';
 
 import { insertSubmission } from '../reducer/submissions';
 
@@ -41,7 +41,7 @@ export const getTags = () => async (dispatch) => {
   if (!error && response.status === 200) {
     dispatch({
       type: GET_TAGS_SUCCESS,
-      payload: [response.data],
+      payload: response.data,
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
     });
   } else {

@@ -4,9 +4,13 @@ import { apiCall } from '../utils/api';
 import { PREFIX } from '../constant/enum';
 import { POINT_API } from '../services/pointAPI';
 
-const GET_POINT_LOADING = 'GET_POINT_LOADING';
-const GET_POINT_SUCCESS = 'GET_POINT_SUCCESS';
-const GET_POINT_FAILURE = 'GET_POINT_FAILURE';
+const GET_ALL_POINT_LOADING = 'GET_ALL_POINT_LOADING';
+const GET_ALL_POINT_SUCCESS = 'GET_ALL_POINT_SUCCESS';
+const GET_ALL_POINT_FAILURE = 'GET_ALL_POINT_FAILURE';
+
+const GET_USER_POINT_LOADING = 'GET_USER_POINT_LOADING';
+const GET_USER_POINT_SUCCESS = 'GET_USER_POINT_SUCCESS';
+const GET_USER_POINT_FAILURE = 'GET_USER_POINT_FAILURE';
 
 const INSERT_POINT_LOADING = 'INSERT_POINT_LOADING';
 const INSERT_POINT_SUCCESS = 'INSERT_POINT_SUCCESS';
@@ -16,43 +20,43 @@ const UPDATE_POINT_LOADING = 'UPDATE_POINT_LOADING';
 const UPDATE_POINT_SUCCESS = 'UPDATE_POINT_SUCCESS';
 const UPDATE_POINT_FAILURE = 'UPDATE_POINT_FAILURE';
 
-export const getAllPoint = () => async (dispatch) => {
-  const api = POINT_API.getAllPoint();
-  dispatch({
-    type: GET_POINT_LOADING,
-    meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
-  });
-  const { response, error } = await apiCall({ ...api });
-  if (!error && response.status === 200) {
-    dispatch({
-      type: GET_POINT_SUCCESS,
-      payload: response.data,
-      meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
-    });
-  } else {
-    dispatch({
-      type: GET_POINT_FAILURE,
-      meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
-    });
-  }
-};
+// export const getAllPoint = () => async (dispatch) => {
+//   const api = POINT_API.getAllPoint();
+//   dispatch({
+//     type: GET_ALL_POINT_LOADING,
+//     meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
+//   });
+//   const { response, error } = await apiCall({ ...api });
+//   if (!error && response.status === 200) {
+//     dispatch({
+//       type: GET_ALL_POINT_SUCCESS,
+//       payload: response.data,
+//       meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
+//     });
+//   } else {
+//     dispatch({
+//       type: GET_ALL_POINT_FAILURE,
+//       meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
+//     });
+//   }
+// };
 
-export const getPointByCourseId = (id) => async (dispatch) => {
-  const api = POINT_API.getPointByCourseId(id);
+export const getAllPointByCourseId = (id) => async (dispatch) => {
+  const api = POINT_API.getAllPointByCourseId(id);
   dispatch({
-    type: GET_POINT_LOADING,
+    type: GET_ALL_POINT_LOADING,
     meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_POINT_SUCCESS,
+      type: GET_ALL_POINT_SUCCESS,
       payload: response.data,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
-      type: GET_POINT_FAILURE,
+      type: GET_ALL_POINT_FAILURE,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
     });
   }
@@ -61,19 +65,19 @@ export const getPointByCourseId = (id) => async (dispatch) => {
 export const getPointByQuizId = (id) => async (dispatch) => {
   const api = POINT_API.getPointByQuizId(id);
   dispatch({
-    type: GET_POINT_LOADING,
+    type: GET_ALL_POINT_LOADING,
     meta: { prefix: [PREFIX.POINT, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api });
   if (!error && response.status === 200) {
     dispatch({
-      type: GET_POINT_SUCCESS,
+      type: GET_ALL_POINT_SUCCESS,
       payload: response.data,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_SUCCESS] },
     });
   } else {
     dispatch({
-      type: GET_POINT_FAILURE,
+      type: GET_ALL_POINT_FAILURE,
       meta: { prefix: [PREFIX.POINT, PREFIX.API_FAILURE] },
     });
   }
@@ -122,25 +126,34 @@ export const updatePoint = (id, payload) => async (dispatch) => {
 };
 
 const initialState = fromJS({
-  point: [],
+  user_point: [],
+  server_point: [],
   isFetching: false,
 });
 
 export default function pointReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_POINT_LOADING:
+    case GET_ALL_POINT_LOADING:
+    case GET_USER_POINT_LOADING:
       return state.merge({
         isFetching: true,
       });
 
-    case GET_POINT_FAILURE:
+    case GET_ALL_POINT_FAILURE:
+    case GET_USER_POINT_FAILURE:
       return state.merge({
         isFetching: false,
       });
 
-    case GET_POINT_SUCCESS:
+    case GET_ALL_POINT_SUCCESS:
       return state.merge({
-        point: [...action.payload],
+        server_point: [...action.payload],
+        isFetching: false,
+      });
+
+    case GET_USER_POINT_SUCCESS:
+      return state.merge({
+        user_point: [...action.payload],
         isFetching: false,
       });
 
