@@ -5,8 +5,6 @@ import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { SUBMISSIONS_API } from '../services/submissionsAPI';
 
-import { insertPoint, updatePoint } from './point';
-
 const GET_SUBMISSIONS_LOADING = 'GET_SUBMISSIONS_LOADING';
 const GET_SUBMISSIONS_SUCCESS = 'GET_SUBMISSIONS_SUCCESS';
 const GET_SUBMISSIONS_FAILURE = 'GET_SUBMISSIONS_FAILURE';
@@ -110,7 +108,6 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
     meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
   });
   const { response, error } = await apiCall({ ...api, payload });
-  console.log(response, error);
 
   if (!error && response.status === 200) {
     dispatch({
@@ -118,31 +115,6 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
-    // var point = 0;
-    // response.data.testCase.forEach((e) => point += (e.get === e.want) ? 1 : 0);
-    // point = parseFloat(((point / response.data.testCase.length) * 100).toFixed(0));
-
-    // if (pointData.id === undefined) {
-    //   dispatch(insertPoint({
-    //     userId: parseInt(sessionStorage.getItem("userId")),
-    //     quizId: pointData.quizId,
-    //     courseId: pointData.courseId,
-    //     point,
-    //   }));
-    // } else {
-    //   if (point > pointData.point) {
-    //     dispatch(updatePoint(
-    //       pointData.id,
-    //       {
-    //         userId: parseInt(sessionStorage.getItem("userId")),
-    //         quizId: pointData.quizId,
-    //         courseId: pointData.courseId,
-    //         point,
-    //       }
-    //     ));  
-    //   }
-    // }
-
     history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
   } else {
     dispatch({
@@ -154,6 +126,7 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
 
 const initialState = fromJS({
   submissions: [],
+  submissionsLength: 0,
   isFetching: false,
   isSolving: false,
 });

@@ -7,7 +7,7 @@ export const POINT_API = {
     headers: HEADERS.DEFAULT_HEADER,
   }),
   getPointByQuizId: (id) => ({
-    endPoint: `api/v1/point/?quizId=${id}`,
+    endPoint: `api/v1/quizzes/points/id/?id=${id}`,
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
@@ -18,6 +18,11 @@ export const POINT_API = {
   }),
   getAllPointByCourseId: (id) => ({
     endPoint: `api/v1/courses/points/all/?id=${id}`,
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
+  getPointByUserId: (id) => ({
+    endPoint: 'api/v1/quizzes/currentUser/points/all',
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),

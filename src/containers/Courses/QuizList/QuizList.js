@@ -17,7 +17,7 @@ import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { getCourseById } from '../../../reducer/courses';
-import { getAllPointByCourseId } from '../../../reducer/point';
+import { getPointByUserId } from '../../../reducer/point';
 import { getQuizByCourseId } from '../../../reducer/quiz';
 import { getTagsByCourseId } from '../../../reducer/tags';
 
@@ -31,23 +31,25 @@ function HomeCourses(props) {
   const {
     courseId,
     getCourseById,
+    getPointByUserId,
     getTagsByCourseId,
     getQuizByCourseId,
-    getAllPointByCourseId,
   } = props;
 
   const [deletedTag, setDeletedTag] = useState(null);
   const [updatedTag, setUpdatedTag] = useState(null);
   const [deletingQuiz, setDeletingQuiz] = useState(null);
 
+  const userId = parseInt(localStorage.getItem("userId"));
   const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
   useEffect(() => {
     getCourseById(courseId);
     getTagsByCourseId(courseId);
     getQuizByCourseId(courseId);
-    getAllPointByCourseId(courseId);
-  }, [courseId, getCourseById, getAllPointByCourseId, getQuizByCourseId, getTagsByCourseId]);
+    getPointByUserId(userId);
+    // getAllPointByCourseId(courseId);
+  }, [courseId, getCourseById, getQuizByCourseId, getTagsByCourseId, userId, getPointByUserId]);
 
   return (
     <>
@@ -120,7 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTagsByCourseId: (id) => dispatch(getTagsByCourseId(id)),
   getQuizByCourseId: (id) => dispatch(getQuizByCourseId(id)),
   getCourseById: (courseId) => dispatch(getCourseById(courseId)),
-  getAllPointByCourseId: (courseId) => dispatch(getAllPointByCourseId(courseId)),
+  getPointByUserId: () => dispatch(getPointByUserId()),
 });
 
 export default connect(
