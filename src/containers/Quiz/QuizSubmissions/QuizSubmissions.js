@@ -14,16 +14,18 @@ import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
+import { getQuizById } from '../../../reducer/quiz';
 import { getSubmissionsByQuizId } from '../../../reducer/submissions';
 
 function QuizSubmissions(props) {
-  const { getSubmissionsByQuizId } = props;
+  const { quizId, getQuizById, getSubmissionsByQuizId } = props;
 
-  const userId = parseInt(localStorage.getItem("userId"));
+    const userId = parseInt(localStorage.getItem("userId"));
 
   useEffect(() => {
-    getSubmissionsByQuizId(props.quizId);
-  }, [getSubmissionsByQuizId, props.quizId]);
+    getQuizById(quizId);
+    getSubmissionsByQuizId(quizId);
+  }, [getQuizById, getSubmissionsByQuizId, quizId]);
 
   return (
     <Card>
@@ -31,7 +33,7 @@ function QuizSubmissions(props) {
         title="Các lần bạn nộp"
         style={{ color: 'white', backgroundColor: '#39424E' }}
       />
-      <CardContent style={{ minHeight: 200, maxHeight: 200, overflow: 'auto' }}>
+      <CardContent style={{ minHeight: 150, maxHeight: 150, overflow: 'auto' }}>
         {props.submissions.filter((submission) => submission.userId === userId).map((submission, index) => {
           const point = submission?.point;
           // submission.testCase.map((e) => point += (e.get === e.want) ? 1 : 0);
@@ -44,7 +46,7 @@ function QuizSubmissions(props) {
               key={`submission${submission?.id}`}
               to={{
                 pathname: `${ROUTER.SUBMISSION}/${submission?.id}`,
-                state: { quizId: props.quizId, submissionId: submission?.id },
+                state: { quizId: quizId, submissionId: submission?.id },
               }}
               style={{ textDecoration: 'none' }}
             >
@@ -71,6 +73,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getQuizById: (id) => dispatch(getQuizById(id)),
   getSubmissionsByQuizId: (id) => dispatch(getSubmissionsByQuizId(id)),
 });
 
