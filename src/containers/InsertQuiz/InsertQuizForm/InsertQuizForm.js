@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Card,
-  CardContent,
   CardHeader,
+  CardContent,
   CardActions,
-  Button,
   Grid,
+  Button,
   TextareaAutosize,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -15,17 +15,17 @@ import toJs from '../../../hoc/ToJS';
 
 import { insertQuiz } from '../../../reducer/quiz';
 
-import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
 import './index.css';
+import InsertQuizPreviewModal from '../InsertQuizPreviewModal';
 
 function InsertQuizForm(props) {
   const history = useHistory();
-  const { content, setContent } = props;
   const { input, setInput } = props;
   const { output, setOutput } = props;
+  const { content, setContent } = props;
   const { sampleInput, setSampleInput } = props;
   const { sampleOutput, setSampleOutput } = props;
-  const { title, selectedCourseId, selectedTagId, testcase } = props;
+  const { title, selectedTagId, testcase } = props;
 
   var contentPart = '';
   content.split('\n').forEach((row) => {
@@ -79,10 +79,7 @@ function InsertQuizForm(props) {
   return (
     <>
       <Card>
-        <CardHeader
-          title="Thêm bài tập"
-          style={{ color: 'white', backgroundColor: '#39424E' }}
-        />
+        <CardHeader title="Thêm bài tập" style={{ color: 'white', backgroundColor: '#39424E' }}/>
         <CardContent>
           <strong>Yêu cầu:</strong>
           <TextareaAutosize className="text-area" rowsMin={3} onChange={(e) => setContent(e.target.value)} />
@@ -110,17 +107,12 @@ function InsertQuizForm(props) {
         </CardActions>
       </Card>
 
-      <InsertQuizPreviewModal
-        combine={combine}
-        isPreviewing={isPreviewing}
-        setPreviewing={setPreviewing}
-      />
+      <InsertQuizPreviewModal combine={combine} isPreviewing={isPreviewing} setPreviewing={setPreviewing} />
     </>
   );
 }
 
-const mapStateToProps = () => ({
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   insertQuiz: (history, payload) => dispatch(insertQuiz(history, payload)),

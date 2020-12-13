@@ -8,15 +8,15 @@ import InsertQuizTestCase from '../../containers/InsertQuiz/InsertQuizTestCase';
 function InsertQuiz(props) {
   const courseId = props.location?.state?.courseId;
 
-  const [content, setContent] = useState('');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
+  const [content, setContent] = useState('');
   const [sampleInput, setSampleInput] = useState('');
   const [sampleOutput, setSampleOutput] = useState('');
 
   const [title, setTitle] = useState("");
-  const [selectedCourseId, setSelectedCourseId] = useState(courseId ? courseId : "");
   const [selectedTagId, setSelectedTagId] = useState("");
+  const [selectedCourseId, setSelectedCourseId] = useState(courseId ? courseId : "");
 
   const [testcase, setTestcase] = useState([{}]);
 
@@ -24,13 +24,13 @@ function InsertQuiz(props) {
     <Grid container justify="center" spacing={3}>
       <Grid item lg={3} md={4} xs={12}>
         <InsertQuizSetting
-          courseId={courseId}
           title={title}
-          selectedCourseId={selectedCourseId}
+          courseId={courseId}
           selectedTagId={selectedTagId}
+          selectedCourseId={selectedCourseId}
           setTitle={setTitle}
-          setSelectedCourseId={setSelectedCourseId}
           setSelectedTagId={setSelectedTagId}
+          setSelectedCourseId={setSelectedCourseId}
         />
         <InsertQuizTestCase
           testcase={testcase}
@@ -39,20 +39,20 @@ function InsertQuiz(props) {
       </Grid>
       <Grid item lg={7} md={8} xs={12}>
         <InsertQuizForm
-          content={content}
+          title={title}
           input={input}
           output={output}
+          content={content}
+          testcase={testcase}
           sampleInput={sampleInput}
           sampleOutput={sampleOutput}
-          setContent={setContent}
+          selectedTagId={selectedTagId}
+          selectedCourseId={selectedCourseId}
           setInput={setInput}
           setOutput={setOutput}
+          setContent={setContent}
           setSampleInput={setSampleInput}
           setSampleOutput={setSampleOutput}
-          title={title}
-          selectedCourseId={selectedCourseId}
-          selectedTagId={selectedTagId}
-          testcase={testcase}
         />
       </Grid>
     </Grid>
