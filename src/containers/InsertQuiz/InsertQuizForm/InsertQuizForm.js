@@ -29,36 +29,36 @@ function InsertQuizForm(props) {
 
   var contentPart = '';
   content.split('\n').forEach((row) => {
-    contentPart += `<p style="textAlign:justify">${row}</p>`; 
+    contentPart += `<p style='textAlign:justify'>${row}</p>`; 
   });
 
-  var inputPart = '<p style="textAlign:justify"><strong>Input:</strong></p>';
+  var inputPart = "<p style='textAlign:justify'><strong>Input:</strong></p>";
   input.split('\n').forEach((row) => {
-    inputPart += `<p style="textAlign:justify">${row}</p>`; 
+    inputPart += `<p style='textAlign:justify'>${row}</p>`; 
   });
 
-  var outputPart = '<p style="textAlign:justify"><strong>Output:</strong></p>';
+  var outputPart = "<p style='textAlign:justify'><strong>Output:</strong></p>";
   output.split('\n').forEach((row) => {
-    outputPart += `<p style="textAlign:justify">${row}</p>`; 
+    outputPart += `<p style='textAlign:justify'>${row}</p>`; 
   });
 
   const combine =
-  `<div class='problem-content'>
-    ${contentPart}
-    ${inputPart}
-    ${outputPart}
-  </div>
-  <div class='problem-sample'>
-    <strong>Ví dụ:</strong>
-    <ul style="margin: 0">
-      <li>
-        <div class='sample-type'>input</div>
-        <div class='sample-value'>${sampleInput}</div>    
-        <div class='sample-type'>output</div>
-        <div class='sample-value'>${sampleOutput}</div>
-      </li>
-    </ul>
-  </div>`;
+`<div class='problem-content'>
+  ${contentPart}
+  ${inputPart}
+  ${outputPart}
+</div>
+<div class='problem-sample'>
+  <strong>Ví dụ:</strong>
+  <ul style="margin: 0">
+    <li>
+      <div class='sample-type'>input</div>
+      <div class='sample-value'>${sampleInput}</div>
+      <div class='sample-type'>output</div>
+      <div class='sample-value'>${sampleOutput}</div>
+    </li>
+  </ul>
+</div>`;
 
   const [isPreviewing, setPreviewing] = useState(false);
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
 
 import UpdateQuizForm from '../../containers/UpdateQuiz/UpdateQuizForm';
-// import UpdateQuizSetting from '../../containers/UpdateQuiz/UpdateQuizSetting';
+import UpdateQuizSetting from '../../containers/UpdateQuiz/UpdateQuizSetting';
 // import UpdateQuizTestCase from '../../containers/UpdateQuiz/UpdateQuizTestCase';
 
 function UpdateQuiz(props) {
@@ -26,8 +26,8 @@ function UpdateQuiz(props) {
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item lg={3} md={4} xs={12}>
-        okcc
-        {/* <UpdateQuizSetting
+        <UpdateQuizSetting
+          quizId={quizId}
           courseId={courseId}
           title={title}
           selectedCourseId={selectedCourseId}
@@ -36,10 +36,10 @@ function UpdateQuiz(props) {
           setSelectedCourseId={setSelectedCourseId}
           setSelectedTagId={setSelectedTagId}
         />
-        <UpdateQuizTestCase
+        {/* <UpdateQuizTestCase
           testcase={testcase}
           setTestcase={setTestcase} 
-        />*/}
+        /> */}
       </Grid>
       <Grid item lg={7} md={8} xs={12}>
         <UpdateQuizForm

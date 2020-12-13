@@ -32,12 +32,39 @@ function UpdateQuizForm(props) {
   }, [getQuizById, quizId]);
 
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
-
+  var combine = quiz?.content;
+  combine = combine?.replaceAll("<div class='problem-content'>\n", "");
+  combine = combine?.replaceAll("<div class='problem-sample'>\n", "");
+  combine = combine?.replaceAll("</div>\n", "");
+  
   useEffect(() => {
-    // getQuizById(quizId);
-    contentPart = quiz?.content?.split('<strong>Input:</strong>')[0];
-    console.log(quiz?.content);
-  }, [quiz]);
+    var tempContent = "";
+    const contentPart = combine?.split('\n')[0].substring(2).replaceAll("<p style='textAlign:justify'>", "")?.split('</p>') || [];
+    contentPart.splice(contentPart.length - 1, 1);
+    contentPart.forEach((e, index) => tempContent += (e === "") ? '\n' : `${e}${index === contentPart.length - 1 ? '' :'\n'}`);
+    setContent(tempContent);
+
+    var tempInput = "";
+    var inputPart = combine?.split('\n')[1].substring(2).replaceAll("<p style='textAlign:justify'><strong>Input:</strong></p>", "");
+    inputPart = inputPart?.replaceAll("<p style='textAlign:justify'>", "")?.split('</p>') || [];
+    inputPart.splice(inputPart.length - 1, 1);
+    inputPart.forEach((e, index) => tempInput += (e === "") ? '\n' : `${e}${index === inputPart.length - 1 ? '' :'\n'}`);
+    setInput(tempInput);
+
+    var tempOutput = "";
+    var outputPart = combine?.split('\n')[2].substring(2).replaceAll("<p style='textAlign:justify'><strong>Output:</strong></p>", "");
+    outputPart = outputPart?.replaceAll("<p style='textAlign:justify'>", "")?.split('</p>') || [];
+    outputPart.splice(outputPart.length - 1, 1);
+    outputPart.forEach((e, index) => tempOutput += (e === "") ? '\n' : `${e}${index === outputPart.length - 1 ? '' :'\n'}`);
+    setOutput(tempOutput);
+
+    var tempSampleIput = "";
+    var samplePart = combine?.split('\n')[6].substring(2).replaceAll("    <div class='sample-type'>input      <div class='sample-value'>", "");
+    samplePart = samplePart?.replaceAll("      <div class='sample-type'>output      <div class='sample-value'>", ",");
+    samplePart = samplePart?.replaceAll("    </li>", "");
+    setSampleInput(samplePart?.split(',')[0]);
+    setSampleOutput(samplePart?.split(',')[1]);
+  }, [combine, setContent, setInput, setOutput, setSampleInput, setSampleOutput]);
 
   var contentPart = '';
   content.split('\n').forEach((row) => {
@@ -54,7 +81,7 @@ function UpdateQuizForm(props) {
     outputPart += `<p style="textAlign:justify">${row}</p>`; 
   });
 
-  const combine = `
+  const previewCombine = `
     <div class='problem-content'>
       ${contentPart}
       <p style="textAlign:justify">
@@ -97,19 +124,19 @@ function UpdateQuizForm(props) {
         />
         <CardContent>
           <strong>Yêu cầu:</strong>
-          <TextareaAutosize className="text-area" rowsMin={3} onChange={(e) => setContent(e.target.value)} />
+          <TextareaAutosize className="text-area" value={content} rowsMin={3} onChange={(e) => setContent(e.target.value)} />
           <strong>Input:</strong>
-          <TextareaAutosize className="text-area" rowsMin={1} onChange={(e) => setInput(e.target.value)} />
+          <TextareaAutosize className="text-area" value={input} rowsMin={1} onChange={(e) => setInput(e.target.value)} />
           <strong>Output:</strong>
-          <TextareaAutosize className="text-area" rowsMin={1} onChange={(e) => setOutput(e.target.value)} />
+          <TextareaAutosize className="text-area" value={output} rowsMin={1} onChange={(e) => setOutput(e.target.value)} />
           <div className='problem-sample'>
             <strong>Ví dụ:</strong>
             <ul style={{ margin: 0, borderBottom: '1px solid #bbb' }}>
               <li style={{ margin: 0 }}>
                 <div className='sample-type'>input</div>
-                <TextareaAutosize className="text-area table-text-area" rowsMin={1} onChange={(e) => setSampleInput(e.target.value)} />
+                <TextareaAutosize className="text-area table-text-area" value={sampleInput} rowsMin={1} onChange={(e) => setSampleInput(e.target.value)} />
                 <div className='sample-type' style={{ borderTop: '1px solid #bbb' }}>output</div>
-                <TextareaAutosize className="text-area table-text-area" rowsMin={1} onChange={(e) => setSampleOutput(e.target.value)} />
+                <TextareaAutosize className="text-area table-text-area" value={sampleOutput} rowsMin={1} onChange={(e) => setSampleOutput(e.target.value)} />
               </li>
             </ul>
           </div>
@@ -123,7 +150,7 @@ function UpdateQuizForm(props) {
       </Card>
 
       <InsertQuizPreviewModal
-        combine={combine}
+        combine={previewCombine}
         isPreviewing={isPreviewing}
         setPreviewing={setPreviewing}
       />

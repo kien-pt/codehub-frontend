@@ -11,6 +11,10 @@ const GET_TAGS_LOADING = 'GET_TAGS_LOADING';
 const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
 const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
 
+const GET_TAG_BY_ID_LOADING = 'GET_TAG_BY_ID_LOADING';
+const GET_TAG_BY_ID_SUCCESS = 'GET_TAG_BY_ID_SUCCESS';
+const GET_TAG_BY_ID_FAILURE = 'GET_TAG_BY_ID_FAILURE';
+
 const INSERT_TAG_LOADING = 'INSERT_TAG_LOADING';
 const INSERT_TAG_SUCCESS = 'INSERT_TAG_SUCCESS';
 const INSERT_TAG_FAILURE = 'INSERT_TAG_FAILURE';
@@ -23,10 +27,8 @@ const DELETE_TAG_LOADING = 'DELETE_TAG_LOADING';
 const DELETE_TAG_SUCCESS = 'DELETE_TAG_SUCCESS';
 const DELETE_TAG_FAILURE = 'DELETE_TAG_FAILURE';
 
-var testCaseCount = 0;
-var testCase = [];
-
 const initialState = fromJS({
+  tag: null,
   tags: [],
   isFetching: false,
 });
@@ -47,6 +49,27 @@ export const getTags = () => async (dispatch) => {
   } else {
     dispatch({
       type: GET_TAGS_FAILURE,
+      meta: { prefix: [PREFIX.TAGS, PREFIX.API_FAILURE] },
+    });
+  }
+};
+
+export const getTagById = (id) => async (dispatch) => {
+  const api = TAGS_API.getTagById(id);
+  dispatch({
+    type: GET_TAG_BY_ID_LOADING,
+    meta: { prefix: [PREFIX.TAGS, PREFIX.API_CALLING] },
+  });
+  const { response, error } = await apiCall({ ...api });
+  if (!error && response.status === 200) {
+    dispatch({
+      type: GET_TAG_BY_ID_SUCCESS,
+      payload: response.data,
+      meta: { prefix: [PREFIX.TAGS, PREFIX.API_SUCCESS] },
+    });
+  } else {
+    dispatch({
+      type: GET_TAG_BY_ID_FAILURE,
       meta: { prefix: [PREFIX.TAGS, PREFIX.API_FAILURE] },
     });
   }
@@ -163,6 +186,7 @@ export const getTagsByCourseId = (id) => async (dispatch) => {
 export default function tagsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_TAGS_LOADING:
+    case GET_TAG_BY_ID_LOADING:
     case INSERT_TAG_LOADING:
     case UPDATE_TAG_LOADING:
     case DELETE_TAG_LOADING:
@@ -171,6 +195,7 @@ export default function tagsReducer(state = initialState, action) {
       });
 
     case GET_TAGS_FAILURE:
+    case GET_TAG_BY_ID_FAILURE:
     case INSERT_TAG_FAILURE:
     case UPDATE_TAG_FAILURE:
     case DELETE_TAG_FAILURE:
@@ -178,37 +203,43 @@ export default function tagsReducer(state = initialState, action) {
         isFetching: false,
       });
 
-      case GET_TAGS_SUCCESS:
-        return state.merge({
-          tags: [...action.payload],
-          isFetching: false,
-        });
-      
-      case INSERT_TAG_SUCCESS:
-        return state.merge({
-          tags: [...state.get('tags'), ...action.payload],
-          isFetching: false,
-        });
+    case GET_TAGS_SUCCESS:
+      return state.merge({
+        tags: [...action.payload],
+        isFetching: false,
+      });
 
-      case UPDATE_TAG_SUCCESS: {
-        const newList = state.get('tags');
-        const id = newList.findIndex((e) => e.id === action.payload.id);
-        newList.splice(id, 1, action.payload);
-        return state.merge({
-          tags: [...newList],
-          isFetching: false,
-        });
-      }
+    case GET_TAG_BY_ID_SUCCESS:
+      return state.merge({
+        tag: action.payload,
+        isFetching: false,
+      });
+    
+    case INSERT_TAG_SUCCESS:
+      return state.merge({
+        tags: [...state.get('tags'), ...action.payload],
+        isFetching: false,
+      });
 
-      case DELETE_TAG_SUCCESS: {
-        const newList = state.get('tags');
-        const id = newList.findIndex((e) => e.id === action.id);
-        newList.splice(id, 1);
-        return state.merge({
-          tags: [...newList],
-          isFetching: false,
-        });
-      }
+    case UPDATE_TAG_SUCCESS: {
+      const newList = state.get('tags');
+      const id = newList.findIndex((e) => e.id === action.payload.id);
+      newList.splice(id, 1, action.payload);
+      return state.merge({
+        tags: [...newList],
+        isFetching: false,
+      });
+    }
+
+    case DELETE_TAG_SUCCESS: {
+      const newList = state.get('tags');
+      const id = newList.findIndex((e) => e.id === action.id);
+      newList.splice(id, 1);
+      return state.merge({
+        tags: [...newList],
+        isFetching: false,
+      });
+    }
 
     default: return state;
   }

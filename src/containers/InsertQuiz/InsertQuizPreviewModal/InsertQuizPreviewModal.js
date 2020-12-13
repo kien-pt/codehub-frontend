@@ -16,7 +16,6 @@ import select from '../../../utils/select';
 
 function InsertQuizPreviewModal(props) {
   const { combine, isPreviewing, setPreviewing } = props;
-  console.log(combine);
 
   return (
     <Dialog open={isPreviewing} onClose={() => setPreviewing(false)}>

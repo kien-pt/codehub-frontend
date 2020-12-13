@@ -6,6 +6,11 @@ export const TAGS_API = {
     method: 'GET',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  getTagById: (id) => ({
+    endPoint: `api/v1/tags/id/?id=${id}`,
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
   getTagsByCourseId: (id) => ({
     endPoint: `api/v1/tags/courses/id/?id=${id}`,
     method: 'GET',
