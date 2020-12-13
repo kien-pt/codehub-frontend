@@ -25,6 +25,7 @@ import logo from '../../../assets/logo.png';
 import avatar from '../../../assets/avatar.jpg';
 
 import LogoutModal from '../LogoutModal';
+import PasswordModal from '../PasswordModal';
 
 function AppHeader(props) {
   const history = useHistory();
@@ -43,6 +44,7 @@ function AppHeader(props) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setLogout] = useState(false);
+  const [isPasswordModal, setPasswordModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
 
   const menuList = [
@@ -75,6 +77,12 @@ function AppHeader(props) {
   // Handle select logout button
   const handleLogout = () => {
     setLogout(true);
+    handleClose();
+  };
+
+  // Handle select change password button
+  const handlePassword = () => {
+    setPasswordModal(true);
     handleClose();
   };
 
@@ -143,7 +151,6 @@ function AppHeader(props) {
           <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div id="user-button" onClick={handleClick}>
               <Avatar style={{ width: 30, height: 30, fontSize: 15, margin: 'auto 4px' }}>{username ? username[0].toUpperCase() : ''}</Avatar>
-              {/* <img src={avatar} alt="avatar" height="30px" style={{ padding: '15px 6px', borderRadius: '50%' }} /> */}
               <div style={{ lineHeight: '60px' }}>{fullname}</div>
               <ExpandMore style={{ padding: '18px 0' }} />
             </div> 
@@ -161,7 +168,7 @@ function AppHeader(props) {
           <Person fontSize="small" style={{ paddingRight: 16 }} />
           <Typography variant="inherit" noWrap>{username}</Typography>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handlePassword}>
           <Build fontSize="small" style={{ paddingRight: 16 }} />
           <Typography variant="inherit" noWrap>Đổi mật khẩu</Typography>
         </MenuItem>
@@ -172,6 +179,7 @@ function AppHeader(props) {
       </StyledMenu>
 
       <LogoutModal isLogout={isLogout} setLogout={setLogout} />
+      <PasswordModal isPasswordModal={isPasswordModal} setPasswordModal={setPasswordModal} />
     </>
   );
 }

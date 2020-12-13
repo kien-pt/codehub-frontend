@@ -47,7 +47,7 @@ function Profile(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.updateUser({
-      id: parseInt(sessionStorage.getItem("userId")),
+      id: parseInt(localStorage.getItem("userId")),
       username,
       fullname,
     })

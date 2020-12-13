@@ -329,6 +329,7 @@ export default function usersReducer(state = initialState, action) {
       }
       return state.merge({
         user: {...newUser},
+        profile: action.payload,
         usersList: [...newList],
         isFetching: false,
       });
