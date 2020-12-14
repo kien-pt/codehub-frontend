@@ -7,11 +7,14 @@ import {
   CardActions,
   Grid,
   Button,
+  Backdrop,
   TextareaAutosize,
+  CircularProgress,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
 
 import { insertQuiz } from '../../../reducer/quiz';
 
@@ -26,6 +29,8 @@ function InsertQuizForm(props) {
   const { sampleInput, setSampleInput } = props;
   const { sampleOutput, setSampleOutput } = props;
   const { title, selectedTagId, testcase } = props;
+
+  const {isFetchingTags, isFetchingQuiz, isFetchingCourses} = props;
 
   var contentPart = '';
   content.split('\n').forEach((row) => {
@@ -108,11 +113,17 @@ function InsertQuizForm(props) {
       </Card>
 
       <InsertQuizPreviewModal combine={combine} isPreviewing={isPreviewing} setPreviewing={setPreviewing} />
+
+      <Backdrop open={isFetchingTags || isFetchingQuiz || isFetchingCourses} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isFetchingTags: select(state, 'tagsReducer', 'isFetching'),
+  isFetchingQuiz: select(state, 'quizReducer', 'isFetching'),
+  isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   insertQuiz: (history, payload) => dispatch(insertQuiz(history, payload)),

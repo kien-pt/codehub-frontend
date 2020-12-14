@@ -213,6 +213,8 @@ export const submitCode = (history, payload) => async (dispatch) => {
   if (!error && response.status === 200) {
     var got = String(response.data);
     while (got.slice(-1) === '\n') got = got.slice(0, -1);
+    while (got.slice(-1) === ' ') got = got.slice(0, -1);
+    while (got.slice(0) === ' ') got = got.slice(0, 1);
     dispatch({
       type: SUBMIT_CODE_SUCCESS,
       payload: {

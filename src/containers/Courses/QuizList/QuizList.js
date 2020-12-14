@@ -58,7 +58,7 @@ function HomeCourses(props) {
     <>
       {props.tags?.map((tag) => {
         return (
-          <Card key={`tag-${tag?.id}`} style={{ padding: 0, marginBottom: 32 }}>
+          <Card key={`tag-${tag?.id}`} style={{ padding: 0, marginBottom: 32, minHeight: 202 }}>
             <CardHeader
               title={
                 <Grid container>
