@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom';
 import {
   Fab,
   Grid,
+  Backdrop,
   IconButton,
   LinearProgress,
+  CircularProgress,
   Card,
   CardHeader,
   CardContent,
@@ -38,6 +40,8 @@ function HomeCourses(props) {
     getUserPointByCourseId,
   } = props;
 
+  const {isFetchingUsers, isFetchingPoints, isFetchingCourses} = props;
+
   const [isInserting, setInserting] = useState(false);
   const [deletingCourse, setDeletingCourse] = useState(null);
   const [updatingCourse, setUpdatingCourse] = useState(null);
@@ -54,14 +58,15 @@ function HomeCourses(props) {
     getTags();
   }, [getAllQuiz, getCourses, getTags]);
 
+
   useEffect(() => {
-    resetUserPoint();
+    if (courses.length > 0) resetUserPoint();
     courses.forEach((course) => getUserPointByCourseId(course.id));
   }, [courses, getUserPointByCourseId, resetUserPoint]);
 
   return (
     <>
-      <Card style={{ color: 'white', padding: 0 }}>
+      <Card style={{ color: 'white', padding: 0, minHeight: 213 }}>
         <CardHeader
           title={
             <Grid container>
@@ -94,7 +99,7 @@ function HomeCourses(props) {
                   });
                 }}>
                   <CardContent>
-                    <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{course.name}</div>
+                    <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{`${course.code} - ${course.name}`}</div>
                     <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
                     <div style={{ padding: '12px 0' }}>
                       <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
@@ -129,6 +134,8 @@ function HomeCourses(props) {
       <InsertCourseModal isInserting={isInserting} handleClick={handleClick} />
       <UpdateCourseModal updatingCourse={updatingCourse} setUpdatingCourse={setUpdatingCourse} />
       <DeleteCourseModal deletingCourse={deletingCourse} setDeletingCourse={setDeletingCourse} />
+
+      <Backdrop open={isFetchingUsers || isFetchingCourses || isFetchingPoints} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
@@ -139,7 +146,9 @@ const mapStateToProps = (state) => ({
   user_point: select(state, 'pointReducer', 'user_point'),
   server_point: select(state, 'pointReducer', 'server_point'),
   courses: select(state, 'coursesReducer', 'courses'),
-  isFetching: select(state, 'coursesReducer', 'isFetching'),
+  isFetchingUsers: select(state, 'usersReducer', 'isFetching'),
+  isFetchingPoints: select(state, 'pointReducer', 'isFetching'),
+  isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

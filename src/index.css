@@ -47,6 +47,7 @@ button.MuiButton-root {
 
 button.MuiButton-containedPrimary, a.MuiButton-containedPrimary {
   background-color: #1BA94C;
+  min-height: 36px;
 }
 
 button.MuiButton-containedPrimary:hover, a.MuiButton-containedPrimary:hover {
