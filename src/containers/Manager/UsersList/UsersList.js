@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import {
   Paper,
   Button,
+  Backdrop,
   IconButton,
+  CircularProgress,
   Card,
   CardHeader,
   CardContent,
@@ -97,12 +99,15 @@ function UsersList(props) {
 
       <InsertUserModal isInserting={isInserting} setInserting={setInserting} />
       <DeleteUserModal deletedUser={deletedUser} setDeletedUser={setDeletedUser} />
+
+      <Backdrop open={props.isFetching} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
   usersList: select(state, 'usersReducer', 'usersList'),
+  isFetching: select(state, 'usersReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

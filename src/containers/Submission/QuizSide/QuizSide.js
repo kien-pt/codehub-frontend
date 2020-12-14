@@ -24,7 +24,6 @@ function QuizSide(props) {
 const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
   submission: select(state, 'submissionsReducer', 'submission'),
-  isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = () => ({});
