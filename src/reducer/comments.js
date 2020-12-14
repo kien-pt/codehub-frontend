@@ -37,7 +37,7 @@ const initialState = fromJS({
   isFetching: false,
 });
 
-export default function COMMENTSReducer(state = initialState, action) {
+export default function commentsReducer(state = initialState, action) {
   switch (action.type) {
     case INSERT_COMMENTS_LOADING:
       return state.merge({

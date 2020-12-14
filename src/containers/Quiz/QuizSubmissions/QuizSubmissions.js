@@ -69,7 +69,6 @@ function QuizSubmissions(props) {
 
 const mapStateToProps = (state) => ({
   submissions: select(state, 'submissionsReducer', 'submissions'),
-  isFetching: select(state, 'submissionsReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

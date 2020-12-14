@@ -71,7 +71,6 @@ function QuizDiscuss(props) {
 const mapStateToProps = (state) => ({
   comments: select(state, 'quizReducer', 'comments'),
   usersList: select(state, 'usersReducer', 'usersList'),
-  isFetching: select(state, 'quizReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
