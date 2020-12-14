@@ -112,8 +112,8 @@ function HomeCourses(props) {
 const mapStateToProps = (state) => ({
   quiz: select(state, 'quizReducer', 'quiz'),
   tags: select(state, 'tagsReducer', 'tags'),
-  user_point: select(state, 'pointReducer', 'user_point'),
   courses: select(state, 'coursesReducer', 'courses'),
+  user_point: select(state, 'pointReducer', 'user_point'),
   isFetching: select(state, 'coursesReducer', 'isFetching'),
 });
 

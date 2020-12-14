@@ -42,6 +42,7 @@ const initialState = fromJS({
   profile: null,
   usersList: [],
   notification: null,
+  isLogin: false,
   isFetching: false,
 });
 
@@ -244,8 +245,6 @@ export const deleteUser = (id) => async (dispatch) => {
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_LOADING:
-    case LOGOUT_LOADING:
     case GET_ALL_USERS_LOADING:
     case GET_USER_BY_ID_LOADING:
     case GET_PROFILE_LOADING:
@@ -256,8 +255,12 @@ export default function usersReducer(state = initialState, action) {
         isFetching: true,
       });
 
-    case LOGIN_FAILURE:
-    case LOGOUT_FAILURE:
+    case LOGIN_LOADING:
+    case LOGOUT_LOADING:
+      return state.merge({
+        isLogin: true,
+      });
+
     case GET_ALL_USERS_FAILURE:
     case GET_USER_BY_ID_FAILURE:
     case GET_PROFILE_FAILURE:
@@ -268,6 +271,12 @@ export default function usersReducer(state = initialState, action) {
         isFetching: false,
       });
 
+    case LOGIN_FAILURE:
+    case LOGOUT_FAILURE:
+      return state.merge({
+        isLogin: false,
+      });
+
     case LOGIN_SUCCESS: {
       const expiredTime = new Date();
       expiredTime.setHours(expiredTime.getHours() + 1);
@@ -275,7 +284,7 @@ export default function usersReducer(state = initialState, action) {
       localStorage.setItem("userId", action.payload.id);
       localStorage.setItem("isAdmin", action.payload.admin);
       return state.merge({
-        isFetching: false,
+        isLogin: false,
       });
     }
 
@@ -284,7 +293,7 @@ export default function usersReducer(state = initialState, action) {
       localStorage.removeItem("expiredTime");
       localStorage.removeItem("isAdmin");
       return state.merge({
-        isFetching: false,
+        isLogin: false,
       });
     }
 

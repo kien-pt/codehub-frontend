@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
+  Card,
   CardHeader,
   CardContent,
   Grid,
-  Card,
   Button,
+  Snackbar,
+  Backdrop,
   FormControl,
   OutlinedInput,
-  Snackbar,
+  CircularProgress, 
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Person, Lock } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { login } from '../../../reducer/users';
@@ -49,10 +52,7 @@ function Login(props) {
     <Grid container style={{ display: 'flex', height: window.innerHeight }}>
       <Grid item lg={4} md={6} sm={8} xs={10} style={{ margin: 'auto' }}>
         <Card style={{ width: '100%' }}>
-          <CardHeader
-            title="Đăng nhập"
-            style={{ color: 'white', backgroundColor: '#39424E' }}
-          />
+          <CardHeader title="Đăng nhập" style={{ color: 'white', backgroundColor: '#39424E' }} />
           <CardContent>
             <form onSubmit={handleSubmit}>
               <FormControl style={{ width: '100%' }}>
@@ -75,21 +75,8 @@ function Login(props) {
                 />
               </FormControl>
               <FormControl style={{ display: 'inline', width: '100%' }}>
-                <Button
-                  variant="outlined"
-                  href={ROUTER.REGISTER}
-                  style={{ width: '48%' }}
-                >
-                  Đăng ký
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  style={{ width: '48%', float: 'right' }}
-                >
-                  Đăng nhập
-                </Button>
+                <Button variant="outlined" href={ROUTER.REGISTER} style={{ width: '48%' }}>Đăng ký</Button>
+                <Button variant="contained" color="primary" type="submit" style={{ width: '48%', float: 'right' }}> Đăng nhập</Button>
               </FormControl>
             </form>
           </CardContent>
@@ -98,12 +85,15 @@ function Login(props) {
         <Snackbar open={noti} autoHideDuration={6000} onClose={() => setNoti(false)}>
           <Alert variant="filled" severity="error" onClose={() => setNoti(false)}>Sai tên đăng nhập hoặc mật khẩu!</Alert>
         </Snackbar>
+
+        <Backdrop open={props.isLogin} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
       </Grid>
     </Grid>
   );
 }
 
 const mapStateToProps = (state) => ({
+  isLogin: select(state, 'usersReducer', 'isLogin'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
