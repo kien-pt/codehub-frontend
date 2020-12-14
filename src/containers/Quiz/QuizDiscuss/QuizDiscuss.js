@@ -61,7 +61,7 @@ function QuizDiscuss(props) {
       <CardActions style={{ paddingLeft: 16, paddingRight: 16 }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
           <TextareaAutosize className="text-area" value={comment} rowsMin={1} onChange={(e) => setComment(e.target.value)} style={{ width: 'calc(100% - 32px)' }} />
-          <Button variant="contained" type="submit" color="primary" style={{ marginLeft: 4, height: 32, minWidth: 50 }}>Gửi</Button>
+          <Button variant="contained" type="submit" color="primary" style={{ marginLeft: 4, height: 32, minHeight: 32, minWidth: 50 }}>Gửi</Button>
         </form>
       </CardActions>
     </Card>
