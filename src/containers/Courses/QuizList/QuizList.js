@@ -44,12 +44,11 @@ function HomeCourses(props) {
   const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
   useEffect(() => {
-    getCourseById(courseId);
+    getCourseById(courseId).then((res) => {if (!res) history.push(ROUTER.ERROR)}).catch();
     getTagsByCourseId(courseId);
     getQuizByCourseId(courseId);
     getPointByUserId(userId);
-    // getAllPointByCourseId(courseId);
-  }, [courseId, getCourseById, getQuizByCourseId, getTagsByCourseId, userId, getPointByUserId]);
+  }, [courseId, getCourseById, getQuizByCourseId, getTagsByCourseId, userId, getPointByUserId, history]);
 
   return (
     <>

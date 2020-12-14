@@ -37,11 +37,13 @@ export const getCourseById = (id) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.COURSES, PREFIX.API_SUCCESS] },
     });
+    return true;
   } else {
     dispatch({
       type: GET_COURSE_BY_ID_FAILURE,
       meta: { prefix: [PREFIX.COURSES, PREFIX.API_FAILURE] },
     });
+    return false;
   }
 };
 
