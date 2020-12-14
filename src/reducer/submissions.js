@@ -30,11 +30,13 @@ export const getSubmissionsById = (id) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
+    return true;
   } else {
     dispatch({
       type: GET_SUBMISSION_BY_ID_FAILURE,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_FAILURE] },
     });
+    return false;
   }
 };
 

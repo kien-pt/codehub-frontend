@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Divider,
   Card,
@@ -10,16 +11,19 @@ import Interweave from 'interweave';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 import { getQuizById } from '../../../reducer/quiz';
 import { getSubmissionsById } from '../../../reducer/submissions';
 
 function QuizContent(props) {
+  const history = useHistory();
   const { getSubmissionsById, submissionId } = props;
 
   useEffect(() => {
     getSubmissionsById(submissionId);
-  }, [getSubmissionsById, submissionId]);
+    getSubmissionsById(submissionId).then((res) => {if (!res) history.push(ROUTER.ERROR)}).catch();
+  }, [getSubmissionsById, history, submissionId]);
 
   const submission = props.submission.find((e) => e.id === submissionId);
 

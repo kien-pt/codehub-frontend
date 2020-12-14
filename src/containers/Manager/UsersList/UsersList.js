@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Paper,
   Button,
@@ -21,6 +22,7 @@ import { Delete, Add } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 import { getAllUsers } from '../../../reducer/users';
 
@@ -28,12 +30,16 @@ import InsertUserModal from '../InsertUserModal';
 import DeleteUserModal from '../DeleteUserModal';
 
 function UsersList(props) {
+  const history = useHistory();
   const { getAllUsers } = props;
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isInserting, setInserting] = useState(false);
   const [deletedUser, setDeletedUser] = useState(null);
+
+  const isAdmin = localStorage.getItem("isAdmin") === 'true';
+  if (!isAdmin) history.push(ROUTER.ERROR);
 
   useEffect(() => {
     getAllUsers();

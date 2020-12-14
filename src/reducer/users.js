@@ -148,11 +148,13 @@ export const getProfile = (id) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.USERS, PREFIX.API_SUCCESS] },
     });
+    return true;
   } else {
     dispatch({
       type: GET_PROFILE_FAILURE,
       meta: { prefix: [PREFIX.USERS, PREFIX.API_FAILURE] },
     });
+    return false;
   }
 };
 

@@ -86,11 +86,13 @@ export const getQuizById = (id) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_SUCCESS] },
     });
+    return true;
   } else {
     dispatch({
       type: GET_QUIZ_BY_ID_FAILURE,
       meta: { prefix: [PREFIX.QUIZ, PREFIX.API_FAILURE] },
     });
+    return false;
   }
 };
 

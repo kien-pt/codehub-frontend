@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Card,
   Avatar,
@@ -17,12 +18,15 @@ import { AssignmentInd, Person } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 import { getProfile, updateUser } from '../../../reducer/users';
 
 import './Profile.css';
 
 function Profile(props) {
+  const history = useHistory();
+
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
   const [isEditting, setEditting] = useState(false);
@@ -32,8 +36,8 @@ function Profile(props) {
   const userId = parseInt(localStorage.getItem("userId"));
 
   useEffect(() => {
-    getProfile(profileId);
-  }, [getProfile, profileId]);
+    getProfile(profileId).then((res) => {if (!res) history.push(ROUTER.ERROR)}).catch();
+  }, [getProfile, history, profileId]);
 
   useEffect(() => {
     setUsername(props.user?.username || '');

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -13,17 +14,19 @@ import './index.css';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
+import ROUTER from '../../../constant/router';
 
 import { getQuizById } from '../../../reducer/quiz';
 
 function QuizContent(props) {
+  const history = useHistory();
   const { getQuizById, quizId } = props;
 
   const {isFetchingQuiz, isFetchingPoints, isFetchingComments, isFetchingSubmissions} = props;
 
   useEffect(() => {
-    getQuizById(quizId);
-  }, [getQuizById, quizId]);
+    getQuizById(quizId).then((res) => {if (!res) history.push(ROUTER.ERROR)}).catch();
+  }, [getQuizById, history, quizId]);
 
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
 
