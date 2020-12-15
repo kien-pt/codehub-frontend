@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import {
   Grid,
   Button,
+  Backdrop,
   FormControl,
   OutlinedInput,
+  CircularProgress,
   Card,
   CardHeader,
   CardContent,
@@ -23,6 +25,7 @@ import {
 import { useHistory } from 'react-router-dom';
 
 import toJs from '../../../hoc/ToJS';
+import select from '../../../utils/select';
 import ROUTER from '../../../constant/router';
 
 import { insertUser } from '../../../reducer/users';
@@ -131,15 +134,17 @@ function Register(props) {
             }
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">Tiếp tục</Button>
-        </DialogActions>
+        <DialogActions><Button onClick={handleClose} color="primary">Tiếp tục</Button> </DialogActions>
       </Dialog>
+
+      <Backdrop open={props.isFetching} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isFetching: select(state, 'usersReducer', 'isFetching'),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   insertUser: (payload) => dispatch(insertUser(payload)),

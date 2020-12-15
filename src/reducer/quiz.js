@@ -5,7 +5,7 @@ import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { QUIZ_API } from '../services/quizAPI';
 
-import { insertSubmission, insertDetail } from '../reducer/submissions';
+import { insertSubmission } from '../reducer/submissions';
 
 const EMPTY_QUIZ_LIST = 'EMPTY_QUIZ_LIST';
 

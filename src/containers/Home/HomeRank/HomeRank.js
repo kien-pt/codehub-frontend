@@ -25,6 +25,8 @@ function HomeRank(props) {
   const { getAllUsers, getAllPointByCourseId } = props;
   const [courseIndex, setCourseIndex] = useState(0);
 
+  const userId = parseInt(localStorage.getItem("userId"));
+
   const selectedCourse = courses?.length > 0 ? courses[courseIndex] : null;
 
   const rankUser = props.usersList.map((user) => ({...user, point: 0}));
@@ -35,8 +37,8 @@ function HomeRank(props) {
 
   // Get all students
   useEffect(() => {
-    getAllUsers();
-  }, [getAllUsers]);
+    if (userId >= 0) getAllUsers();
+  }, [userId, getAllUsers]);
 
   useEffect(() => {
     if (selectedCourse) getAllPointByCourseId(selectedCourse.id);

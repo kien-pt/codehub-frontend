@@ -7,9 +7,11 @@ import {
   Menu,
   AppBar,
   Avatar,
+  Backdrop,
   MenuItem,
   withStyles,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import { Person, ExitToApp, Build, ExpandMore } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
@@ -30,6 +32,12 @@ function AppHeader(props) {
   const history = useHistory();
 
   const { logout, getUserById } = props;
+
+  const {
+    isFetchingUsers,
+    isFetchingPoints,
+    isFetchingCourses,
+  } = props;
 
   const currentTime = Date.parse(new Date());
   const userId = parseInt(localStorage.getItem("userId"));
@@ -62,9 +70,7 @@ function AppHeader(props) {
 
   // Auto Logout
   useEffect(() => {
-    if (expiredTime - currentTime <= 0) {
-      logout(history);
-    }
+    if (expiredTime - currentTime <= 0) logout(history);
     if (!(userId >= 0) && currentRoute !== ROUTER.REGISTER) history.push(ROUTER.LOGIN);
   }, [history, userId, currentTime, expiredTime, currentRoute, logout]);
 
@@ -179,12 +185,17 @@ function AppHeader(props) {
 
       <LogoutModal isLogout={isLogout} setLogout={setLogout} />
       <PasswordModal isPasswordModal={isPasswordModal} setPasswordModal={setPasswordModal} />
+
+      <Backdrop open={isFetchingUsers || isFetchingCourses || isFetchingPoints} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
   user: select(state, 'usersReducer', 'user'),
+  isFetchingUsers: select(state, 'usersReducer', 'isFetching'),
+  isFetchingPoints: select(state, 'pointReducer', 'isFetching'),
+  isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

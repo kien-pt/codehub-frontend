@@ -4,10 +4,8 @@ import { useHistory } from 'react-router-dom';
 import {
   Fab,
   Grid,
-  Backdrop,
   IconButton,
   LinearProgress,
-  CircularProgress,
   Card,
   CardHeader,
   CardContent,
@@ -40,8 +38,6 @@ function HomeCourses(props) {
     getUserPointByCourseId,
   } = props;
 
-  const {isFetchingUsers, isFetchingPoints, isFetchingCourses} = props;
-
   const [isInserting, setInserting] = useState(false);
   const [deletingCourse, setDeletingCourse] = useState(null);
   const [updatingCourse, setUpdatingCourse] = useState(null);
@@ -53,10 +49,12 @@ function HomeCourses(props) {
   const handleClick = (inserting) => setInserting(inserting);
 
   useEffect(() => {
-    getCourses();
-    getAllQuiz();
-    getTags();
-  }, [getAllQuiz, getCourses, getTags]);
+    if (userId >= 0) {
+      getCourses();
+      getAllQuiz();
+      getTags();
+    }
+  }, [userId, getAllQuiz, getCourses, getTags]);
 
 
   useEffect(() => {
@@ -135,7 +133,6 @@ function HomeCourses(props) {
       <UpdateCourseModal updatingCourse={updatingCourse} setUpdatingCourse={setUpdatingCourse} />
       <DeleteCourseModal deletingCourse={deletingCourse} setDeletingCourse={setDeletingCourse} />
 
-      <Backdrop open={isFetchingUsers || isFetchingCourses || isFetchingPoints} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
@@ -146,9 +143,6 @@ const mapStateToProps = (state) => ({
   user_point: select(state, 'pointReducer', 'user_point'),
   server_point: select(state, 'pointReducer', 'server_point'),
   courses: select(state, 'coursesReducer', 'courses'),
-  isFetchingUsers: select(state, 'usersReducer', 'isFetching'),
-  isFetchingPoints: select(state, 'pointReducer', 'isFetching'),
-  isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
