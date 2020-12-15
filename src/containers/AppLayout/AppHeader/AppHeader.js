@@ -38,10 +38,11 @@ function AppHeader(props) {
     isFetchingQuiz,
     isFetchingTags,
     isFetchingUsers,
-    isFetchingPoints,
     isFetchingCourses,
     isFetchingComments,
     isFetchingSubmissions,
+    isFetching_user_point,
+    isFetching_server_point,
   } = props;
 
   const currentTime = Date.parse(new Date());
@@ -192,7 +193,16 @@ function AppHeader(props) {
       <PasswordModal isPasswordModal={isPasswordModal} setPasswordModal={setPasswordModal} />
 
       <Backdrop
-        open={isSolving || isFetchingTags || isFetchingQuiz || isFetchingUsers || isFetchingCourses || isFetchingPoints || isFetchingComments || isFetchingSubmissions}
+        open={
+          isSolving ||
+          isFetchingTags ||
+          isFetchingQuiz ||
+          isFetchingUsers ||
+          isFetchingCourses ||
+          isFetchingComments ||
+          isFetchingSubmissions ||
+          isFetching_user_point ||
+          isFetching_server_point}
         style={{ zIndex: 10 }}
       >
         <CircularProgress />
@@ -207,10 +217,11 @@ const mapStateToProps = (state) => ({
   isFetchingQuiz: select(state, 'quizReducer', 'isFetching'),
   isSolving: select(state, 'submissionsReducer', 'isSolving'),
   isFetchingUsers: select(state, 'usersReducer', 'isFetching'),
-  isFetchingPoints: select(state, 'pointReducer', 'isFetching'),
   isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
   isFetchingComments: select(state, 'commentsReducer', 'isFetching'),
   isFetchingSubmissions: select(state, 'submissionsReducer', 'isFetching'),
+  isFetching_user_point: select(state, 'pointReducer', 'isFetching_user_point'),
+  isFetching_server_point: select(state, 'pointReducer', 'isFetching_server_point'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

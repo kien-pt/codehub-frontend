@@ -167,26 +167,35 @@ export const updatePoint = (id, payload) => async (dispatch) => {
 const initialState = fromJS({
   user_point: [],
   server_point: [],
-  isFetching: false,
+  isFetching_user_point: false,
+  isFetching_server_point: false,
 });
 
 export default function pointReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_POINT_LOADING:
-    case GET_USER_POINT_LOADING:
-    case GET_POINT_BY_USER_ID_LOADING:
     case GET_POINT_BY_QUIZ_ID_LOADING:
       return state.merge({
-        isFetching: true,
+        isFetching_server_point: true,
+      });
+
+    case GET_USER_POINT_LOADING:
+    case GET_POINT_BY_USER_ID_LOADING:
+      return state.merge({
+        isFetching_user_point: true,
       });
 
     case GET_ALL_POINT_FAILURE:
-    case GET_USER_POINT_FAILURE:
-    case GET_POINT_BY_USER_ID_FAILURE:
     case GET_POINT_BY_QUIZ_ID_FAILURE:
       return state.merge({
-        isFetching: false,
+        isFetching_server_point: false,
       });
+
+      case GET_USER_POINT_FAILURE:
+      case GET_POINT_BY_USER_ID_FAILURE:
+        return state.merge({
+          isFetching_user_point: false,
+        });
 
     case RESET_USER_POINT:
       return state.merge({
@@ -196,25 +205,25 @@ export default function pointReducer(state = initialState, action) {
     case GET_ALL_POINT_SUCCESS:
       return state.merge({
         server_point: [...action.payload],
-        isFetching: false,
+        isFetching_server_point: false,
       });
 
     case GET_USER_POINT_SUCCESS:
       return state.merge({
         user_point: [...state.get('user_point'), {points: action.payload, courseId: action.id}],
-        isFetching: false,
+        isFetching_user_point: false
       });
 
     case GET_POINT_BY_USER_ID_SUCCESS:
       return state.merge({
         user_point: [...action.payload],
-        isFetching: false,
+        isFetching_user_point: false,
       });
 
     case GET_POINT_BY_QUIZ_ID_SUCCESS:
       return state.merge({
         server_point: [...action.payload],
-        isFetching: false,
+        isFetching_server_point: false,
       });
 
     default: return state;
