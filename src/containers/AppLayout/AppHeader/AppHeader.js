@@ -34,6 +34,7 @@ function AppHeader(props) {
   const { logout, getUserById } = props;
 
   const {
+    isSolving,
     isFetchingTags,
     isFetchingUsers,
     isFetchingPoints,
@@ -190,7 +191,7 @@ function AppHeader(props) {
       <PasswordModal isPasswordModal={isPasswordModal} setPasswordModal={setPasswordModal} />
 
       <Backdrop
-        open={isFetchingTags || isFetchingUsers || isFetchingCourses || isFetchingPoints || isFetchingComments || isFetchingSubmissions}
+        open={isSolving || isFetchingTags || isFetchingUsers || isFetchingCourses || isFetchingPoints || isFetchingComments || isFetchingSubmissions}
         style={{ zIndex: 10 }}
       >
         <CircularProgress />
@@ -203,6 +204,7 @@ const mapStateToProps = (state) => ({
   user: select(state, 'usersReducer', 'user'),
   isFetchingTags: select(state, 'tagsReducer', 'isFetching'),
   isFetchingQuiz: select(state, 'quizReducer', 'isFetching'),
+  isSolving: select(state, 'submissionsReducer', 'isSolving'),
   isFetchingUsers: select(state, 'usersReducer', 'isFetching'),
   isFetchingPoints: select(state, 'pointReducer', 'isFetching'),
   isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),

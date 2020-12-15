@@ -5,6 +5,8 @@ import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { SUBMISSIONS_API } from '../services/submissionsAPI';
 
+const SET_SOLVING = 'SET_SOLVING';
+
 const GET_SUBMISSIONS_LOADING = 'GET_SUBMISSIONS_LOADING';
 const GET_SUBMISSIONS_SUCCESS = 'GET_SUBMISSIONS_SUCCESS';
 const GET_SUBMISSIONS_FAILURE = 'GET_SUBMISSIONS_FAILURE';
@@ -112,6 +114,13 @@ export const getSubmissionsByCourseId = (id) => async (dispatch) => {
   }
 };
 
+export const setSolving = () => async (dispatch) => {
+  dispatch({
+    type: SET_SOLVING,
+    meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_CALLING] },
+  });
+};
+
 export const insertSubmission = (history, payload) => async (dispatch) => {
   const api = SUBMISSIONS_API.insertSubmission();
   dispatch({
@@ -172,7 +181,7 @@ export const insertDetail = (history, payload) => async (dispatch) => {
   });
   const { response, error } = await fakeApiCall({ ...api, payload });
 
-  if (!error && response.status === 200) {
+  if (!error && response.status === 201) {
     dispatch({
       type: INSERT_DETAIL_SUCCESS,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
@@ -184,6 +193,8 @@ export const insertDetail = (history, payload) => async (dispatch) => {
       type: INSERT_DETAIL_FAILURE,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_FAILURE] },
     });
+
+    history.push(`${ROUTER.SUBMISSION}/${payload.submissionId}`);
   }
 };
 
@@ -202,15 +213,15 @@ export default function submissionsReducer(state = initialState, action) {
     case INSERT_DETAIL_LOADING:
     case GET_SUBMISSIONS_LOADING:
     case GET_SUBMISSION_BY_ID_LOADING:
+    case INSERT_SUBMISSIONS_LOADING:
       return state.merge({
         isFetching: true,
       });
 
     case GET_DETAIL_FAILURE:
-    case INSERT_DETAIL_FAILURE:
-    case INSERT_DETAIL_SUCCESS:
     case GET_SUBMISSIONS_FAILURE:
     case GET_SUBMISSION_BY_ID_FAILURE:
+    case INSERT_SUBMISSIONS_FAILURE:
       return state.merge({
         isFetching: false,
       });
@@ -227,21 +238,22 @@ export default function submissionsReducer(state = initialState, action) {
         isFetching: false,
       });
 
-    case INSERT_SUBMISSIONS_LOADING:
+    case SET_SOLVING:
       return state.merge({
         isSolving: true,
-      });
-
-    case INSERT_SUBMISSIONS_FAILURE:
-      return state.merge({
-        isSolving: false,
       });
 
     case INSERT_SUBMISSIONS_SUCCESS:
       return state.merge({
         submissions: [...[action.payload]],
-        isSolving: false,
+        isFetching: false,
       });
+
+    case INSERT_DETAIL_SUCCESS:
+    case INSERT_DETAIL_FAILURE:
+      return state.merge({
+        isSolving: false,
+      }); 
 
     case GET_DETAIL_SUCCESS:
       return state.merge({

@@ -220,6 +220,7 @@ export const submitCode = (history, payload) => async (dispatch) => {
     dispatch({
       type: SUBMIT_CODE_SUCCESS,
       payload: {
+        id: payload.id,
         got,
         expected: payload.output,
       },
@@ -232,7 +233,8 @@ export const submitCode = (history, payload) => async (dispatch) => {
       point = parseFloat(((point / testCase.length) * 100).toFixed(0));
 
       var gotList = [];
-      testCase.forEach((e) => gotList.push(e.got));
+      testCase.sort((a, b) => a.id - b.id).forEach((e) => gotList.push(e.got));
+      console.log(testCase);
       dispatch(insertSubmission(
         history,
         {

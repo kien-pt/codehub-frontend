@@ -5,10 +5,8 @@ import {
   Card,
   CardHeader,
   CardContent,
-  Button,
   Grid,
-  Backdrop,
-  CircularProgress,
+  Button,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
@@ -16,6 +14,7 @@ import {UnControlled as CodeMirror} from 'react-codemirror2';
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
+import { setSolving } from '../../../reducer/submissions';
 import { submitCode, resetTestCaseCount } from '../../../reducer/quiz';
 import { insertPoint, updatePoint, getPointByQuizId } from '../../../reducer/point';
 
@@ -39,19 +38,19 @@ function QuizSubmitField(props) {
   const history = useHistory();
 
   const [sourceCode, setSourceCode] = useState(code);
-  const [isSubmitting, setSubmitting] = useState(false);
   
   const { resetTestCaseCount, quizId } = props;
 
   const quiz = props.quizList.find((quiz) => quiz.id === quizId);
 
   const handleSubmit = () => {
-    setSubmitting(true);
+    props.setSolving();
     resetTestCaseCount(quiz?.testCases?.length);
-    quiz?.testCases?.forEach((e) => {
+    quiz?.testCases?.forEach((e, id) => {
       props.submitCode(
         history,
         {
+          id,
           quizId,
           sourceCode,
           input: e.input,
@@ -94,8 +93,6 @@ function QuizSubmitField(props) {
           </Grid>
         </CardContent>
       </Card>
-      
-      <Backdrop open={isSubmitting} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
@@ -104,14 +101,12 @@ const mapStateToProps = (state) => ({
   point: select(state, 'pointReducer', 'point'),
   quizList: select(state, 'quizReducer', 'quiz'),
   testCase: select(state, 'quizReducer', 'testCase'),
-  isFetching: select(state, 'quizReducer', 'isFetching'),
   testCaseCount: select(state, 'quizReducer', 'testCaseCount'),
-
-  isSolving: select(state, 'submissionsReducer', 'isSolving'),
   submissions: select(state, 'submissionsReducer', 'submissions'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setSolving: () => dispatch(setSolving()),
   resetTestCaseCount: (size) => dispatch(resetTestCaseCount(size)),
   submitCode: (history, payload) => dispatch(submitCode(history, payload)),
 
