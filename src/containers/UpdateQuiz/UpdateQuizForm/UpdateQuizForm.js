@@ -7,9 +7,7 @@ import {
   CardActions,
   Grid,
   Button,
-  Backdrop,
   TextareaAutosize,
-  CircularProgress,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
@@ -31,8 +29,6 @@ function UpdateQuizForm(props) {
   const { sampleOutput, setSampleOutput } = props;
   const { quizId, getQuizById } = props;
   const { title, selectedTagId, testcase } = props;
-
-  const {isFetchingTags, isFetchingQuiz, isFetchingCourses} = props;
 
   useEffect(() => {
     getQuizById(quizId);
@@ -162,17 +158,12 @@ function UpdateQuizForm(props) {
         isPreviewing={isPreviewing}
         setPreviewing={setPreviewing}
       />
-
-      <Backdrop open={isFetchingTags || isFetchingQuiz || isFetchingCourses} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
-  isFetchingTags: select(state, 'tagsReducer', 'isFetching'),
-  isFetchingQuiz: select(state, 'quizReducer', 'isFetching'),
-  isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

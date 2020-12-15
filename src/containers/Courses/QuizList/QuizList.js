@@ -4,9 +4,7 @@ import { useHistory } from 'react-router-dom';
 import {
   Fab,
   Grid,
-  Backdrop,
   IconButton,
-  CircularProgress,
   Card,
   CardHeader,
   CardContent,
@@ -37,8 +35,6 @@ function HomeCourses(props) {
     getTagsByCourseId,
     getQuizByCourseId,
   } = props;
-
-  const {isFetchingTags, isFetchingCourses} = props;
 
   const [deletedTag, setDeletedTag] = useState(null);
   const [updatedTag, setUpdatedTag] = useState(null);
@@ -109,8 +105,6 @@ function HomeCourses(props) {
       <UpdateTagModal updatedTag={updatedTag} setUpdatedTag={setUpdatedTag} />
       <DeleteTagModal deletedTag={deletedTag} setDeletedTag={setDeletedTag} />
       <DeleteQuizModal deletingQuiz={deletingQuiz} setDeletingQuiz={setDeletingQuiz} />
-
-      <Backdrop open={isFetchingTags || isFetchingCourses} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </>
   );
 }
@@ -120,8 +114,6 @@ const mapStateToProps = (state) => ({
   tags: select(state, 'tagsReducer', 'tags'),
   courses: select(state, 'coursesReducer', 'courses'),
   user_point: select(state, 'pointReducer', 'user_point'),
-  isFetchingTags: select(state, 'tagsReducer', 'isFetching'),
-  isFetchingCourses: select(state, 'coursesReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

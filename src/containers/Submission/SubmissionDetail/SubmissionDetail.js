@@ -5,8 +5,6 @@ import {
   Paper,
   Button,
   Divider,
-  Backdrop,
-  CircularProgress,
   Card,
   CardHeader,
   CardContent,
@@ -32,8 +30,6 @@ require('codemirror/mode/clike/clike.js');
 
 function SubmissionDetail(props) {
   const history = useHistory();
-
-  const { isFetchingQuiz, isFetchingSubmissions } = props; 
 
   const temp = window.location.href.split('/');
   const submissionId = parseInt(temp[temp.length - 1]);
@@ -104,7 +100,6 @@ function SubmissionDetail(props) {
           </Grid>
         </Grid>
       </CardContent>
-      <Backdrop open={isFetchingQuiz || isFetchingSubmissions} style={{ zIndex: 10 }}><CircularProgress /></Backdrop>
     </Card>
   );
 }
@@ -113,8 +108,6 @@ const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
   detail: select(state, 'submissionsReducer', 'detail'),
   submission: select(state, 'submissionsReducer', 'submission'),
-  isFetchingQuiz: select(state, 'quizReducer', 'isFetching'),
-  isFetchingSubmissions: select(state, 'submissionsReducer', 'isFetching'),
 });
 
 const mapDispatchToProps = () => ({});
