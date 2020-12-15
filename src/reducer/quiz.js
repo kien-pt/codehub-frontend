@@ -234,7 +234,6 @@ export const submitCode = (history, payload) => async (dispatch) => {
 
       var gotList = [];
       testCase.sort((a, b) => a.id - b.id).forEach((e) => gotList.push(e.got));
-      console.log(testCase);
       dispatch(insertSubmission(
         history,
         {

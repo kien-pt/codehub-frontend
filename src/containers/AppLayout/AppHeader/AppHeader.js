@@ -35,6 +35,7 @@ function AppHeader(props) {
 
   const {
     isSolving,
+    isFetchingQuiz,
     isFetchingTags,
     isFetchingUsers,
     isFetchingPoints,
@@ -191,7 +192,7 @@ function AppHeader(props) {
       <PasswordModal isPasswordModal={isPasswordModal} setPasswordModal={setPasswordModal} />
 
       <Backdrop
-        open={isSolving || isFetchingTags || isFetchingUsers || isFetchingCourses || isFetchingPoints || isFetchingComments || isFetchingSubmissions}
+        open={isSolving || isFetchingTags || isFetchingQuiz || isFetchingUsers || isFetchingCourses || isFetchingPoints || isFetchingComments || isFetchingSubmissions}
         style={{ zIndex: 10 }}
       >
         <CircularProgress />

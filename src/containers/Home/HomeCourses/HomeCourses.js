@@ -100,7 +100,7 @@ function HomeCourses(props) {
                     <div style={{ fontWeight: 'bold', fontSize: 20, padding: '16px 0 8px 0' }}>{`${course.code} - ${course.name}`}</div>
                     <LinearProgress variant="determinate" value={totalPoint === 0 ? 0 : currentPoint / totalPoint * 100} style={{ width: '70%' }} />
                     <div style={{ padding: '12px 0' }}>
-                      <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${currentPoint / totalPoint * 100}%`}</span>
+                      <span style={{ fontWeight: 'bold' }}>{totalPoint === 0 ? '0%' : `${(currentPoint / totalPoint * 100).toFixed(2)}%`}</span>
                       <span>&nbsp; {` ${currentPoint}/${totalPoint}`}</span>
                     </div>
                     <div className="cardButton" style={{ minWidth: 120, width: '20%' }}>Tiếp tục luyện tập</div>
