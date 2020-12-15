@@ -25,5 +25,15 @@ export const SUBMISSIONS_API = {
     endPoint: 'api/v1/submissions/new',
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
-  })
+  }),
+  getDetail: (id) => ({
+    endPoint: `api/v1/detail?submissionId=${id}`,
+    method: 'GET',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
+  insertDetail: () => ({
+    endPoint: 'api/v1/detail',
+    method: 'POST',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 };

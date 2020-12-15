@@ -98,3 +98,7 @@ button.fab-quiz-element {
   height: 24px;
   min-height: 24px;
 }
+
+th.MuiTableCell-root, td.MuiTableCell-root {
+  border: solid 1px #e5e5e5;
+}

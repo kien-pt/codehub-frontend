@@ -46,7 +46,7 @@ function QuizDiscuss(props) {
               <div key={comment.createdAt}>
                 <Grid container>
                   <Grid item><Avatar style={{ marginTop: 6 }}>{comment.user.username[0].toUpperCase()}</Avatar></Grid>
-                  <Grid item style={{ marginLeft: 12 }}>
+                  <Grid item style={{ marginLeft: 12, maxWidth: 'calc(100% - 52px)' }}>
                     <Grid item style={{ fontWeight: 'bold' }}>{comment.user.fullname}</Grid>
                     <Grid item style={{ fontSize: 10, color: '#8c8c8c' }}>{`${day}-${month}-${year}`}</Grid>
                     <Grid item style={{ marginTop: 4 }}>{comment.content}</Grid>

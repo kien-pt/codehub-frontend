@@ -49,3 +49,32 @@ export const apiCall = async ({
     };
   }
 };
+
+export const fakeApiCall = async ({
+  endPoint,
+  method,
+  payload,
+  headers,
+  params,
+}) => {
+  try {
+    const result = await axios({
+      method,
+      url: process.env.REACT_APP_FAKE_DOMAIN + endPoint,
+      headers,
+      data: payload,
+      params,
+      paramsSerializer: (params) => parseParams(params),
+    });
+    return {
+      response: result,
+      error: null,
+    };
+  } catch (e) {
+    return {
+      response: null,
+      error: e.request,
+    };
+  }
+};
+

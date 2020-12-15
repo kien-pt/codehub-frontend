@@ -5,7 +5,7 @@ import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { QUIZ_API } from '../services/quizAPI';
 
-import { insertSubmission } from '../reducer/submissions';
+import { insertSubmission, insertDetail } from '../reducer/submissions';
 
 const EMPTY_QUIZ_LIST = 'EMPTY_QUIZ_LIST';
 
@@ -231,10 +231,13 @@ export const submitCode = (history, payload) => async (dispatch) => {
       testCase.forEach((e) => point += (e.got === e.expected) ? 1 : 0);
       point = parseFloat(((point / testCase.length) * 100).toFixed(0));
 
+      var gotList = [];
+      testCase.forEach((e) => gotList.push(e.got));
       dispatch(insertSubmission(
         history,
         {
           point,
+          got: String(gotList),
           quizId: payload.quizId,
           sourceCode: payload.sourceCode,
         }
