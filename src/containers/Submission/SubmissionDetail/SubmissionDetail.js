@@ -36,7 +36,7 @@ function SubmissionDetail(props) {
 
   const submission = props.submission?.find((e) => e.id === submissionId);
   
-  const detail = props.detail?.got.replace('[', '').replace(']', '').split(',');
+  const detail = submission?.result.replace('[', '').replace(']', '').split(',');
 
   return (
     <Card style={{ marginTop: 32 }}>
@@ -106,7 +106,6 @@ function SubmissionDetail(props) {
 
 const mapStateToProps = (state) => ({
   quizList: select(state, 'quizReducer', 'quiz'),
-  detail: select(state, 'submissionsReducer', 'detail'),
   submission: select(state, 'submissionsReducer', 'submission'),
 });
 

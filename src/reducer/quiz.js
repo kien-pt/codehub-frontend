@@ -238,7 +238,7 @@ export const submitCode = (history, payload) => async (dispatch) => {
         history,
         {
           point,
-          got: String(gotList),
+          result: String(gotList),
           quizId: payload.quizId,
           sourceCode: payload.sourceCode,
         }
