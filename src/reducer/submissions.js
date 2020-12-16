@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 
 import { apiCall } from '../utils/api';
+import ROUTER from '../constant/router';
 import { PREFIX } from '../constant/enum';
 import { SUBMISSIONS_API } from '../services/submissionsAPI';
 
@@ -125,6 +126,7 @@ export const insertSubmission = (history, payload) => async (dispatch) => {
       payload: response.data,
       meta: { prefix: [PREFIX.SUBMISSIONS, PREFIX.API_SUCCESS] },
     });
+    history.push(`${ROUTER.SUBMISSION}/${response.data.id}`);
   } else {
     dispatch({
       type: INSERT_SUBMISSIONS_FAILURE,
@@ -178,6 +180,7 @@ export default function submissionsReducer(state = initialState, action) {
       return state.merge({
         submissions: [...[action.payload]],
         isFetching: false,
+        isSolving: false,
       });
 
     default: return state;
