@@ -102,3 +102,7 @@ button.fab-quiz-element {
 th.MuiTableCell-root, td.MuiTableCell-root {
   border: solid 1px #e5e5e5;
 }
+
+div.MuiDrawer-paper {
+  width: 50%;
+}

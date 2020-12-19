@@ -5,16 +5,19 @@ import {
   Link,
   Grid,
   Menu,
+  Drawer,
   AppBar,
   Avatar,
   Backdrop,
   MenuItem,
   withStyles,
+  IconButton,
   Typography,
   CircularProgress,
 } from '@material-ui/core';
 import { Person, ExitToApp, Build, ExpandMore } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
@@ -55,6 +58,7 @@ function AppHeader(props) {
   const username = props.user?.username;
   const fullname = props.user?.fullname;
 
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setLogout] = useState(false);
   const [isPasswordModal, setPasswordModal] = useState(false);
@@ -135,7 +139,7 @@ function AppHeader(props) {
     <>
       <AppBar position="fixed" style={{ backgroundColor: '#39424E', padding: '0 20px' }}>
         <Grid container justify="center" alignItems="center" style={{ height: 60 }}>
-          <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
+          <Grid item sm={7} lg={6} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Link href={ROUTER.HOME}>
                 <img src={logo} alt="logo" height="36px" style={{ padding: '12px 0' }} />
@@ -159,13 +163,58 @@ function AppHeader(props) {
               }
             </div> 
           </Grid>
-          <Grid item sm={6} lg={5} component={Box} display={{ xs: 'none', sm: 'block' }}>
+          <Grid item sm={5} lg={4} component={Box} display={{ xs: 'none', sm: 'block' }}>
             <div id="user-button" onClick={handleClick}>
               <Avatar style={{ width: 30, height: 30, fontSize: 15, margin: 'auto 4px' }}>{username ? username[0].toUpperCase() : ''}</Avatar>
               <div style={{ lineHeight: '60px' }}>{fullname}</div>
               <ExpandMore style={{ padding: '18px 0' }} />
             </div> 
           </Grid>
+
+
+
+
+
+
+
+
+
+
+
+          <Grid item xs={1} component={Box} display={{ xs: 'block', sm: 'none' }}>
+            <IconButton style={{ marginLeft: -12 }} onClick={() => setOpenMobileMenu(true)}>
+              <MenuIcon style={{ color: 'white' }} />
+            </IconButton>
+          </Grid>
+          <Grid item xs={10} component={Box} display={{ xs: 'block', sm: 'none' }}>
+            <Link href={ROUTER.HOME} style={{ display: 'flex' }}>
+              <img src={logo} alt="logo" height="36px" style={{ margin: '0 auto', padding: '12px 0' }} />
+            </Link>
+          </Grid>
+          <Grid item xs={1} component={Box} display={{ xs: 'block', sm: 'none' }}>
+            <Avatar onClick={handleClick} style={{ width: 30, height: 30, fontSize: 15, cursor: 'pointer', margin: 'auto 4px' }}>{username ? username[0].toUpperCase() : ''}</Avatar>
+          </Grid>
+
+          <Drawer open={openMobileMenu} onClose={() => setOpenMobileMenu(false)} style={{ width: '50%' }}>
+            {
+              menuList.map((item, index) => (
+                <Link
+                  className="app-menu-item"
+                  key={item.name}
+                  href={item.link}
+                  style={{
+                    margin: '12px 0',
+                    lineHeight: '55px',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    backgroundColor: (selectedId === index) ? '#1BA94C' : 'none',
+                  }}
+                >
+                  {item.name}
+                </Link>
+              ))
+            }
+          </Drawer>
         </Grid>
       </AppBar>
 
