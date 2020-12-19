@@ -110,7 +110,7 @@ function InsertUserModal(props) {
               <FormControlLabel label="Trao quyền quản trị viên" control={<Checkbox color="default" />} onChange={() => setAdmin(!isAdmin)} />  
             </FormControl>
             <FormControl style={{ width: '100%' }}>
-              <Button variant="contained" color="primary" type="submit">Đăng ký</Button>
+              <Button disabled={password === '' || password !== confirmPassword} variant="contained" color="primary" type="submit">Đăng ký</Button>
             </FormControl>
           </form>
         </DialogContent>

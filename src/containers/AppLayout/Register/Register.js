@@ -54,7 +54,7 @@ function Register(props) {
   // Handle close noti modal
   const handleClose = () => {
     if (noti.type === 'success') history.push(ROUTER.LOGIN);
-    setNoti(false);
+    setNoti(null);
   }
   
   return (

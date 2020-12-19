@@ -20,7 +20,7 @@ function InsertQuizTestCase(props) {
 
   const handleDeleteTestcase = () => {
     const temp = testcase;
-    if (temp.length >= 1) temp.splice(temp.length - 1);
+    if (temp.length > 1) temp.splice(temp.length - 1);
     setTestcase([...temp]);
   }
 

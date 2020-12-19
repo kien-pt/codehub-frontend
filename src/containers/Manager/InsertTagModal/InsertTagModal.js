@@ -55,7 +55,7 @@ function InsertTagModal(props) {
         </DialogContent>
         <DialogActions style={{ padding: '0 24px 12px 24px' }}>
           <Button variant="outlined" color="secondary" onClick={() => handleClick(false)}>Huỷ</Button>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>Đồng ý</Button>
+          <Button disabled={name === ''} variant="contained" color="primary" onClick={handleSubmit}>Đồng ý</Button>
         </DialogActions>
       </Dialog>
 
