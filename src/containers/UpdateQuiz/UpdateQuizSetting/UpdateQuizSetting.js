@@ -49,7 +49,7 @@ function UpdateQuizSetting(props) {
 
   const handleSelect = (e) => {
     setSelectedCourseId(e.target.value);
-    getTagsByCourseId(selectedCourseId);
+    getTagsByCourseId(e.target.value);
   }
 
   return (

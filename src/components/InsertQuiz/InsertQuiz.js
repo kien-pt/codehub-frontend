@@ -16,7 +16,7 @@ function InsertQuiz(props) {
 
   const [title, setTitle] = useState("");
   const [selectedTagId, setSelectedTagId] = useState("");
-  const [selectedCourseId, setSelectedCourseId] = useState(courseId ? courseId : "");
+  const [selectedCourseId, setSelectedCourseId] = useState(courseId);
 
   const [testcase, setTestcase] = useState([{}]);
 

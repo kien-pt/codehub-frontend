@@ -102,8 +102,6 @@ function UpdateQuizForm(props) {
   </ul>
 </div>`;
 
-  console.log(previewCombine);
-
   const [isPreviewing, setPreviewing] = useState(false);
 
   const updateQuiz = () => {

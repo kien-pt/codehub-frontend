@@ -36,10 +36,7 @@ function InsertQuizSetting(props) {
     setSelectedTagId(tags[0]?.id);
   }, [setSelectedTagId, tags]);
 
-  const handleSelect = (e) => {
-    setSelectedCourseId(e.target.value);
-    getTagsByCourseId(selectedCourseId);
-  }
+  const handleSelect = (e) => setSelectedCourseId(e.target.value);
 
   return (
     <Card>
