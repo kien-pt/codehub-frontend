@@ -5,29 +5,42 @@ import {
   CardContent,
   CardHeader,
   CardActions,
+  Fab,
   Grid,
   Button,
   Avatar,
   Divider,
+  Snackbar,
   TextareaAutosize,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { Clear } from '@material-ui/icons';
 
 import toJs from '../../../hoc/ToJS';
 import select from '../../../utils/select';
 
-import { insertComment } from '../../../reducer/comments';
+import { insertComment, deleteComment } from '../../../reducer/comments';
 
 function QuizDiscuss(props) {
   const { quizId } = props;
+
+  const [noti, setNoti] = useState(null);
   const [comment, setComment] = useState('');
+
+  const isAdmin = localStorage.getItem("isAdmin") === 'true';
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.insertComment({
-      quizId,
-      content: comment,
-    });
+    props.insertComment({ quizId, content: comment })
+    .then(result => setNoti(result))
+    .catch();
     setComment('');
+  }
+
+  const handleDelete = (id) => {
+    props.deleteComment(id, quizId)
+    .then(result => setNoti(result))
+    .catch();
   }
 
   const commentsList = props.comments.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
@@ -44,13 +57,21 @@ function QuizDiscuss(props) {
             const year = date.getFullYear();
             return (
               <div key={comment.createdAt}>
-                <Grid container>
+                <Grid container style={{ position: 'relative' }}>
                   <Grid item><Avatar style={{ marginTop: 6 }}>{comment.user.username[0].toUpperCase()}</Avatar></Grid>
                   <Grid item style={{ marginLeft: 12, maxWidth: 'calc(100% - 52px)' }}>
                     <Grid item style={{ fontWeight: 'bold' }}>{comment.user.fullname}</Grid>
                     <Grid item style={{ fontSize: 10, color: '#8c8c8c' }}>{`${day}-${month}-${year}`}</Grid>
                     <Grid item style={{ marginTop: 4 }}>{comment.content}</Grid>
                   </Grid>
+                  <Fab
+                      size="small"
+                      className="fab-quiz-element"
+                      onClick={() => handleDelete(comment.id)}
+                      style={{ display: isAdmin ? 'inline-flex' : 'none' }}
+                    >
+                      <Clear style={{ fontSize: 16 }} />
+                    </Fab>
                 </Grid>
                 <Divider style={{ marginTop: 8, marginBottom: (index !== commentsList.length - 1) ? 12 : 0 }} />
               </div>
@@ -64,6 +85,15 @@ function QuizDiscuss(props) {
           <Button variant="contained" type="submit" color="primary" style={{ marginLeft: 4, height: 32, minHeight: 32, minWidth: 50 }}>Gửi</Button>
         </form>
       </CardActions>
+
+
+
+
+      <Snackbar open={noti !== null} autoHideDuration={6000} onClose={() => setNoti(null)}>
+        <Alert variant="filled" severity={noti?.type} onClose={() => setNoti(null)}>
+          {noti?.message}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }
@@ -75,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   insertComment: (payload) => dispatch(insertComment(payload)),
+  deleteComment: (id, quizId) => dispatch(deleteComment(id, quizId)),
 });
 
 export default connect(

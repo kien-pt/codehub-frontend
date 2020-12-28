@@ -11,4 +11,9 @@ export const COMMENTS_API = {
     method: 'POST',
     headers: HEADERS.DEFAULT_HEADER,
   }),
+  deleteComment: (id) => ({
+    endPoint: `api/v1/comments/delete/id/?id=${id}`,
+    method: 'DELETE',
+    headers: HEADERS.DEFAULT_HEADER,
+  }),
 };
