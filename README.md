@@ -1,9 +1,11 @@
 # CODEHUB - WEBSITE GIẢI BÀI TẬP LẬP TRÌNH
 __Bài tập lớn môn Phát triển ứng dụng Web__
 
-Frontend: https://github.com/kien-pt/codehub-frontend
+Frontend: https://github.com/kien-pt/codehub-frontend<br/>
+Backend : https://github.com/giangbang/web-project<br/>
+Demo Web: https://codehub-web.herokuapp.com
 
-Backend : https://github.com/giangbang/web-project
+![demo](https://github.com/kien-pt/codehub-frontend/blob/master/src/assets/demo.png)
 
 # Description
 <table>
